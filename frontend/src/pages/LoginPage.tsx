@@ -6,7 +6,7 @@ const LoginPage = () => {
     <div className="py-8 mt-16 font-body">
       <div className="flex items-center justify-center gap-x-2">
         <FaSignInAlt />
-        <h1>Sign in</h1>
+        <h1>Sign In</h1>
       </div>
       <LoginForm />
     </div>

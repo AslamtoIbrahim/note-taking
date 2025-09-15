@@ -17,7 +17,7 @@
 
 
 .marx {
-  @apply mx-4
+  @apply mx-4 md:max-w-md md:mx-auto
 }
 
 .div-input {
@@ -26,4 +26,7 @@
 
 .form-input{
   @apply w-full outline-none truncate
+}
+.form-error{
+  @apply text-red-500 text-sm
 }

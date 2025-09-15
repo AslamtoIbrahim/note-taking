@@ -1,18 +1,27 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, type SubmitHandler } from "react-hook-form";
-import { FaEnvelope, FaLock } from "react-icons/fa";
+import { FaEnvelope, FaLock, FaUser } from "react-icons/fa";
 import z from "zod";
-import GoogleSignIn from "../ui/GoogleSignIn";
 import SubmitButton from "../ui/SubmitButton";
 
-const schema = z.object({
-  email: z.string().nonempty("Email is required"),
-  password: z.string().nonempty("Password is required"),
-});
+const schema = z
+  .object({
+    username: z.string().nonempty("username is required"),
+    email: z.email("invalid email"),
+    password: z
+      .string()
+      .nonempty("passowrd is required")
+      .min(8, "password too short"),
+    confirmPassword: z.string().nonempty("confirmPassowrd is required"),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    error: "Password do not match",
+    path: ["confirmPassword"],
+  });
 
 type Inputs = z.infer<typeof schema>;
 
-const LoginForm = () => {
+const SignUpForm = () => {
   const {
     register,
     formState: { errors },
@@ -24,11 +33,21 @@ const LoginForm = () => {
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     console.log("data", data);
   };
-
   return (
     <div className="bg-light marx mt-12 flex flex-col items-center gap-y-8 rounded px-6 py-8">
-      <GoogleSignIn />
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        <section>
+          <div className="div-input">
+            <FaUser className="text-secondary" />
+            <input
+              {...register("username")}
+              className="form-input"
+              type="text"
+              placeholder="user name"
+            />
+          </div>
+          {errors && <p className="text-red-500">{errors.username?.message}</p>}
+        </section>
         <section>
           <div className="div-input">
             <FaEnvelope className="text-secondary" />
@@ -53,18 +72,22 @@ const LoginForm = () => {
           </div>
           {errors && <p className="form-error">{errors.password?.message}</p>}
         </section>
-        <SubmitButton text="log in" />
+        <section>
+          <div className="div-input">
+            <FaLock className="text-secondary" />
+            <input
+              {...register("confirmPassword")}
+              className="form-input"
+              type="password"
+              placeholder="confirmPassword"
+            />
+          </div>
+          {errors && <p className="form-error">{errors.confirmPassword?.message}</p>}
+        </section>
+        <SubmitButton text="create account" />
       </form>
-      <div className="-mt-2">
-        <p className="text-secondary text-sm md:text-base">
-          Don't you have an account?{" "}
-          <span className="hover:text-text-dark cursor-pointer underline">
-            sign up
-          </span>
-        </p>
-      </div>
     </div>
   );
 };
 
-export default LoginForm;
+export default SignUpForm;
