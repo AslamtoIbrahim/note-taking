@@ -1,0 +1,35 @@
+my-app/
+ ├─ frontend/               # واجهة المستخدم (React + Vite)
+ │   ├─ src/
+ │   │   ├─ assets/         # صور، أيقونات، ستايلات CSS
+ │   │   ├─ components/     # جميع Components الصغيرة
+ │   │   │   ├─ ui/         # أزرار، Inputs، Cards…
+ │   │   │   ├─ auth/       # LoginForm, RegisterForm…
+ │   │   │   ├─ layout/     # Header, Sidebar, Footer…
+ │   │   │   └─ ...
+ │   │   ├─ pages/          # صفحات كاملة (LoginPage, DashboardPage…)
+ │   │   ├─ hooks/          # Hooks مخصصة (useAuth, useFetch…)
+ │   │   ├─ context/        # Context API (AuthContext…)
+ │   │   ├─ lib/            # API calls, Configurations…
+ │   │   ├─ styles/         # ملفات CSS أو Tailwind config
+ │   │   ├─ App.jsx         # المكوّن الرئيسي للتطبيق
+ │   │   ├─ main.jsx        # entry point ReactDOM
+ │   │   └─ index.css       # CSS عام
+ │   ├─ package.json
+ │   └─ vite.config.js
+ │
+ └─ backend/                # السيرفر (Express + SQLite + MongoDB)
+     ├─ package.json
+     ├─ .env                # إعدادات (JWT_SECRET, MONGO_URI…)
+     ├─ server.js           # نقطة الدخول للسيرفر
+     ├─ db/
+     │   ├─ sqlite.js       # إعداد SQLite و users table
+     │   └─ mongo.js        # اتصال Mongoose ب MongoDB
+     ├─ routes/
+     │   ├─ auth.js         # تسجيل الدخول + تسجيل مستخدمين
+     │   └─ notes.js        # CRUD على الملاحظات
+     ├─ middleware/
+     │   └─ auth.js         # JWT auth middleware
+     ├─ models/
+     │   └─ Note.js         # Mongoose schema للملاحظات
+     └─ README.md
