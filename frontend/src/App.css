@@ -30,3 +30,12 @@
 .form-error{
   @apply text-red-500 text-sm
 }
+
+.nav-div{
+  @apply flex flex-col justify-center items-center w-fit  text-lg
+  cursor-pointer hover:text-text-dark transition-transform duration-200 ease-in-out scale-100 hover:scale-115
+}
+
+.nav-p {
+  @apply hidden md:block md:text-sm
+}
