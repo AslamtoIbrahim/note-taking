@@ -1,15 +1,15 @@
 import "./App.css";
 import Header from "./components/layout/Header";
 import BottomNav from "./navigation/BottomNav";
-import HomePage from "./pages/HomePage";
-import NoteContent from "./pages/NoteContent";
+import SearchPage from "./pages/SearchPage";
 
 function App() {
   return (
     <div className="relative h-screen bg-primary/8">
       <Header />
       {/* <NoteContent /> */}
-      <HomePage />
+      {/* <HomePage /> */}
+      <SearchPage />
       <BottomNav />
     </div>
   );
