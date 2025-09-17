@@ -1,7 +1,7 @@
 import "./App.css";
 import Header from "./components/layout/Header";
 import BottomNav from "./navigation/BottomNav";
-import SearchPage from "./pages/SearchPage";
+import ArchivedPage from "./pages/ArchivedPage";
 
 function App() {
   return (
@@ -9,7 +9,8 @@ function App() {
       <Header />
       {/* <NoteContent /> */}
       {/* <HomePage /> */}
-      <SearchPage />
+      {/* <SearchPage /> */}
+      <ArchivedPage />
       <BottomNav />
     </div>
   );

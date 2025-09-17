@@ -1,3 +1,5 @@
+import { BiArchiveOut } from "react-icons/bi";
+
 const tags = ["Dev", "React"];
 
 type NoteItemProp = {
@@ -5,14 +7,18 @@ type NoteItemProp = {
 };
 
 const NoteItem = ({ onclick }: NoteItemProp) => {
+  const isDeleted = false;
   return (
     <div
       onClick={onclick}
       className="hover:bg-primary/10 cursor-pointer space-y-3 p-4 hover:rounded"
     >
-      <h1 className="text-lg font-black capitalize">
-        react performance optimization
-      </h1>
+      <div className="flex justify-between">
+        <h1 className="text-lg font-black capitalize">
+          react performance optimization
+        </h1>
+        {isDeleted && <BiArchiveOut className="text-primary mt-2 size-5 cursor-pointer transition-transform duration-200 ease-in-out hover:scale-115" />}
+      </div>
       <div className="flex items-center gap-4">
         {tags.map((t, i) => {
           return (
