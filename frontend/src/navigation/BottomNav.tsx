@@ -1,5 +1,7 @@
 import { useState } from "react";
-import { FiArchive, FiHome, FiSearch, FiSettings, FiTag } from "react-icons/fi";
+import { BsTags } from "react-icons/bs";
+import { FiSearch, FiSettings } from "react-icons/fi";
+import { GoArchive, GoHome } from "react-icons/go";
 const BOTTOM_NAV = "bottomNav";
 
 const BottomNav = () => {
@@ -12,13 +14,13 @@ const BottomNav = () => {
     localStorage.setItem(BOTTOM_NAV, value);
   };
   return (
-    <nav className="fixed bottom-0 left-0 flex w-full items-center justify-evenly px-2 py-4">
+    <nav className="fixed bottom-0 left-0 flex w-full items-center justify-evenly px-2 py-4 lg:hidden bg-white shadow-2xl shadow-text-dark">
       <button
         value="home"
         onClick={onClickOption}
         className={`nav-div ${selected === "home" ? "text-primary" : "text-secondary"}`}
       >
-        <FiHome />
+        <GoHome />
         <p className="nav-p">Home</p>
       </button>
       <button
@@ -34,7 +36,7 @@ const BottomNav = () => {
         onClick={onClickOption}
         className={`nav-div ${selected === "archived" ? "text-primary" : "text-secondary"}`}
       >
-        <FiArchive />
+        <GoArchive />
         <p className="nav-p">Archived</p>
       </button>
       <button
@@ -42,7 +44,7 @@ const BottomNav = () => {
         onClick={onClickOption}
         className={`nav-div ${selected === "tags" ? "text-primary" : "text-secondary"}`}
       >
-        <FiTag />
+        <BsTags />
         <p className="nav-p">Tags</p>
       </button>
       <button
