@@ -1,10 +1,9 @@
+import Logo from "../ui/Logo";
+
 const Header = () => {
   return (
-    <div className="p-3 md:p-5">
-      <picture>
-        <source media="(min-width: 768px)" srcSet="/note-logo.png" />
-        <img src="/mobile-note-logo.png" alt="logo" className="md:size-8" />
-      </picture>
+    <div className="p-3 md:p-5 lg:hidden">
+      <Logo />
     </div>
   );
 };

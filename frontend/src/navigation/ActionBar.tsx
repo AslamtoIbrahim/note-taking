@@ -6,7 +6,7 @@ import SaveNoteButton from "../components/ui/SaveNoteButton";
 
 const ActionBar = () => {
   return (
-    <div className="flex items-center justify-between py-3 text-sm  md:py-4 md:text-base">
+    <div className="flex items-center justify-between py-3 text-sm md:py-4 md:text-base lg:hidden">
       <GoBackButton />
       <section className="flex items-center gap-x-3 md:gap-x-4">
         <DeleteButton />

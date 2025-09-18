@@ -11,7 +11,7 @@ const NoteItem = ({ onclick }: NoteItemProp) => {
   return (
     <div
       onClick={onclick}
-      className="hover:bg-primary/10 cursor-pointer space-y-3 p-4 hover:rounded"
+      className="hover:bg-primary/10 cursor-pointer space-y-3 p-4 lg:px-0 hover:rounded"
     >
       <div className="flex justify-between">
         <h1 className="text-lg font-black capitalize">

@@ -10,7 +10,7 @@ const SearchInput = ({ onChangeSearch }: SearchInputProp) => {
   };
 
   return (
-    <div className="bg-secondary/10 ring-secondary flex items-center rounded-md px-4 py-2 ring-1">
+    <div className="bg-secondary/1 ring-secondary flex items-center rounded-md px-4 py-2 ring-1">
       <FiSearch className="text-secondary" />
       <input
         onChange={onChangeHandler}
