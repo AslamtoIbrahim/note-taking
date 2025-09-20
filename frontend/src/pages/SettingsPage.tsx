@@ -16,7 +16,7 @@ const SettingsPage = () => {
       </section>
       <h1 className="text-secondary text-lg">Profile</h1>
       <section className="bg-secondary/5 rounded">
-      <Profile />
+        <Profile />
       </section>
     </div>
   );

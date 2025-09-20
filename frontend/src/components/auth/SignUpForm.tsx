@@ -3,6 +3,10 @@ import { useForm, type SubmitHandler } from "react-hook-form";
 import { FaEnvelope, FaLock, FaUser } from "react-icons/fa";
 import z from "zod";
 import SubmitButton from "../ui/SubmitButton";
+import { authClient } from "../../lib/auth-client";
+import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const schema = z
   .object({
@@ -22,6 +26,8 @@ const schema = z
 type Inputs = z.infer<typeof schema>;
 
 const SignUpForm = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate()
   const {
     register,
     formState: { errors },
@@ -30,8 +36,22 @@ const SignUpForm = () => {
     resolver: zodResolver(schema),
   });
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
-    console.log("data", data);
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    setIsLoading(true);
+    const {error} = await authClient.signUp.email({
+      email: data.email,
+      password: data.confirmPassword,
+      name: data.username
+    })
+    if (error) {
+      toast.error('somthing went wrong')
+      console.error('error: ', error.code)
+      setIsLoading(false);
+    }else{
+      toast.success('you signed up successfully')
+      setIsLoading(false);
+      navigate('/sign-in')
+    }
   };
   return (
     <div className="bg-light marx mt-12 flex flex-col items-center gap-y-8 rounded px-6 py-8">
@@ -84,7 +104,7 @@ const SignUpForm = () => {
           </div>
           {errors && <p className="form-error">{errors.confirmPassword?.message}</p>}
         </section>
-        <SubmitButton text="create account" />
+        <SubmitButton loading={isLoading} text="create account" />
       </form>
     </div>
   );

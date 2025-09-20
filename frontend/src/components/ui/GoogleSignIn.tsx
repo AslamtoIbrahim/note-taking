@@ -1,10 +1,22 @@
 import { FaGoogle } from "react-icons/fa";
+import Loader from "./Loader";
 
-const GoogleSignIn = () => {
+type GoogleSignInProp = {
+  onClick?: () => void;
+  loading: boolean;
+};
+
+const GoogleSignIn = ({ onClick, loading }: GoogleSignInProp) => {
   return (
-    <button className="bg-border text-text-dark dark:text-border dark:bg-text-dark dark:hover:bg-text-dark hover:bg-border/50 flex cursor-pointer items-center gap-x-2 rounded px-3 py-1 w-full justify-center md:w-fit md:px-13">
+    <button
+      onClick={onClick}
+      className="bg-border text-text-dark dark:text-border dark:bg-text-dark dark:hover:bg-text-dark hover:bg-border/50 flex w-full cursor-pointer items-center justify-center gap-x-2 rounded px-3 py-1 md:w-fit md:px-13"
+    >
       <FaGoogle />
-      Sign in with google
+      <p>Sign in with google</p>
+      {loading && (
+        <Loader className="border-text-dark border-l-text-dark/30 size-4" />
+      )}
     </button>
   );
 };

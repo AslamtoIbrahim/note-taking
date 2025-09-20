@@ -33,3 +33,13 @@ my-app/
      ├─ models/
      │   └─ Note.js         # Mongoose schema للملاحظات
      └─ README.md
+
+backend/
+ ├─ lib/
+ │   └─ auth.ts      # هنا دير instance ديال Better Auth
+ ├─ routes/
+ │   └─ auth.js      # route ديال login/register
+ ├─ middleware/
+ │   └─ auth.js      # JWT verification middleware (اختياري)
+ ├─ models/
+ └─ server.js
