@@ -11,7 +11,7 @@ const DeleteButton = ({ onclick }: DeleteButtonProp) => {
       className="text-secondary hover:text-text-dark cursor-pointer desk-button"
     >
       <FiTrash2 />
-      <p className="hidden lg:block capitalize">archive note</p>
+      <p className="hidden lg:block capitalize">delete note</p>
     </button>
   );
 };

@@ -93,25 +93,28 @@ input[type="search"]::-webkit-search-cancel-button {
   cursor: pointer;
 }
 
-.desk-button{
-  @apply lg:flex lg:items-center lg:gap-x-2 lg:rounded lg:border lg:w-full lg:py-2 lg:px-4 lg:border-secondary/50
-  lg:hover:bg-secondary/5
+.desk-button {
+  @apply lg:border-secondary/50 lg:hover:bg-secondary/5 lg:flex lg:w-full lg:items-center lg:gap-x-2 lg:rounded lg:border lg:px-4 lg:py-2;
 }
 
 ::-webkit-scrollbar {
-  width: 0.1rem;
+  width: 0rem;
 }
 
 ::-webkit-scrollbar-track {
   background: transparent;
-  border-radius: 0.1rem;
+  border-radius: 0rem;
 }
 
 ::-webkit-scrollbar-thumb {
   background: hsla(220, 19%, 69%, 0.478);
-  border-radius: 0.1rem;
+  border-radius: 0rem;
 }
 
 ::-webkit-scrollbar-thumb:hover {
   background: hsl(220, 9%, 46%);
+}
+
+.active {
+  @apply bg-primary/10 block rounded;
 }

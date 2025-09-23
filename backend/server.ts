@@ -3,6 +3,7 @@ import cors from "cors";
 import authRouter from "./routes/auth.ts";
 
 const app = express();
+
 const prot = 3000;
 
 app.use(

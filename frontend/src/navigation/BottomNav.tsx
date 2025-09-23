@@ -2,21 +2,12 @@ import { BsTags } from "react-icons/bs";
 import { FiSearch, FiSettings } from "react-icons/fi";
 import { GoArchive, GoHome } from "react-icons/go";
 import { NavLink } from "react-router-dom";
-const BOTTOM_NAV = "bottomNav";
 
 const BottomNav = () => {
-  // const [selected, setSelected] = useState(() =>
-  //   !(BOTTOM_NAV in localStorage) ? "home" : localStorage.getItem(BOTTOM_NAV),
-  // );
-  // const onClickOption = (e: React.MouseEvent<HTMLButtonElement>) => {
-  //   const value = e.currentTarget.value;
-  //   setSelected(value);
-  //   localStorage.setItem(BOTTOM_NAV, value);
-  // };
   return (
     <nav className="shadow-text-dark fixed bottom-0 left-0 flex w-full items-center justify-evenly bg-white px-2 py-4 shadow-2xl lg:hidden">
       <NavLink
-        className={({ isActive }: { isActive: boolean }) =>
+        className={({ isActive }) =>
           isActive ? "text-primary" : "text-secondary"
         }
         to={"/home"}

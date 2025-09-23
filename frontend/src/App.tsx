@@ -1,25 +1,51 @@
-import { Outlet } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
-import Header from "./components/layout/Header";
-import BottomNav from "./navigation/BottomNav";
-import { useRequireAuth } from "./hooks/use-require-auth";
+import { useMediaQuery } from "react-responsive";
+import MobileApp from "./MobileApp";
+import HomePage from "./pages/HomePage";
+import SearchPage from "./pages/SearchPage";
+import ArchivedPage from "./pages/ArchivedPage";
+import TagsPage from "./pages/TagsPage";
+import SettingsPage from "./pages/SettingsPage";
+import LoginPage from "./pages/LoginPage";
+import SignUpPage from "./pages/SignUpPage";
+import NotFoundPage from "./pages/NotFoundPage";
+import LargeApp from "./LargeApp";
+import AllNotes from "./components/layout/AllNotes";
+import TagedNotes from "./components/layout/TagedNotes";
+import NoteContentPage from "./pages/NoteContentPage";
 
 function App() {
-  const session = useRequireAuth();
-  if (!session) {
-    return (
-      <div className="bg-primary/8 flex h-screen items-center justify-center lg:bg-white">
-        <div className="border-l-primary/50 border-primary size-6 animate-spin rounded-full border-4 md:size-8 md:border-6"></div>
-      </div>
-    );
-  }
+  const isLarge = useMediaQuery({ minWidth: 1024 });
 
-  return (
-    <div className="bg-primary/8 relative h-screen lg:bg-white">
-      <Header />
-      <Outlet />
-      <BottomNav />
-    </div>
+  return isLarge ? (
+    <Routes>
+      <Route path="/" Component={LargeApp}>
+        <Route index={true} element={<Navigate to={"/all-notes"} />} />
+        <Route path="/all-notes" Component={AllNotes}>
+          <Route path=":id" Component={NoteContentPage} />
+        </Route>
+        <Route path="/archived-notes" Component={ArchivedPage} />
+        <Route path="/taged-notes/:id" Component={TagedNotes} />
+      </Route>
+      <Route path="/sign-in" Component={LoginPage} />
+      <Route path="/sign-up" Component={SignUpPage} />
+      <Route path="/*" Component={NotFoundPage} />
+    </Routes>
+  ) : (
+    <Routes>
+      <Route path="/" Component={MobileApp}>
+        <Route index={true} element={<Navigate to={"/home"} replace />} />
+        <Route path="/home" Component={HomePage} />
+        <Route path="/search" Component={SearchPage} />
+        <Route path="/archived" Component={ArchivedPage} />
+        <Route path="/tags" Component={TagsPage} />
+        <Route path="/settings" Component={SettingsPage} />
+      </Route>
+      <Route path="/sign-in" Component={LoginPage} />
+      <Route path="/sign-up" Component={SignUpPage} />
+      <Route path="/*" Component={NotFoundPage} />
+    </Routes>
   );
 }
 

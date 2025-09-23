@@ -1,0 +1,21 @@
+import type { ChangeEvent } from "react";
+
+type TitleInputProp = {
+  title: string;
+  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+};
+
+const TitleInput = ({ title, onChange }: TitleInputProp) => {
+   
+  return (
+    <input
+      onChange={onChange}
+      className="py-2 text-2xl font-black outline-none capitalize truncate"
+      type="text"
+      value={title}
+      placeholder="Title..."
+    />
+  );
+};
+
+export default TitleInput;
