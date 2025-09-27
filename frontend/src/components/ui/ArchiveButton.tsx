@@ -1,11 +1,13 @@
 import { GoArchive } from "react-icons/go";
 
-const ArchiveButton = () => {
+type ArchiveButtonProp = {
+  onclick?: () => void;
+};
+const ArchiveButton = ({ onclick }: ArchiveButtonProp) => {
   return (
-    <button className="text-secondary hover:text-text-dark cursor-pointer
-    desk-button">
+    <button onClick={onclick} className="text-secondary hover:text-text-dark desk-button cursor-pointer">
       <GoArchive />
-      <p className="hidden lg:block capitalize">archive note</p>
+      <p className="hidden capitalize lg:block">archive note</p>
     </button>
   );
 };

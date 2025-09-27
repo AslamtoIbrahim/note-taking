@@ -19,18 +19,10 @@ const NoteBar = ({ editor }: { editor: Editor }) => {
 
   const [fontPopupColor, setFontPopupColor] = useState(false);
   const [hilightPopupColor, setHilightPopupColor] = useState(false);
-  const [fontColor, setFontColor] = useState("#000000");
-  const [hilightColor, setHilightColor] = useState("#000000");
 
   const selectFontColor = (color: string) => {
     setFontPopupColor(false);
-    if (color === "transparent") {
-      setFontColor("#000000");
-      editor.chain().focus().unsetColor().run();
-      return;
-    }
     editor.chain().focus().setColor(color).run();
-    setFontColor(color);
   };
 
   const showFontColorBar = () => {
@@ -39,17 +31,7 @@ const NoteBar = ({ editor }: { editor: Editor }) => {
 
   const selectHilightColor = (color: string) => {
     setHilightPopupColor(false);
-
     editor.chain().focus().setHighlight({ color: color }).run();
-    
-
-
-    if (color === "transparent") {
-      setHilightColor("#000000");
-      return;
-    }
-
-    setHilightColor(color);
   };
 
   const showHilightColorBar = () => {
@@ -57,8 +39,7 @@ const NoteBar = ({ editor }: { editor: Editor }) => {
   };
 
   return (
-    <div className="text-secondary flex items-center justify-between gap-x-2 py-4 px-2
-    md:p-4">
+    <div className="text-secondary flex items-center justify-between gap-x-2 px-2 py-4 md:p-4">
       <BsJustifyLeft
         className="editor-icons"
         onClick={() => editor.chain().focus().setTextAlign("left").run()}
@@ -99,24 +80,17 @@ const NoteBar = ({ editor }: { editor: Editor }) => {
       <div className="relative">
         <BiFontColor
           className="editor-icons border-secondary rounded-full border"
-          style={{ color: fontColor }}
           onClick={showFontColorBar}
         />
-        <ColorBar
-          inputId="font-input"
-          isPopupOn={fontPopupColor}
-          onChangeColor={selectFontColor}
-        />
+        <ColorBar isPopupOn={fontPopupColor} onChangeColor={selectFontColor} />
       </div>
 
       <div className="relative">
         <PiHighlighterBold
           className="editor-icons"
-          style={{ color: hilightColor }}
           onClick={showHilightColorBar}
         />
         <ColorBar
-          inputId="hilight-input"
           isPopupOn={hilightPopupColor}
           onChangeColor={selectHilightColor}
         />

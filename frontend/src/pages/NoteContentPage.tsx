@@ -1,44 +1,27 @@
-import { useParams } from "react-router-dom";
+import { Editor, type JSONContent } from "@tiptap/react";
+import { useEffect, useState, type ChangeEvent } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "sonner";
 import Metadata from "../components/layout/Metadata";
+import Loader from "../components/ui/Loader";
 import NoteText from "../components/ui/NoteText";
 import TitleInput from "../components/ui/TitleInput";
+import {
+  useAddNote,
+  useArchiveNote,
+  useDelteNote,
+  useQueryNote,
+  useUpdateNote,
+} from "../hooks/use-query-note";
 import ActionBar from "../navigation/ActionBar";
-import { Editor } from "@tiptap/react";
-import type { ChangeEvent } from "react";
 
-const jsonexample = {
+const fullback: JSONContent = {
   type: "doc",
   content: [
     {
       type: "paragraph",
-      attrs: {
-        textAlign: null,
-      },
       content: [
-        {
-          type: "text",
-          marks: [
-            {
-              type: "textStyle",
-              attrs: {
-                color: "#8a2be2",
-              },
-            },
-          ],
-          text: "hello gyus ",
-        },
-        {
-          type: "text",
-          marks: [
-            {
-              type: "textStyle",
-              attrs: {
-                color: "#7ccf00",
-              },
-            },
-          ],
-          text: "ahmed ",
-        },
+        { type: "text", text: "" }, // initial empty text
       ],
     },
   ],
@@ -46,24 +29,110 @@ const jsonexample = {
 
 const NoteContentPage = () => {
   const { id } = useParams();
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState(fullback);
+  const { data: noteDetails, isPending, error } = useQueryNote(id);
 
-  const onTitleChangeHandler = (
-    event: ChangeEvent<HTMLInputElement>,
-  ): void => {};
+  const navigate = useNavigate();
 
-  const onEditUpdate = (editor: Editor) => {
-    const json = editor.getJSON()
+  const addNoteMutation = useAddNote();
+
+  const updateNoteMutation = useUpdateNote();
+
+  const deleteNoteMutation = useDelteNote();
+
+  const archiveNoteMutation = useArchiveNote();
+
+  useEffect(() => {
+    if (noteDetails) {
+      setTitle(noteDetails.title);
+      setContent(noteDetails.content);
+    }
+  }, [noteDetails, id]);
+
+  const onTitleChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    setTitle(event.currentTarget.value);
   };
+
+  const onUpdateNoteText = (editor: Editor) => {
+    const json = editor.getJSON();
+    setContent(json);
+  };
+
+  const onSaveUpdateNoteHandler = () => {
+    if (!title || !content) {
+      toast.warning("title or content must not be empty");
+      return;
+    }
+    if (id) {
+      // update note
+      const updatedNote = {
+        title,
+        content,
+      };
+      updateNoteMutation.mutate({
+        id,
+        note: updatedNote,
+      });
+    } else {
+      // save new note
+      const newNote = {
+        title,
+        content,
+        tags: [],
+      };
+      addNoteMutation.mutate(newNote);
+    }
+    navigate("/home");
+  };
+
+  const onDeleteNoteHandler = () => {
+    if (id) {
+      deleteNoteMutation.mutate(id);
+      navigate("/home");
+    }
+  };
+
+  const onArchiveNoteHandler = () => {
+    if (id) {
+      archiveNoteMutation.mutate(id);
+      navigate("/home");
+    }
+  };
+
+  if (id && isPending) {
+    return (
+      <div className="my-auto flex h-[30rem] items-center justify-center md:h-[35rem]">
+        <Loader />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="my-auto flex h-[30rem] items-center justify-center md:h-[35rem]">
+        <p className="text-red-500">{error.message}</p>
+      </div>
+    );
+  }
 
   return (
     <div className="padx font-body h-full space-y-2 rounded-t-xl bg-white">
-      <ActionBar />
+      <ActionBar
+        onArchiveClick={onArchiveNoteHandler}
+        onSaveUpdateClick={onSaveUpdateNoteHandler}
+        onDeleteClick={onDeleteNoteHandler}
+        id={id}
+      />
       <hr className="text-secondary/50 lg:hidden" />
-      <TitleInput title={id + ""} onChange={onTitleChangeHandler} />
+      <TitleInput title={title} onChange={onTitleChangeHandler} />
       <Metadata />
       <hr className="text-secondary/50" />
       {/* Add a WYSIWYG editor with text formatting for the notes */}
-      <NoteText content={jsonexample} onUpdate={onEditUpdate} />
+      <NoteText
+        content={noteDetails?.content ?? fullback}
+        onUpdate={onUpdateNoteText}
+      />
     </div>
   );
 };

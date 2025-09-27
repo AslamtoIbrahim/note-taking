@@ -9,7 +9,7 @@ const MobileApp = () => {
   if (!session) {
     return (
       <div className="bg-primary/8 flex h-screen items-center justify-center lg:bg-white">
-        <Loader className="md:size-8 md:border-6 border-l-primary/35" />
+        <Loader className="md:size-8 md:border-6" />
       </div>
     );
   }

@@ -1,14 +1,19 @@
-
 type SaveNoteButtonProp = {
-    onclick?: () => void
-}
-const SaveNoteButton = ({onclick}: SaveNoteButtonProp) => {
+  text: string;
+  onclick?: () => void;
+};
+const SaveNoteButton = ({
+  text = "save note",
+  onclick,
+}: SaveNoteButtonProp) => {
   return (
-    <button onClick={onclick} className="text-primary capitalize cursor-pointer hover:text-blue-600
-    lg:text-white lg:bg-primary lg:py-2 lg:px-4 lg:rounded lg:hover:text-white lg:hover:bg-blue-600">
-      save note
+    <button
+      onClick={onclick}
+      className="text-primary lg:bg-primary cursor-pointer capitalize hover:text-blue-600 lg:rounded lg:px-4 lg:py-2 lg:text-white lg:hover:bg-blue-600 lg:hover:text-white"
+    >
+      {text}
     </button>
-  )
-}
+  );
+};
 
-export default SaveNoteButton
+export default SaveNoteButton;

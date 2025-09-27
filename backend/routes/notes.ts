@@ -1,20 +1,27 @@
-import express from 'express'
-import { addNote, deleteNote, getNoteById, getNotes, getQueryNotes, updateNote } from '../controllers/note-controllers.ts'
+import express from "express";
+import {
+  addNote,
+  archiveNote,
+  deleteNote,
+  getNoteById,
+  getQueryNotes,
+  updateNote,
+} from "../controllers/note-controllers.ts";
 
+const noteRouter = express.Router();
 
-const noteRouter = express.Router()
+// noteRouter.get('/api/v1/all-notes', getNotes)
 
+noteRouter.get("/api/v1/notes", getQueryNotes);
 
-noteRouter.get('/api/v1/all-notes', getNotes)
+noteRouter.get("/api/v1/all-notes/:id", getNoteById);
 
-noteRouter.get('/api/v1/notes', getQueryNotes)
+noteRouter.post("/api/v1/note", addNote);
 
-noteRouter.get('/api/v1/all-notes/:id', getNoteById)
+noteRouter.put("/api/v1/note/:id", updateNote);
 
-noteRouter.post('/api/v1/note', addNote)
+noteRouter.delete("/api/v1/note/:id", deleteNote);
 
-noteRouter.put('/api/v1/note/:id', updateNote)
+noteRouter.put("/api/v1/note-archive/:id", archiveNote);
 
-noteRouter.delete('/api/v1/note/:id', deleteNote)
-
-export default noteRouter
+export default noteRouter;

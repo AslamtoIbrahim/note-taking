@@ -37,6 +37,8 @@ function App() {
       <Route path="/" Component={MobileApp}>
         <Route index={true} element={<Navigate to={"/home"} replace />} />
         <Route path="/home" Component={HomePage} />
+        <Route path="/editor" Component={NoteContentPage} />
+        <Route path="/editor/:id" Component={NoteContentPage} />
         <Route path="/search" Component={SearchPage} />
         <Route path="/archived" Component={ArchivedPage} />
         <Route path="/tags" Component={TagsPage} />

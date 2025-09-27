@@ -9,43 +9,23 @@ export const getQueryNotes = async (
     const { limit, cursor } = req.query;
     const limitNumber = Number(limit) || 10;
 
-    let query = {};
+    let query: any = { deletedAt: null, archivedAt: null };
     if (cursor) {
-      query = { _id: { $gt: cursor } };
+      query._id = { $lt: cursor };
     }
 
     const notes = await NoteModel.find(query)
-      .sort({ createdAt: 1 })
+      .sort({ createdAt: -1 })
       .limit(limitNumber);
 
     if (!notes) {
       res.status(404).json({ message: "Notes not found" });
     }
 
-    const nextCursor = notes.length > 0 ? notes[notes.length -1]._id : null
-    
+    const nextCursor = notes.length > 0 ? notes[notes.length - 1]._id : null;
     res.json({ notes, nextCursor });
-    
   } catch (error) {
     res.status(500).json({ message: "⛔ Error server ", error: error });
-  }
-};
-
-export const getNotes = async (req: express.Request, res: express.Response) => {
-  try {
-    const notes = await NoteModel.find(
-      {
-        archivedAt: null,
-        deletedAt: null,
-      },
-      { content: 0 }
-    );
-    if (!notes) {
-      return res.status(400).json({ message: "failed to get notes" });
-    }
-    res.json(notes);
-  } catch (error) {
-    res.status(500).json({ message: "Server error", error: error });
   }
 };
 
@@ -131,7 +111,6 @@ export const updateNote = async (
   res: express.Response
 ) => {
   try {
-    console.log("🟡 updateNote: ");
     const { id } = req.params;
     const { title, content, tags } = req.body;
 
@@ -169,6 +148,7 @@ export const deleteNote = async (
 ) => {
   try {
     const { id } = req.params;
+
     if (!id) {
       return res.status(400).json({ message: "id required to update" });
     }
@@ -181,6 +161,34 @@ export const deleteNote = async (
       return res.status(404).json({ message: "Note not found" });
 
     res.json(deletedNote);
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error });
+  }
+};
+
+export const archiveNote = async (
+  req: express.Request,
+  res: express.Response
+) => {
+  try {
+    const { id } = req.params;
+    console.log("📗 archive Note: ", id);
+    if (!id) {
+      res.status(400).json({ error: "id is not defined" });
+    }
+
+    const archivedNote = await NoteModel.findByIdAndUpdate(
+      id,
+      {
+        archivedAt: new Date(),
+      },
+      { new: true }
+    );
+
+    if (!archivedNote) {
+      res.status(404).json({ error: "archived note not found" });
+    }
+    res.json(archiveNote);
   } catch (error) {
     res.status(500).json({ message: "Server error", error: error });
   }
