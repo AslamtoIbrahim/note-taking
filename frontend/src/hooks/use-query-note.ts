@@ -1,9 +1,16 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import {
   addQueryNote,
   archiveQueryNote,
   deleteQueryNote,
+  getArchiveNotes,
   getQueryNoteById,
+  unarchiveNote,
   updateQueryNote,
 } from "../lib/note-query";
 import { toast } from "sonner";
@@ -61,8 +68,7 @@ export const useDelteNote = () => {
   });
 };
 
-
-export const useArchiveNote =  () => {
+export const useArchiveNote = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: archiveQueryNote,
@@ -74,6 +80,30 @@ export const useArchiveNote =  () => {
       toast.error("something went wrong while archive a new note");
       console.error(error);
     },
-  })
-
+  });
 };
+
+export const useArchives = () => {
+  return useInfiniteQuery({
+    queryKey: ["archives"],
+    initialPageParam: null,
+    queryFn: getArchiveNotes,
+    getNextPageParam: (lastPage) => lastPage.nextCursor,
+  });
+};
+
+export const useUnarchiveNote = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: unarchiveNote,
+     onSuccess: () => {
+      toast.success("note unarchive");
+      queryClient.invalidateQueries({ queryKey: ["archives"] });
+    },
+    onError: (error) => {
+      toast.error("something went wrong while unarchive a note");
+      console.error(error);
+    },
+  })
+};
+

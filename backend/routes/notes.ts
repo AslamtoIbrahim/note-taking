@@ -3,8 +3,10 @@ import {
   addNote,
   archiveNote,
   deleteNote,
+  getArchives,
   getNoteById,
   getQueryNotes,
+  unarchiveNote,
   updateNote,
 } from "../controllers/note-controllers.ts";
 
@@ -22,6 +24,10 @@ noteRouter.put("/api/v1/note/:id", updateNote);
 
 noteRouter.delete("/api/v1/note/:id", deleteNote);
 
-noteRouter.put("/api/v1/note-archive/:id", archiveNote);
+noteRouter.get("/api/v1/archives", getArchives);
+
+noteRouter.put("/api/v1/archives/:id", archiveNote);
+
+noteRouter.put("/api/v1/unarchive/:id", unarchiveNote);
 
 export default noteRouter;

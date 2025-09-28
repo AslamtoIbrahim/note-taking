@@ -45,7 +45,23 @@ export const deleteQueryNote = async (id: string) => {
   await axios.delete(`http://localhost:3000/api/v1/note/${id}`);
 };
 
-
 export const archiveQueryNote = async (id: string) => {
-  await axios.put(`http://localhost:3000/api/v1/note-archive/${id}`)
+  await axios.put(`http://localhost:3000/api/v1/archives/${id}`);
+};
+
+export const getArchiveNotes = async ({
+  pageParam,
+}: {
+  pageParam: string | null;
+}) => {
+  const res = await axios.get<Notes>(`http://localhost:3000/api/v1/archives`, {
+    params: { limit: 6, cursor: pageParam },
+  });
+  console.log('archives: ',res.data);
+  return res.data;
+};
+
+
+export const unarchiveNote = async (id: string) => {
+  await axios.put(`http://localhost:3000/api/v1/unarchive/${id}`)
 };

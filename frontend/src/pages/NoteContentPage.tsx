@@ -11,6 +11,7 @@ import {
   useArchiveNote,
   useDelteNote,
   useQueryNote,
+  useUnarchiveNote,
   useUpdateNote,
 } from "../hooks/use-query-note";
 import ActionBar from "../navigation/ActionBar";
@@ -42,6 +43,8 @@ const NoteContentPage = () => {
   const deleteNoteMutation = useDelteNote();
 
   const archiveNoteMutation = useArchiveNote();
+
+  const unarchiveNoteMutation = useUnarchiveNote();
 
   useEffect(() => {
     if (noteDetails) {
@@ -83,20 +86,26 @@ const NoteContentPage = () => {
       };
       addNoteMutation.mutate(newNote);
     }
-    navigate("/home");
+    navigate(-1);
   };
 
   const onDeleteNoteHandler = () => {
     if (id) {
       deleteNoteMutation.mutate(id);
-      navigate("/home");
+      navigate(-1);
     }
   };
 
   const onArchiveNoteHandler = () => {
     if (id) {
       archiveNoteMutation.mutate(id);
-      navigate("/home");
+      navigate(-1);
+    }
+  };
+  const onUnarchiveNoteHandler = () => {
+    if (id && noteDetails?.archivedAt) {
+      unarchiveNoteMutation.mutate(id);
+      navigate(-1);
     }
   };
 
@@ -119,7 +128,9 @@ const NoteContentPage = () => {
   return (
     <div className="padx font-body h-full space-y-2 rounded-t-xl bg-white">
       <ActionBar
+        archivedAt={noteDetails?.archivedAt}
         onArchiveClick={onArchiveNoteHandler}
+        onUnarchiveClick={onUnarchiveNoteHandler}
         onSaveUpdateClick={onSaveUpdateNoteHandler}
         onDeleteClick={onDeleteNoteHandler}
         id={id}

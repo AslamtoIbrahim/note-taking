@@ -14,9 +14,11 @@ const MobileApp = () => {
     );
   }
   return (
-    <div className="bg-primary/8 relative h-screen lg:bg-white">
+    <div className="bg-primary/8 relative flex flex-col h-screen lg:bg-white ">
       <Header />
-      <Outlet />
+      <div className="flex-11/12 bg-white rounded-t-xl pt-4 pb-14 lg:rounded-none">
+        <Outlet />
+      </div>
       <BottomNav />
     </div>
   );

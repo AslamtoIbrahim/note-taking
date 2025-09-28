@@ -4,17 +4,20 @@ import CancelButton from "../components/ui/CancelButton";
 import DeleteButton from "../components/ui/DeleteButton";
 import GoBackButton from "../components/ui/GoBackButton";
 import SaveNoteButton from "../components/ui/SaveNoteButton";
+import { BiArchiveOut } from "react-icons/bi";
 
 type ActionBarProp = {
   id?: string;
+  archivedAt: Date | null | undefined,
   onSaveUpdateClick?: () => void;
   onDeleteClick?: () => void;
   onArchiveClick?: () => void;
+  onUnarchiveClick?: () => void;
 };
-const ActionBar = ({ id, onSaveUpdateClick, onDeleteClick, onArchiveClick }: ActionBarProp) => {
+const ActionBar = ({ id,archivedAt, onSaveUpdateClick, onDeleteClick, onArchiveClick, onUnarchiveClick }: ActionBarProp) => {
   const navigate = useNavigate();
   const onClickGoBackHandler = () => {
-    navigate("/home");
+    navigate(-1);
   };
 
   return (
@@ -22,7 +25,7 @@ const ActionBar = ({ id, onSaveUpdateClick, onDeleteClick, onArchiveClick }: Act
       <GoBackButton onclick={onClickGoBackHandler} />
       <section className="flex items-center gap-x-3 md:gap-x-4">
         {id && <DeleteButton onclick={onDeleteClick} />}
-        {id && <ArchiveButton onclick={onArchiveClick}/>}
+        {id && (archivedAt ? <BiArchiveOut className="icon-button" onClick={onUnarchiveClick}/> : <ArchiveButton onclick={onArchiveClick}/>)}
         <CancelButton onclick={onClickGoBackHandler} />
         <SaveNoteButton
           onclick={onSaveUpdateClick}

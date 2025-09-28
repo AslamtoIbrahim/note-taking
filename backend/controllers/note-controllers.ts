@@ -186,10 +186,62 @@ export const archiveNote = async (
     );
 
     if (!archivedNote) {
-      res.status(404).json({ error: "archived note not found" });
+      return res.status(404).json({ error: "archived note not found" });
     }
     res.json(archiveNote);
   } catch (error) {
     res.status(500).json({ message: "Server error", error: error });
+  }
+};
+
+export const getArchives = async (
+  req: express.Request,
+  res: express.Response
+) => {
+  try {
+    const { cursor, limit } = req.query;
+
+    let query: any = { archivedAt: { $ne: null }, deletedAt: null };
+    if (cursor) {
+      query._id = { $lt: cursor };
+    }
+
+    const archives = await NoteModel.find(query)
+      .sort({ createdAt: -1 })
+      .limit(Number(limit) || 8);
+
+    if (!archives) {
+      return res.status(404).json({ error: "archives not found" });
+    }
+
+    
+    const nextCursor =
+      archives.length > 0 ? archives[archives.length - 1]._id : null;
+
+    res.json({ notes: archives, nextCursor });
+  } catch (error) {
+    res.status(500).json({ message: "archives error server", error: error });
+  }
+};
+
+export const unarchiveNote = async (
+  req: express.Request,
+  res: express.Response
+) => {
+  try {
+    const { id } = req.params;
+    if (!id) {
+      return res.status(400).json({ error: "id is required" });
+    }
+    const note = await NoteModel.findByIdAndUpdate(id, {
+      archivedAt: null,
+    });
+    console.log("note: ", note);
+    if (!note) {
+      return res.status(404).json({ error: "unrachive not found" });
+    }
+    res.json(note);
+  } catch (error) {
+    res.status(500).json({ message: "Unarchive error server", error: error });
   }
 };

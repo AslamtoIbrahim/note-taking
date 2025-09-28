@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 
 const BottomNav = () => {
   return (
-    <nav className="shadow-text-dark fixed bottom-0 left-0 flex w-full items-center justify-evenly bg-white px-2 py-4 shadow-2xl lg:hidden">
+    <nav className="shadow-text-dark flex-1 fixed bottom-0 left-0 flex w-full items-center justify-evenly bg-white px-2 py-4 shadow-2xl lg:hidden">
       <NavLink
         className={({ isActive }) =>
           isActive ? "text-primary" : "text-secondary"

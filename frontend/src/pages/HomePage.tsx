@@ -25,7 +25,7 @@ const HomePage = () => {
     }
   };
 
-  console.log('data: ',data);
+  
 
   if (status === "pending") {
     return (
@@ -43,8 +43,8 @@ const HomePage = () => {
   }
 
   return (
-    <div className="padx font-body relative rounded-t-xl bg-white pt-4 pb-14 lg:rounded-none lg:py-0">
-      <section className="divide-secondary/50 h-full divide-y lg:flex lg:h-[37rem] lg:flex-col lg:gap-y-4 lg:overflow-auto lg:scroll-smooth">
+    <div className="padx font-body relative pt-4 pb-14 lg:py-0">
+      <section className="divide-secondary/50 divide-y lg:flex lg:h-[37rem] lg:flex-col lg:gap-y-4 lg:overflow-auto lg:scroll-smooth">
         {data.pages.map((p) =>
           p.notes.map((note, i) => <NoteItem key={i} note={note} />),
         )}

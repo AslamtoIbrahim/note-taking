@@ -19,12 +19,12 @@ const SearchPage = () => {
         </p>
       )}
       <section className="divide-secondary/50 divide-y">
+        {/* <NoteItem />
         <NoteItem />
         <NoteItem />
         <NoteItem />
         <NoteItem />
-        <NoteItem />
-        <NoteItem />
+        <NoteItem /> */}
       </section>
       <MobileAddNoteButton />
     </div>
