@@ -1,5 +1,7 @@
 import axios from "axios";
 import type { Note, NotePartial, Notes } from "../utils/types";
+import { ca } from "zod/v4/locales";
+import type { QueryFunctionContext } from "@tanstack/react-query";
 
 export const getQueryNotes = async ({
   pageParam,
@@ -17,10 +19,10 @@ export const getQueryNotes = async ({
 };
 
 type QueryType = {
-  queryKey: [string, string];
+  queryKey: string[];
 };
 // queryKey: ["note", id]
-export const getQueryNoteById = async ({ queryKey }: QueryType) => {
+export const getQueryNoteById = async ({queryKey}: QueryType) => {
   const [, id] = queryKey;
   const res = await axios.get<Note>(
     `http://localhost:3000/api/v1/all-notes/${id}`,
@@ -57,11 +59,24 @@ export const getArchiveNotes = async ({
   const res = await axios.get<Notes>(`http://localhost:3000/api/v1/archives`, {
     params: { limit: 6, cursor: pageParam },
   });
-  console.log('archives: ',res.data);
+  console.log("archives: ", res.data);
   return res.data;
 };
 
-
 export const unarchiveNote = async (id: string) => {
-  await axios.put(`http://localhost:3000/api/v1/unarchive/${id}`)
+  await axios.put(`http://localhost:3000/api/v1/unarchive/${id}`);
+};
+
+export const searchNotes = async ({
+  pageParam,
+  queryKey,
+}: {
+  pageParam: string | null;
+  queryKey: [string, string]
+}) => {
+  const [, search] = queryKey
+  const res = await axios.get<Notes>(`http://localhost:3000/api/v1/search`, {
+    params: { search, cursor: pageParam, limit: 6 },
+  });
+  return res.data;
 };

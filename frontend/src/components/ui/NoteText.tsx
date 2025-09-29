@@ -4,17 +4,17 @@ import { BulletList, ListItem, OrderedList } from "@tiptap/extension-list";
 import TextAlign from "@tiptap/extension-text-align";
 import { Color, TextStyle } from "@tiptap/extension-text-style";
 import { Placeholder } from "@tiptap/extensions";
+import Text from '@tiptap/extension-text'
+import Paragraph from '@tiptap/extension-paragraph'
 import {
   Editor,
   EditorContent,
   useEditor,
   type JSONContent,
 } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
 import "prosemirror-view/style/prosemirror.css";
 import NoteBar from "./NoteBar";
-
-
+import { useEffect } from "react";
 
 type NoteTextProp = {
   content: JSONContent;
@@ -25,9 +25,9 @@ const NoteText = ({ content, onUpdate }: NoteTextProp) => {
   // const [jsonContent, setJsonContent] = useState<JSONContent>(jsonexample);
 
   const editor = useEditor({
+    // schema of editor
     extensions: [
       Document,
-      StarterKit,
       BulletList,
       OrderedList.configure({
         itemTypeName: "listItem",
@@ -35,7 +35,7 @@ const NoteText = ({ content, onUpdate }: NoteTextProp) => {
       }),
       ListItem,
       Placeholder.configure({
-        placeholder: "Write somthing...",
+        placeholder: "Write somthing ...",
       }),
       TextAlign.configure({
         types: ["heading", "paragraph"],
@@ -45,12 +45,20 @@ const NoteText = ({ content, onUpdate }: NoteTextProp) => {
       }),
       TextStyle,
       Color,
+      Text,
+      Paragraph
     ],
     content,
     onUpdate({ editor }) {
       onUpdate(editor);
     },
   });
+
+  useEffect(() => {
+    if (editor && content) {
+      editor.commands.setContent(content);
+    }
+  }, [editor, content]);
 
   return (
     <div>

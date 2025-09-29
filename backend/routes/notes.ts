@@ -6,6 +6,7 @@ import {
   getArchives,
   getNoteById,
   getQueryNotes,
+  getSearchedNotes,
   unarchiveNote,
   updateNote,
 } from "../controllers/note-controllers.ts";
@@ -29,5 +30,7 @@ noteRouter.get("/api/v1/archives", getArchives);
 noteRouter.put("/api/v1/archives/:id", archiveNote);
 
 noteRouter.put("/api/v1/unarchive/:id", unarchiveNote);
+
+noteRouter.get("/api/v1/search", getSearchedNotes);
 
 export default noteRouter;

@@ -214,7 +214,6 @@ export const getArchives = async (
       return res.status(404).json({ error: "archives not found" });
     }
 
-    
     const nextCursor =
       archives.length > 0 ? archives[archives.length - 1]._id : null;
 
@@ -243,5 +242,44 @@ export const unarchiveNote = async (
     res.json(note);
   } catch (error) {
     res.status(500).json({ message: "Unarchive error server", error: error });
+  }
+};
+
+export const getSearchedNotes = async (
+  req: express.Request,
+  res: express.Response
+) => {
+  try {
+    const { search, cursor, limit } = req.query;
+    let query: any = { archivedAt: null, deletedAt: null };
+
+    if (cursor) {
+      query._id = { $lt: cursor };
+    }
+
+    if (search) {
+      query.$or = [
+        { title: { $regex: search } },
+        { "content.content.content.text": { $regex: search, $options: "i" } },
+        { tags: { $in: [search] } },
+      ];
+    }
+
+    
+
+    console.log("query: ", query);
+
+    const notes = await NoteModel.find(query)
+      .sort({ createdAt: -1 })
+      .limit(Number(limit) || 8);
+    if (!notes) {
+      return res.status(404).json({ error: "searched notes not found" });
+    }
+
+    const nextCursor = notes.length > 0 ? notes[notes.length - 1]._id : null;
+
+    res.json({ notes, nextCursor });
+  } catch (error) {
+    res.status(500).json({ message: "Search error server", error: error });
   }
 };

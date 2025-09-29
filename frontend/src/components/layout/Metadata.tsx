@@ -1,6 +1,10 @@
 import { GoClock, GoTag } from "react-icons/go";
 
-const Metadata = () => {
+type MetadataProp = {
+  tags: string[] | undefined;
+  lastEdit: Date |null | undefined;
+};
+const Metadata = ({ tags, lastEdit }: MetadataProp) => {
   return (
     <div className="text-secondary space-y-4 py-2">
       <section className="flex items-center gap-x-8">
@@ -8,14 +12,20 @@ const Metadata = () => {
           <GoTag />
           <p>Tags</p>
         </div>
-        <p>Dev, React</p>
+        <p>{tags?.join(",")}</p>
       </section>
       <section className="flex items-center gap-x-8">
         <div className="flex items-center gap-x-2">
           <GoClock />
           <p>Last edited</p>
         </div>
-        <p>12 Oct 2025</p>
+        <p>
+          {lastEdit && new Date(lastEdit).toLocaleDateString("en-UK", {
+            day: "2-digit",
+            month: "short",
+            year: "numeric",
+          })}
+        </p>
       </section>
     </div>
   );

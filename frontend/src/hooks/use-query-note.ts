@@ -17,7 +17,7 @@ import { toast } from "sonner";
 
 export const useQueryNote = (id?: string) => {
   return useQuery({
-    queryKey: ["note", id] as [string, string],
+    queryKey: ["note", id] as string[],
     queryFn: getQueryNoteById,
     enabled: !!id,
   });
@@ -38,13 +38,13 @@ export const useAddNote = () => {
   });
 };
 
-export const useUpdateNote = () => {
+export const useUpdateNote = (id: string | undefined) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: updateQueryNote,
     onSuccess: () => {
       toast.success("note updated");
-      queryClient.invalidateQueries({ queryKey: ["notes"] });
+      queryClient.invalidateQueries({ queryKey: ["note", id] });
     },
     onError: (error) => {
       toast.error("something went wrong while update a new note");

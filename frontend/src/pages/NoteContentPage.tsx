@@ -21,8 +21,14 @@ const fullback: JSONContent = {
   content: [
     {
       type: "paragraph",
+      attrs: {
+        textAlign: null,
+      },
       content: [
-        { type: "text", text: "" }, // initial empty text
+        {
+          type: "text",
+          text: "",
+        },
       ],
     },
   ],
@@ -30,15 +36,17 @@ const fullback: JSONContent = {
 
 const NoteContentPage = () => {
   const { id } = useParams();
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState(fullback);
+
   const { data: noteDetails, isPending, error } = useQueryNote(id);
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState<JSONContent>(fullback);
+  const [activeTag, setActiveTag] = useState(false);
 
   const navigate = useNavigate();
 
   const addNoteMutation = useAddNote();
 
-  const updateNoteMutation = useUpdateNote();
+  const updateNoteMutation = useUpdateNote(id);
 
   const deleteNoteMutation = useDelteNote();
 
@@ -51,7 +59,7 @@ const NoteContentPage = () => {
       setTitle(noteDetails.title);
       setContent(noteDetails.content);
     }
-  }, [noteDetails, id]);
+  }, [id, noteDetails]);
 
   const onTitleChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setTitle(event.currentTarget.value);
@@ -102,11 +110,16 @@ const NoteContentPage = () => {
       navigate(-1);
     }
   };
+
   const onUnarchiveNoteHandler = () => {
     if (id && noteDetails?.archivedAt) {
       unarchiveNoteMutation.mutate(id);
       navigate(-1);
     }
+  };
+
+  const onShowTagsHandler = () => {
+    setActiveTag(prev => !prev)
   };
 
   if (id && isPending) {
@@ -124,26 +137,31 @@ const NoteContentPage = () => {
       </div>
     );
   }
+ 
 
   return (
-    <div className="padx font-body h-full space-y-2 rounded-t-xl bg-white">
+    <div className=" padx font-body h-full space-y-2 rounded-t-xl bg-white">
       <ActionBar
         archivedAt={noteDetails?.archivedAt}
         onArchiveClick={onArchiveNoteHandler}
         onUnarchiveClick={onUnarchiveNoteHandler}
         onSaveUpdateClick={onSaveUpdateNoteHandler}
         onDeleteClick={onDeleteNoteHandler}
+        onTagClick={onShowTagsHandler}
         id={id}
       />
       <hr className="text-secondary/50 lg:hidden" />
-      <TitleInput title={title} onChange={onTitleChangeHandler} />
-      <Metadata />
+      <TitleInput
+        title={title}
+        onChange={onTitleChangeHandler}
+      />
+      <Metadata tags={noteDetails?.tags} lastEdit={noteDetails?.lastEdit} />
       <hr className="text-secondary/50" />
       {/* Add a WYSIWYG editor with text formatting for the notes */}
-      <NoteText
-        content={noteDetails?.content ?? fullback}
-        onUpdate={onUpdateNoteText}
-      />
+      <NoteText content={content} onUpdate={onUpdateNoteText} />
+      {activeTag && <div onClick={onShowTagsHandler} className="bg-black/50 z-100 h-screen absolute top-0 left-0 w-full ">
+        
+      </div>}
     </div>
   );
 };
