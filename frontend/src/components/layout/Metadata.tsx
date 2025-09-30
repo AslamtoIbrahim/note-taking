@@ -12,7 +12,7 @@ const Metadata = ({ tags, lastEdit }: MetadataProp) => {
           <GoTag />
           <p>Tags</p>
         </div>
-        <p>{tags?.join(",")}</p>
+        <p>{tags?.join(", ")}</p>
       </section>
       <section className="flex items-center gap-x-8">
         <div className="flex items-center gap-x-2">

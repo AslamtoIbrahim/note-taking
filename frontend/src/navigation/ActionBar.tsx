@@ -9,14 +9,22 @@ import SaveNoteButton from "../components/ui/SaveNoteButton";
 
 type ActionBarProp = {
   id?: string;
-  archivedAt: Date | null | undefined,
+  archivedAt: Date | null | undefined;
   onSaveUpdateClick?: () => void;
   onDeleteClick?: () => void;
   onArchiveClick?: () => void;
   onUnarchiveClick?: () => void;
   onTagClick?: () => void;
 };
-const ActionBar = ({ id,archivedAt, onSaveUpdateClick, onDeleteClick, onArchiveClick, onUnarchiveClick, onTagClick}: ActionBarProp) => {
+const ActionBar = ({
+  id,
+  archivedAt,
+  onSaveUpdateClick,
+  onDeleteClick,
+  onArchiveClick,
+  onUnarchiveClick,
+  onTagClick,
+}: ActionBarProp) => {
   const navigate = useNavigate();
   const onClickGoBackHandler = () => {
     navigate(-1);
@@ -27,8 +35,14 @@ const ActionBar = ({ id,archivedAt, onSaveUpdateClick, onDeleteClick, onArchiveC
       <GoBackButton onclick={onClickGoBackHandler} />
       <section className="flex items-center gap-x-3 md:gap-x-4">
         <BsTags className="icon-button" onClick={onTagClick} />
+
         {id && <DeleteButton onclick={onDeleteClick} />}
-        {id && (archivedAt ? <BiArchiveOut className="icon-button" onClick={onUnarchiveClick}/> : <ArchiveButton onclick={onArchiveClick}/>)}
+        {id &&
+          (archivedAt ? (
+            <BiArchiveOut className="icon-button" onClick={onUnarchiveClick} />
+          ) : (
+            <ArchiveButton onclick={onArchiveClick} />
+          ))}
         <CancelButton onclick={onClickGoBackHandler} />
         <SaveNoteButton
           onclick={onSaveUpdateClick}

@@ -98,7 +98,7 @@ input[type="search"]::-webkit-search-cancel-button {
 }
 
 ::-webkit-scrollbar {
-  width: 0rem;
+  width: 0.1rem;
 }
 
 ::-webkit-scrollbar-track {
@@ -107,7 +107,7 @@ input[type="search"]::-webkit-search-cancel-button {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: hsla(220, 19%, 69%, 0.478);
+  background: hsla(222, 8%, 25%, 0.478);
   border-radius: 0rem;
 }
 

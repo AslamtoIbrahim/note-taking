@@ -3,6 +3,7 @@ import {
   addNote,
   archiveNote,
   deleteNote,
+  getAndSearchTags,
   getArchives,
   getNoteById,
   getQueryNotes,
@@ -32,5 +33,7 @@ noteRouter.put("/api/v1/archives/:id", archiveNote);
 noteRouter.put("/api/v1/unarchive/:id", unarchiveNote);
 
 noteRouter.get("/api/v1/search", getSearchedNotes);
+
+noteRouter.get("/api/v1/tags", getAndSearchTags);
 
 export default noteRouter;

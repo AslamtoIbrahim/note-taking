@@ -118,9 +118,9 @@ export const updateNote = async (
       return res.status(400).json({ message: "id required to update" });
     }
 
-    if (!title || !content) {
-      return res.status(400).json({ message: "Nothing to update" });
-    }
+    // if (!title || !content) {
+    //   return res.status(400).json({ message: "Nothing to update" });
+    // }
 
     const updatedNote = await NoteModel.findByIdAndUpdate(
       id,
@@ -259,15 +259,13 @@ export const getSearchedNotes = async (
 
     if (search) {
       query.$or = [
-        { title: { $regex: search } },
+        { title: { $regex: search, $options: "i" } },
         { "content.content.content.text": { $regex: search, $options: "i" } },
-        { tags: { $in: [search] } },
+        { tags: { $regex: search, $options: "i" } },
       ];
     }
 
-    
-
-    console.log("query: ", query);
+    // console.log("query: ", query);
 
     const notes = await NoteModel.find(query)
       .sort({ createdAt: -1 })
@@ -281,5 +279,58 @@ export const getSearchedNotes = async (
     res.json({ notes, nextCursor });
   } catch (error) {
     res.status(500).json({ message: "Search error server", error: error });
+  }
+};
+
+export const getAndSearchTags = async (
+  req: express.Request,
+  res: express.Response
+) => {
+  try {
+    const { search } = req.query;
+
+    // let query: any = {
+    //   tags: { $regex: search, $options: "i" },
+    // };
+
+    // console.log("query", query);
+
+    // const notes = await NoteModel.find().select({ tags: 1, _id: 0 });
+    // const notes = await NoteModel.distinct("tags", query);
+    const notes = await NoteModel.aggregate([
+      { $unwind: "$tags" }, // flat map [[],[]]
+      {
+        $match: {
+          tags: { $regex: search, $options: "i" }, // search includes
+        },
+      },
+      {
+        $group: {
+          _id: null,
+          tags: { $addToSet: "$tags" }, // unique value like [...new Set()]
+        },
+      },
+      {
+        $project: { _id: 0, tags: 1 }, // remove id
+      },
+    ]);
+
+    if (!notes) {
+      return res.status(404).json({ error: "tags not found" });
+    }
+
+    // const tags = [
+    //   ...new Set(notes.map((t) => t.tags.flatMap((t) => t)).flat()),
+    // ];
+
+    // const searchedTag = tags.filter((t) =>
+    //   t.toLocaleLowerCase().includes(search?.toString().toLocaleLowerCase() || "")
+    // );
+
+    // console.log('tags',notes[0]?.tags);
+
+    res.json(notes[0]?.tags || []);
+  } catch (error) {
+    res.status(500).json({ message: "tags error server", error: error });
   }
 };

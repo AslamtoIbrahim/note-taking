@@ -22,7 +22,7 @@ type QueryType = {
   queryKey: string[];
 };
 // queryKey: ["note", id]
-export const getQueryNoteById = async ({queryKey}: QueryType) => {
+export const getQueryNoteById = async ({ queryKey }: QueryType) => {
   const [, id] = queryKey;
   const res = await axios.get<Note>(
     `http://localhost:3000/api/v1/all-notes/${id}`,
@@ -72,11 +72,24 @@ export const searchNotes = async ({
   queryKey,
 }: {
   pageParam: string | null;
-  queryKey: [string, string]
+  queryKey: [string, string];
 }) => {
-  const [, search] = queryKey
+  const [, search] = queryKey;
   const res = await axios.get<Notes>(`http://localhost:3000/api/v1/search`, {
     params: { search, cursor: pageParam, limit: 6 },
+  });
+  return res.data;
+};
+
+export const getAndSearchTags = async ({
+  queryKey,
+}: {
+  
+  queryKey: [string, string];
+}) => {
+  const [, search] = queryKey
+  const res = await axios.get<string[]>(`http://localhost:3000/api/v1/tags`, {
+    params: { search},
   });
   return res.data;
 };

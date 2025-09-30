@@ -5,15 +5,15 @@ import SearchInput from "../components/ui/SearchInput";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { searchNotes } from "../lib/note-query";
 import Loader from "../components/ui/Loader";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { InView } from "react-intersection-observer";
 
 const SearchPage = () => {
   const navigate = useNavigate();
-  const [search, setSearch] = useState("");
-  function onChangeSearchHnadler(value: string): void {
-    setSearch(value);
-  }
+  const location = useLocation()
+  const {tag} = location.state || ""
+  const [search, setSearch] = useState(tag);
+ 
 
   const { data, status, error, hasNextPage, fetchNextPage } = useInfiniteQuery({
     queryKey: ["search", search] as [string, string],
@@ -32,6 +32,10 @@ const SearchPage = () => {
     }
   };
 
+   function onChangeSearchHnadler(value: string): void {
+    setSearch(value);
+  }
+
   if (status === "error") {
     return (
       <div className="my-auto flex h-[30rem] items-center justify-center md:h-[35rem]">
@@ -42,7 +46,7 @@ const SearchPage = () => {
 
   return (
     <div className="padx font-body h-full space-y-2 rounded-t-xl bg-white py-4">
-      <SearchInput onChangeSearch={onChangeSearchHnadler} />
+      <SearchInput search={search} onChangeSearch={onChangeSearchHnadler} />
       {search && (
         <p className="text-sm">
           All notes matching "<span className="font-semibold">{search}</span>"

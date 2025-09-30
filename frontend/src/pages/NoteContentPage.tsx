@@ -1,10 +1,15 @@
 import { Editor, type JSONContent } from "@tiptap/react";
-import { useEffect, useState, type ChangeEvent } from "react";
+import {
+  useEffect,
+  useState,
+  type ChangeEvent
+} from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
 import Metadata from "../components/layout/Metadata";
 import Loader from "../components/ui/Loader";
 import NoteText from "../components/ui/NoteText";
+import TagsDialog from "../components/ui/TagsDialog";
 import TitleInput from "../components/ui/TitleInput";
 import {
   useAddNote,
@@ -119,7 +124,7 @@ const NoteContentPage = () => {
   };
 
   const onShowTagsHandler = () => {
-    setActiveTag(prev => !prev)
+    setActiveTag((prev) => !prev);
   };
 
   if (id && isPending) {
@@ -137,10 +142,9 @@ const NoteContentPage = () => {
       </div>
     );
   }
- 
 
   return (
-    <div className=" padx font-body h-full space-y-2 rounded-t-xl bg-white">
+    <div className="padx font-body h-full space-y-2 rounded-t-xl bg-white">
       <ActionBar
         archivedAt={noteDetails?.archivedAt}
         onArchiveClick={onArchiveNoteHandler}
@@ -151,17 +155,23 @@ const NoteContentPage = () => {
         id={id}
       />
       <hr className="text-secondary/50 lg:hidden" />
-      <TitleInput
-        title={title}
-        onChange={onTitleChangeHandler}
-      />
+      <TitleInput title={title} onChange={onTitleChangeHandler} />
       <Metadata tags={noteDetails?.tags} lastEdit={noteDetails?.lastEdit} />
       <hr className="text-secondary/50" />
       {/* Add a WYSIWYG editor with text formatting for the notes */}
       <NoteText content={content} onUpdate={onUpdateNoteText} />
-      {activeTag && <div onClick={onShowTagsHandler} className="bg-black/50 z-100 h-screen absolute top-0 left-0 w-full ">
-        
-      </div>}
+      {activeTag && (
+        <div
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setActiveTag((prev) => !prev);
+            }
+          }}
+          className="absolute top-0 left-0 z-10 flex h-screen w-full items-center justify-center bg-black/50"
+        >
+          {id && <TagsDialog tags={noteDetails?.tags} id={id}/>}
+        </div>
+      )}
     </div>
   );
 };
