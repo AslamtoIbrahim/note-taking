@@ -7,7 +7,7 @@ export type Note = {
   tags: string[];
   lastEdit: Date | null;
   archivedAt: Date | null;
-  deleteAt: Date | null;
+  deletedAt: Date | null;
 };
 
 

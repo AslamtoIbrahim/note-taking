@@ -47,6 +47,10 @@ export const deleteQueryNote = async (id: string) => {
   await axios.delete(`http://localhost:3000/api/v1/note/${id}`);
 };
 
+export const deleteForeverQueryNote = async (id: string) => {
+  await axios.delete(`http://localhost:3000/api/v1/delete/${id}`);
+};
+
 export const archiveQueryNote = async (id: string) => {
   await axios.put(`http://localhost:3000/api/v1/archives/${id}`);
 };
@@ -84,12 +88,31 @@ export const searchNotes = async ({
 export const getAndSearchTags = async ({
   queryKey,
 }: {
-  
   queryKey: [string, string];
 }) => {
-  const [, search] = queryKey
+  const [, search] = queryKey;
   const res = await axios.get<string[]>(`http://localhost:3000/api/v1/tags`, {
-    params: { search},
+    params: { search },
   });
   return res.data;
+};
+
+export const getTrashNotes = async ({
+  pageParam,
+  queryKey,
+}: {
+  pageParam: string | null;
+  queryKey: [string, string];
+}) => {
+  const [, search] = queryKey;
+  const res = await axios.get<Notes>("http://localhost:3000/api/v1/trash", {
+    params: { limit: 3, search, cursor: pageParam },
+  });
+
+  return res.data;
+};
+
+
+export const restoreQueryNote = async ({ id, note }: UpdateNoteType) => {
+  await axios.put<Note>(`http://localhost:3000/api/v1/restore/${id}`, note);
 };

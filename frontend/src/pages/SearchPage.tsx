@@ -1,26 +1,20 @@
 import { useState } from "react";
+import { InView } from "react-intersection-observer";
+import { useLocation, useNavigate } from "react-router-dom";
+import Loader from "../components/ui/Loader";
 import MobileAddNoteButton from "../components/ui/MobileAddNoteButton";
 import NoteItem from "../components/ui/NoteItem";
 import SearchInput from "../components/ui/SearchInput";
-import { useInfiniteQuery } from "@tanstack/react-query";
-import { searchNotes } from "../lib/note-query";
-import Loader from "../components/ui/Loader";
-import { useLocation, useNavigate } from "react-router-dom";
-import { InView } from "react-intersection-observer";
+import { useSearchNote } from "../hooks/use-query-note";
 
 const SearchPage = () => {
   const navigate = useNavigate();
-  const location = useLocation()
-  const {tag} = location.state || ""
+  const location = useLocation();
+  const { tag } = location.state || "";
   const [search, setSearch] = useState(tag);
- 
 
-  const { data, status, error, hasNextPage, fetchNextPage } = useInfiniteQuery({
-    queryKey: ["search", search] as [string, string],
-    initialPageParam: null,
-    queryFn: searchNotes,
-    getNextPageParam: (lastPage) => lastPage.nextCursor,
-  });
+  const { data, status, error, hasNextPage, fetchNextPage } =
+    useSearchNote(search);
 
   const onClickAddNoteHandler = () => {
     navigate("/editor/");
@@ -32,7 +26,7 @@ const SearchPage = () => {
     }
   };
 
-   function onChangeSearchHnadler(value: string): void {
+  function onChangeSearchHnadler(value: string): void {
     setSearch(value);
   }
 

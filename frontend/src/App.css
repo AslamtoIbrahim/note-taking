@@ -127,3 +127,7 @@ input[type="search"]::-webkit-search-cancel-button {
 .icon-button{
   @apply text-secondary hover:text-text-dark cursor-pointer
 }
+
+.status{
+  @apply opacity-0 transition-opacity duration-300 ease-in-out peer-hover:visible peer-hover:opacity-100
+}

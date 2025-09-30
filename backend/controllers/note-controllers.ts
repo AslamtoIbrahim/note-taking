@@ -334,3 +334,88 @@ export const getAndSearchTags = async (
     res.status(500).json({ message: "tags error server", error: error });
   }
 };
+
+export const getTrashNotes = async (
+  req: express.Request,
+  res: express.Response
+) => {
+  try {
+    const { search, cursor, limit } = req.query;
+    let query: any = {
+      deletedAt: { $ne: null },
+    };
+
+    if (cursor) {
+      query._id = { $lt: cursor };
+    }
+
+    if (search) {
+      query.$or = [
+        { title: { $regex: search, $options: "i" } },
+        { tags: { $regex: search, $options: "i" } },
+        { "content.content.content.text": { $regex: search, $options: "i" } },
+      ];
+    }
+
+    const trash = await NoteModel.find(query)
+      .select({ title: 1, tags: 1, deletedAt: 1 })
+      .sort({ createdAt: -1 })
+      .limit(Number(limit || 6));
+
+    if (!trash) {
+      return res.status(404).json({ error: "trashes not found" });
+    }
+
+    const nextCursor = trash.length > 0 ? trash[trash.length - 1]._id : null;
+    res.json({ notes: trash, nextCursor });
+  } catch (error) {
+    res.status(500).json({ message: "trash error server", error: error });
+  }
+};
+
+export const restoreNote = async (
+  req: express.Request,
+  res: express.Response
+) => {
+  try {
+    const { id } = req.params;
+
+    if (!id) {
+      return res.status(400).json({ message: "id required to restore" });
+    }
+    const restoredNote = await NoteModel.findByIdAndUpdate(
+      id,
+      {
+        deletedAt: null,
+      },
+      { new: true }
+    );
+    if (!restoredNote)
+      return res.status(404).json({ message: "restored Note  not found" });
+
+    res.status(201).json(restoredNote);
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error });
+  }
+};
+
+export const deleteForeverNote = async (
+  req: express.Request,
+  res: express.Response
+) => {
+  try {
+    const { id } = req.params;
+
+    if (!id) {
+      return res.status(400).json({ message: "id required to delete forever" });
+    }
+    const deletedNote = await NoteModel.findByIdAndDelete(id);
+    if (!deletedNote) {
+      return res.status(404).json({ message: "restored Note  not found" });
+    }  
+
+    res.status(201).json(deletedNote);
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error });
+  }
+};

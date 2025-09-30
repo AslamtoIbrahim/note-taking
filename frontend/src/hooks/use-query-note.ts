@@ -7,9 +7,13 @@ import {
 import {
   addQueryNote,
   archiveQueryNote,
+  deleteForeverQueryNote,
   deleteQueryNote,
   getArchiveNotes,
   getQueryNoteById,
+  getTrashNotes,
+  restoreQueryNote,
+  searchNotes,
   unarchiveNote,
   updateQueryNote,
 } from "../lib/note-query";
@@ -96,7 +100,7 @@ export const useUnarchiveNote = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: unarchiveNote,
-     onSuccess: () => {
+    onSuccess: () => {
       toast.success("note unarchive");
       queryClient.invalidateQueries({ queryKey: ["archives"] });
     },
@@ -104,6 +108,55 @@ export const useUnarchiveNote = () => {
       toast.error("something went wrong while unarchive a note");
       console.error(error);
     },
-  })
+  });
 };
 
+export const useSearchNote = (search: string) => {
+  return useInfiniteQuery({
+    queryKey: ["search", search] as [string, string],
+    initialPageParam: null,
+    queryFn: searchNotes,
+    getNextPageParam: (lastPage) => lastPage.nextCursor,
+  });
+};
+
+
+export const useTrashNote = (search: string) => {
+  return useInfiniteQuery({
+    queryKey: ["trash", search] as [string, string],
+    initialPageParam: null,
+    queryFn: getTrashNotes,
+    getNextPageParam: (lastPage) => lastPage.nextCursor,
+  });
+};
+
+
+export const userestoreNote = (search: string) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: restoreQueryNote,
+    onSuccess: () => {
+      toast.success("note restored");
+      queryClient.invalidateQueries({ queryKey: ["trash", search] });
+    },
+    onError: (error) => {
+      toast.error("something went wrong while restoring a new note");
+      console.error(error);
+    },
+  });
+};
+
+export const usedeleteForeverNote = (search: string) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: deleteForeverQueryNote,
+    onSuccess: () => {
+      toast.success("note restored");
+      queryClient.invalidateQueries({ queryKey: ["trash", search] });
+    },
+    onError: (error) => {
+      toast.error("something went wrong while restoring a new note");
+      console.error(error);
+    },
+  });
+};
