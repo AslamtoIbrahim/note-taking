@@ -1,20 +1,21 @@
-import { useState } from "react";
+import { use } from "react";
 import { InView } from "react-intersection-observer";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Loader from "../components/ui/Loader";
 import MobileAddNoteButton from "../components/ui/MobileAddNoteButton";
 import NoteItem from "../components/ui/NoteItem";
 import SearchInput from "../components/ui/SearchInput";
 import { useSearchNote } from "../hooks/use-query-note";
+import LayoutContext from "../store/layout-context";
 
 const SearchPage = () => {
   const navigate = useNavigate();
-  const location = useLocation();
-  const { tag } = location.state || "";
-  const [search, setSearch] = useState(tag);
 
-  const { data, status, error, hasNextPage, fetchNextPage } =
-    useSearchNote(search);
+  const noteContext = use(LayoutContext);
+
+  const { data, status, error, hasNextPage, fetchNextPage } = useSearchNote(
+    noteContext.search,
+  );
 
   const onClickAddNoteHandler = () => {
     navigate("/editor/");
@@ -27,7 +28,7 @@ const SearchPage = () => {
   };
 
   function onChangeSearchHnadler(value: string): void {
-    setSearch(value);
+    noteContext.setSearch(value);
   }
 
   if (status === "error") {
@@ -40,14 +41,19 @@ const SearchPage = () => {
 
   return (
     <div className="padx font-body h-full space-y-2 rounded-t-xl bg-white py-4">
-      <SearchInput search={search} onChangeSearch={onChangeSearchHnadler} />
-      {search && (
+      <SearchInput
+        search={noteContext.search}
+        onChangeSearch={onChangeSearchHnadler}
+        className="lg:hidden"
+      />
+      {noteContext.search && (
         <p className="text-sm">
-          All notes matching "<span className="font-semibold">{search}</span>"
-          are displayed below
+          All notes matching "
+          <span className="font-semibold">{noteContext.search}</span>" are
+          displayed below
         </p>
       )}
-      <section className="divide-secondary/50 divide-y">
+      <section className="divide-secondary/50 divide-y lg:flex lg:h-[37rem] lg:flex-col lg:gap-y-4 lg:overflow-auto lg:scroll-smooth">
         {status === "pending" && (
           <div className="my-auto flex h-[30rem] items-center justify-center md:h-[35rem]">
             <Loader />

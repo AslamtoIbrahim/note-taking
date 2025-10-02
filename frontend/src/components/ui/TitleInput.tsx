@@ -10,7 +10,7 @@ const TitleInput = ({ title, onChange }: TitleInputProp) => {
   return (
     <input
       onChange={onChange}
-      className="py-2 text-2xl font-black outline-none capitalize truncate"
+      className="py-2 text-2xl font-black outline-none capitalize truncate w-full"
       type="text"
       value={title}
       placeholder="Title..."

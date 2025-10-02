@@ -2,6 +2,9 @@ import { BiArchiveOut } from "react-icons/bi";
 import { NavLink } from "react-router-dom";
 import type { Note } from "../../utils/types";
 import { useUnarchiveNote } from "../../hooks/use-query-note";
+import { use, useEffect, useState } from "react";
+import { useMediaQuery } from "react-responsive";
+import LayoutContext from "../../store/layout-context";
 
 type NoteItemProp = {
   note: Note;
@@ -10,32 +13,48 @@ type NoteItemProp = {
 
 const NoteItem = ({ note, onclick }: NoteItemProp) => {
   const unarchiveNote = useUnarchiveNote();
+  const isDesktop = useMediaQuery({ minWidth: 768 });
+  const [path, setPath] = useState(`/editor/`);
+  const { setIsVisible } = use(LayoutContext);
+
+  useEffect(() => {
+    if (isDesktop) {
+      setPath(`editor/`);
+    }
+  }, [isDesktop]);
+
   const onUnrachiveNote = () => {
     if (note._id && note.archivedAt) {
-      console.log('note._id',note._id);
-      console.log('note.archivedAt',note.archivedAt);
       unarchiveNote.mutate(note._id);
     }
   };
+
+  const onClickHandler = () => {
+    setIsVisible(true);
+  };
+
   return (
-    <div className="flex justify-between hover:bg-primary/10">
-      <NavLink
-        to={`/editor/${note._id}`}
-        className={({ isActive }) =>
-          isActive ? "active " : "block bg-transparent flex-12"
-        }
+    <NavLink
+      to={`${path}${note._id}`}
+      className={({ isActive }) =>
+        isActive ? "active" : "h-fit block  bg-transparent"
+      }
+    >
+      <div
+        onClick={onClickHandler}
+        className="hover:bg-primary/10 flex justify-between"
       >
         <div
           onClick={onclick}
-          className=" cursor-pointer space-y-3 p-4 hover:rounded lg:px-2"
+          className="cursor-pointer space-y-3 p-4 hover:rounded lg:px-2"
         >
           <div className="flex justify-between">
             <h1 className="text-lg font-black capitalize">{note.title}</h1>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex flex-wrap items-center gap-2">
             {note.tags.map((t, i) => {
               return (
-                <p className="bg-secondary/20 rounded px-2" key={i}>
+                <p className="bg-secondary/20 rounded px-2 text-sm" key={i}>
                   {t}
                 </p>
               );
@@ -50,14 +69,15 @@ const NoteItem = ({ note, onclick }: NoteItemProp) => {
               })}
           </p>
         </div>
-      </NavLink>
-      {note.archivedAt && (
-        <BiArchiveOut
-          onClick={onUnrachiveNote}
-          className="text-primary  mt-2 size-6 cursor-pointer p-1 transition-transform duration-200 ease-in-out hover:scale-115"
-        />
-      )}
-    </div>
+
+        {note.archivedAt && (
+          <BiArchiveOut
+            onClick={onUnrachiveNote}
+            className="text-primary mt-3 size-6 cursor-pointer p-1 transition-transform duration-200 ease-in-out hover:scale-115 lg:mt-6 lg:mr-4"
+          />
+        )}
+      </div>
+    </NavLink>
   );
 };
 

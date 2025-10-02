@@ -26,7 +26,6 @@ const ArchivedPage = () => {
     );
   }
 
-  console.log('data: ',data);
 
   return (
     <div className="padx font-body h-full space-y-2 rounded-t-xl bg-white py-4">

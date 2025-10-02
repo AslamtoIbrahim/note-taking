@@ -25,5 +25,9 @@ dist-ssr
 
 frame.tx
 
-store/
+note-actions.ts
+note-slice.ts
+note-store.ts
+note-context.ts
+note-provider.tsx
  

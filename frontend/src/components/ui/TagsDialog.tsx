@@ -8,7 +8,7 @@ import TagCheckItem from "./TagCheckItem";
 import { useUpdateNote } from "../../hooks/use-query-note";
 
 type TagsDialog = {
-  id: string;
+  id: string | undefined;
   tags: string[] | undefined;
 };
 
@@ -60,7 +60,7 @@ const TagsDialog = ({ id, tags }: TagsDialog) => {
     );
   }
   return (
-    <div className="flex h-80 flex-col justify-between rounded bg-white">
+    <div className="flex h-80 flex-col marx justify-between rounded bg-white">
       <div className="z-10 w-fit space-y-4 px-12 pt-8">
         <h2>Add tags note</h2>
         <SearchInput

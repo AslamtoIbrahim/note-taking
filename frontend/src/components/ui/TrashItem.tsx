@@ -1,7 +1,7 @@
 import { FaTrash, FaTrashRestore } from "react-icons/fa";
 import {
-  usedeleteForeverNote,
-  userestoreNote,
+  useDeleteForeverNote,
+  useRestoreNote,
 } from "../../hooks/use-query-note";
 import type { Note } from "../../utils/types";
 
@@ -10,8 +10,8 @@ type TrashItemProp = {
   searchForCaching: string;
 };
 const TrashItem = ({ note, searchForCaching }: TrashItemProp) => {
-  const restoreNoteMutation = userestoreNote(searchForCaching);
-  const deleteForverNoteMutation = usedeleteForeverNote(searchForCaching);
+  const restoreNoteMutation = useRestoreNote(searchForCaching);
+  const deleteForverNoteMutation = useDeleteForeverNote(searchForCaching);
 
   const onDeleteForever = () => {
     const id = note._id;

@@ -24,3 +24,22 @@ export type NoteState = {
   error: string | null;
   noteDetails: Note | null;
 };
+
+
+export const fullback: JSONContent = {
+  type: "doc",
+  content: [
+    {
+      type: "paragraph",
+      attrs: {
+        textAlign: null,
+      },
+      content: [
+        {
+          type: "text",
+          text: "",
+        },
+      ],
+    },
+  ],
+};

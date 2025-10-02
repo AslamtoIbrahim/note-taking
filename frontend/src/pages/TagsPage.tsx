@@ -27,12 +27,12 @@ const TagsPage = () => {
 
 
   return (
-    <div className="padx font-body h-full space-y-2 rounded-t-xl bg-white py-4">
+    <div className="padx font-body h-full space-y-2 rounded-t-xl  bg-white py-4">
       <SearchInput
         search={search}
         onChangeSearch={onSearchHandler}
         placeholder="Enter tag name"
-        className="text-sm"
+        className="text-sm xl:mx-4"
       />
       <h1 className="text-secondary lg:px-2">Tags</h1>
       {status === "pending" && (
@@ -40,9 +40,9 @@ const TagsPage = () => {
           <Loader />
         </div>
       )}
-      <section className="space-y-2">
+      <section className="space-y-2 lg:px-3">
         {data && (
-          <div className="space-y-6">
+          <div className="">
             {data.map((t) => (
               <TagItem key={t} tag={t} />
             ))}

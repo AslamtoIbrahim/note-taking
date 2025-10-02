@@ -4,6 +4,7 @@ import {
   useQuery,
   useQueryClient,
 } from "@tanstack/react-query";
+import { toast } from "sonner";
 import {
   addQueryNote,
   archiveQueryNote,
@@ -11,13 +12,22 @@ import {
   deleteQueryNote,
   getArchiveNotes,
   getQueryNoteById,
+  getQueryNotes,
   getTrashNotes,
   restoreQueryNote,
   searchNotes,
   unarchiveNote,
   updateQueryNote,
 } from "../lib/note-query";
-import { toast } from "sonner";
+
+export const useInfiniteQueryNotes = () => {
+  return useInfiniteQuery({
+    queryKey: ["notes"],
+    queryFn: getQueryNotes,
+    initialPageParam: null,
+    getNextPageParam: (lastPage) => lastPage.nextCursor,
+  });
+};
 
 export const useQueryNote = (id?: string) => {
   return useQuery({
@@ -49,6 +59,7 @@ export const useUpdateNote = (id: string | undefined) => {
     onSuccess: () => {
       toast.success("note updated");
       queryClient.invalidateQueries({ queryKey: ["note", id] });
+      queryClient.invalidateQueries({ queryKey: ["notes"] });
     },
     onError: (error) => {
       toast.error("something went wrong while update a new note");
@@ -57,13 +68,15 @@ export const useUpdateNote = (id: string | undefined) => {
   });
 };
 
-export const useDelteNote = () => {
+export const useDelteNote = (id: string | undefined) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: deleteQueryNote,
     onSuccess: () => {
       toast.success("note delete");
+      queryClient.invalidateQueries({ queryKey: ["archives"] });
       queryClient.invalidateQueries({ queryKey: ["notes"] });
+      queryClient.removeQueries({ queryKey: ["note", id] });
     },
     onError: (error) => {
       toast.error("something went wrong while delete a new note");
@@ -78,6 +91,7 @@ export const useArchiveNote = () => {
     mutationFn: archiveQueryNote,
     onSuccess: () => {
       toast.success("note archive");
+      queryClient.removeQueries({ queryKey: ["note"] });
       queryClient.invalidateQueries({ queryKey: ["notes"] });
     },
     onError: (error) => {
@@ -120,7 +134,6 @@ export const useSearchNote = (search: string) => {
   });
 };
 
-
 export const useTrashNote = (search: string) => {
   return useInfiniteQuery({
     queryKey: ["trash", search] as [string, string],
@@ -130,8 +143,7 @@ export const useTrashNote = (search: string) => {
   });
 };
 
-
-export const userestoreNote = (search: string) => {
+export const useRestoreNote = (search: string) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: restoreQueryNote,
@@ -146,7 +158,7 @@ export const userestoreNote = (search: string) => {
   });
 };
 
-export const usedeleteForeverNote = (search: string) => {
+export const useDeleteForeverNote = (search: string) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: deleteForeverQueryNote,

@@ -4,8 +4,12 @@ import { BulletList, ListItem, OrderedList } from "@tiptap/extension-list";
 import TextAlign from "@tiptap/extension-text-align";
 import { Color, TextStyle } from "@tiptap/extension-text-style";
 import { Placeholder } from "@tiptap/extensions";
-import Text from '@tiptap/extension-text'
-import Paragraph from '@tiptap/extension-paragraph'
+import Text from "@tiptap/extension-text";
+import Paragraph from "@tiptap/extension-paragraph";
+import { Bold } from "@tiptap/extension-bold";
+import { Italic } from "@tiptap/extension-italic";
+import { Strike } from "@tiptap/extension-strike";
+import { Underline } from "@tiptap/extension-underline";
 import {
   Editor,
   EditorContent,
@@ -28,6 +32,10 @@ const NoteText = ({ content, onUpdate }: NoteTextProp) => {
     // schema of editor
     extensions: [
       Document,
+      Bold,
+      Italic,
+      Strike,
+      Underline,
       BulletList,
       OrderedList.configure({
         itemTypeName: "listItem",
@@ -46,7 +54,7 @@ const NoteText = ({ content, onUpdate }: NoteTextProp) => {
       TextStyle,
       Color,
       Text,
-      Paragraph
+      Paragraph,
     ],
     content,
     onUpdate({ editor }) {

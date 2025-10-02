@@ -1,5 +1,5 @@
 type SaveNoteButtonProp = {
-  text: string;
+  text?: string;
   onclick?: () => void;
 };
 const SaveNoteButton = ({

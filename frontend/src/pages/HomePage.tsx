@@ -1,19 +1,13 @@
-import { useInfiniteQuery } from "@tanstack/react-query";
 import { InView } from "react-intersection-observer";
 import { useNavigate } from "react-router-dom";
 import Loader from "../components/ui/Loader";
 import MobileAddNoteButton from "../components/ui/MobileAddNoteButton";
 import NoteItem from "../components/ui/NoteItem";
-import { getQueryNotes } from "../lib/note-query";
+import { useInfiniteQueryNotes } from "../hooks/use-query-note";
 
 const HomePage = () => {
   const navigate = useNavigate();
-  const { data, status, error, fetchNextPage, hasNextPage } = useInfiniteQuery({
-    queryKey: ["notes"],
-    queryFn: getQueryNotes,
-    initialPageParam: null,
-    getNextPageParam: (lastPage) => lastPage.nextCursor,
-  });
+  const { data, status, error, fetchNextPage, hasNextPage } = useInfiniteQueryNotes()
 
   const onClickAddNoteHandler = () => {
     navigate("/editor/");

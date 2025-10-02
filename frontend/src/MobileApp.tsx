@@ -16,7 +16,7 @@ const MobileApp = () => {
   return (
     <div className="bg-primary/8 relative flex flex-col h-screen lg:bg-white ">
       <Header />
-      <div className="flex-11/12 bg-white rounded-t-xl pt-4 pb-14 lg:rounded-none">
+      <div className="flex-11/12 bg-white rounded-t-xl pt-4  lg:rounded-none">
         <Outlet />
       </div>
       <BottomNav />
