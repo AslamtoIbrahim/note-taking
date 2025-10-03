@@ -17,7 +17,7 @@ const DesktopPage = () => {
   
 
   return (
-    <div className="divide-secondary/50 hidden h-screen grid-cols-5 divide-x lg:grid">
+    <div className="divide-secondary/50 hidden h-screen grid-cols-5 divide-x lg:grid ">
       {/* Side Nav Root */}
       <section className="col-span-1">
         <SideNav />
@@ -25,7 +25,7 @@ const DesktopPage = () => {
       <section className="divide-secondary/50 col-span-4 grid grid-rows-10 divide-y">
         <div className="row-span-1 flex items-center justify-between px-8">
           <p className="text-2xl font-bold">All Notes</p>
-          <div className="flex items-center gap-x-4">
+          <div className="flex items-center gap-x-4 ">
             <SearchInput search={search} onChangeSearch={onChangeSearch} />
             <Settings />
           </div>

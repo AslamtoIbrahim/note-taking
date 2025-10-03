@@ -22,7 +22,7 @@ const SettingsPage = () => {
   };
 
   return (
-    <div className="padx font-body h-full space-y-2 rounded-t-xl bg-white py-4">
+    <div className="padx font-body h-full space-y-2 rounded-t-xl bg-white py-4 ">
       <h1 className="text-secondary text-lg">Settings</h1>
       <section className="bg-secondary/5 divide-secondary/15 divide-y rounded">
         <ArchivedNotesNavigate onClick={onArchivedNotesHandler} />
@@ -37,7 +37,7 @@ const SettingsPage = () => {
       </section>
       {active && (
         <div
-          className="absolute top-0 left-0 z-10 flex h-screen w-full items-center justify-center bg-black/50"
+          className="absolute top-0 left-0 z-10 flex h-screen w-full  items-center justify-center bg-black/50 lg:bg-transparent lg:h-full "
           onClick={(e) => {
             if (e.target === e.currentTarget) {
               setActive((prev) => !prev);

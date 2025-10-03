@@ -5,9 +5,10 @@ import { NavLink } from "react-router-dom";
 import LayoutContext from "../../store/layout-context";
 
 const DeskArchivedNotesNav = () => {
-  const { setIsVisible } = use(LayoutContext);
+  const { setIsVisible, setSearch } = use(LayoutContext);
   const onClickHandler = () => {
     setIsVisible(false);
+    setSearch("");
   };
 
   return (

@@ -4,11 +4,12 @@ import { useTrashNote } from "../../hooks/use-query-note";
 import Loader from "../ui/Loader";
 import SearchInput from "../ui/SearchInput";
 import TrashItem from "../ui/TrashItem";
+import { CgClose } from "react-icons/cg";
 
 type TrashDialogProp = {
   onClick?: () => void;
 };
-const TrashDialog = ({}: TrashDialogProp) => {
+const TrashDialog = ({onClick}: TrashDialogProp) => {
   const [search, setSearch] = useState("");
   const { data, error, status, hasNextPage, fetchNextPage } =
     useTrashNote(search);
@@ -25,15 +26,18 @@ const TrashDialog = ({}: TrashDialogProp) => {
 
   if (status === "error") {
     return (
-      <div className="my-auto flex h-[30rem] items-center justify-center md:h-[35rem]">
+      <div className="my-auto flex h-full items-center justify-center ">
         <p className="text-red-500">{error.message}</p>
       </div>
     );
   }
 
   return (
-    <div>
-      <div className="marx h-96 space-y-2 rounded-sm bg-white px-8 py-8">
+    <div className="lg:h-full lg:w-full">
+      <div className="py-2 px-4 flex justify-end">
+        <CgClose className="border rounded-full text-secondary cursor-pointer" onClick={onClick}/>
+      </div>
+      <div className="marx h-96 lg:h-full space-y-2 rounded-sm bg-white px-8 py-8 pt-0">
         <h2>Notes in Trash are deleted after 30 days</h2>
         <SearchInput
           className="text-sm"
@@ -42,11 +46,11 @@ const TrashDialog = ({}: TrashDialogProp) => {
         />
         <div>
           {status === "pending" && (
-            <div className="my-auto flex h-[10rem] items-center justify-center">
+            <div className="my-auto flex h-full items-center justify-center">
               <Loader />
             </div>
           )}
-          <div className="h-56 space-y-2 overflow-auto">
+          <div className="h-56 lg:h-92 py-2 space-y-2 overflow-auto">
             {data &&
               data.pages.map((p) =>
                 p.notes.map((n) => <TrashItem searchForCaching={search} key={n._id} note={n} />),

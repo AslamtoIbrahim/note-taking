@@ -4,9 +4,10 @@ import { NavLink } from "react-router-dom";
 import LayoutContext from "../../store/layout-context";
 
 const CreateNewNote = () => {
-  const {setIsVisible} = use(LayoutContext);
+  const { setIsVisible, setSearch } = use(LayoutContext);
   const onClickHandler = () => {
     setIsVisible(true);
+    setSearch("");
   };
   return (
     <NavLink className={"block"} to={"editor/"}>

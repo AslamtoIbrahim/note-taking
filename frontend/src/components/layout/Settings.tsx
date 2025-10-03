@@ -10,7 +10,11 @@ const Settings = () => {
   return (
     <div className="relative">
       <DeskSettingsButton onClick={onClickHandler} />
-      <SettingsPopup className={`${isActive ? 'opacity-100 scale-100' : 'opacity-0 scale-0'}`} />
+      <div>
+        <SettingsPopup
+          className={`${isActive ? "scale-100 opacity-100" : "scale-0 opacity-0"}`}
+        />
+      </div>
     </div>
   );
 };

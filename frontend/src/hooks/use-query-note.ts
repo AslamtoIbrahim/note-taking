@@ -150,6 +150,8 @@ export const useRestoreNote = (search: string) => {
     onSuccess: () => {
       toast.success("note restored");
       queryClient.invalidateQueries({ queryKey: ["trash", search] });
+      queryClient.invalidateQueries({ queryKey: ["archives"] });
+      queryClient.invalidateQueries({ queryKey: ["notes"] });
     },
     onError: (error) => {
       toast.error("something went wrong while restoring a new note");
