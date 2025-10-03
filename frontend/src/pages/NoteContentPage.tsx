@@ -208,37 +208,6 @@ const NoteContentPage = () => {
     </section>
   );
 
-  //   return (
-  //     <div className="padx font-body h-full space-y-2 rounded-t-xl ">
-  //       <ActionBar
-  //         archivedAt={noteDetails?.archivedAt}
-  //         onArchiveClick={onArchiveNoteHandler}
-  //         onUnarchiveClick={onUnarchiveNoteHandler}
-  //         onSaveUpdateClick={onSaveUpdateNoteHandler}
-  //         onDeleteClick={onDeleteNoteHandler}
-  //         onTagClick={onShowTagsHandler}
-  //         id={id}
-  //       />
-  //       <hr className="text-secondary/50 lg:hidden " />
-  //       <TitleInput title={title} onChange={onTitleChangeHandler} />
-  //       <Metadata tags={noteDetails?.tags} lastEdit={noteDetails?.lastEdit} />
-  //       <hr className="text-secondary/50" />
-  //       {/* Add a WYSIWYG editor with text formatting for the notes */}
-  //       <NoteText content={content} onUpdate={onUpdateNoteText} />
-  //       {activeTag && (
-  //         <div
-  //           onClick={(e) => {
-  //             if (e.target === e.currentTarget) {
-  //               setActiveTag((prev) => !prev);
-  //             }
-  //           }}
-  //           className="absolute top-0 left-0 z-10 flex h-screen w-full items-center justify-center bg-black/50"
-  //         >
-  //           {<TagsDialog tags={noteDetails?.tags} id={id} />}
-  //         </div>
-  //       )}
-  //     </div>
-  //   );
 };
 
 export default NoteContentPage;

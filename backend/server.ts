@@ -3,12 +3,14 @@ import cors from "cors";
 import authRouter from "./routes/auth.ts";
 import noteRouter from "./routes/notes.ts";
 import connectNoteDB from "./db/note-db.ts";
+import { authenticateUser } from "./middlewares/authMiddlerware.ts";
 
 const app = express();
 
 const prot = 3000;
 
 connectNoteDB();
+
 
 app.use(
   cors({
@@ -17,7 +19,11 @@ app.use(
   })
 );
 
+
 app.use("/", authRouter);
+
+// protect all routes after this middleware
+app.use(authenticateUser)
 
 app.use(express.json());
 

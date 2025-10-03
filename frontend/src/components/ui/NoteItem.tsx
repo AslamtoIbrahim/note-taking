@@ -13,7 +13,7 @@ type NoteItemProp = {
 
 const NoteItem = ({ note, onclick }: NoteItemProp) => {
   const unarchiveNote = useUnarchiveNote();
-  const isDesktop = useMediaQuery({ minWidth: 768 });
+  const isDesktop = useMediaQuery({ minWidth: 1024 });
   const [path, setPath] = useState(`/editor/`);
   const { setIsVisible } = use(LayoutContext);
 
@@ -23,7 +23,10 @@ const NoteItem = ({ note, onclick }: NoteItemProp) => {
     }
   }, [isDesktop]);
 
-  const onUnrachiveNote = () => {
+  const onUnrachiveNote = (e: React.MouseEvent<SVGElement>) => {
+    e.preventDefault()
+    e.stopPropagation()
+    console.log('button clicked');
     if (note._id && note.archivedAt) {
       unarchiveNote.mutate(note._id);
     }
@@ -37,7 +40,7 @@ const NoteItem = ({ note, onclick }: NoteItemProp) => {
     <NavLink
       to={`${path}${note._id}`}
       className={({ isActive }) =>
-        isActive ? "active" : "h-fit block  bg-transparent"
+        `${isActive ? "active" : "bg-transparent"} h-fit block  h-fit block`
       }
     >
       <div
@@ -73,7 +76,7 @@ const NoteItem = ({ note, onclick }: NoteItemProp) => {
         {note.archivedAt && (
           <BiArchiveOut
             onClick={onUnrachiveNote}
-            className="text-primary mt-3 size-6 cursor-pointer p-1 transition-transform duration-200 ease-in-out hover:scale-115 lg:mt-6 lg:mr-4"
+            className="text-primary mt-3 size-6 cursor-pointer p-1 transition-transform duration-200 ease-in-out hover:scale-115 lg:mt-6 lg:mr-4 "
           />
         )}
       </div>

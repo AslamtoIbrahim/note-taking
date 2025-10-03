@@ -26,7 +26,6 @@ type NoteTextProp = {
 };
 
 const NoteText = ({ content, onUpdate }: NoteTextProp) => {
-  // const [jsonContent, setJsonContent] = useState<JSONContent>(jsonexample);
 
   const editor = useEditor({
     // schema of editor

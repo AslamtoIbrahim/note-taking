@@ -14,6 +14,7 @@ import {
   unarchiveNote,
   updateNote,
 } from "../controllers/note-controllers.ts";
+import { authenticateUser } from "../middlewares/authMiddlerware.ts";
 
 const noteRouter = express.Router();
 
@@ -44,6 +45,5 @@ noteRouter.get("/api/v1/trash", getTrashNotes);
 noteRouter.put("/api/v1/restore/:id", restoreNote);
 
 noteRouter.delete("/api/v1/delete/:id", deleteForeverNote);
-
 
 export default noteRouter;

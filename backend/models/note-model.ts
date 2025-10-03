@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 
 const NoteSchema = new mongoose.Schema(
   {
+    userId: { type: String, required: true },
     title: { type: String, default: "" },
     tags: [String],
     content: { type: mongoose.Schema.Types.Mixed, required: true },

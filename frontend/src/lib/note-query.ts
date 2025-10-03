@@ -1,7 +1,5 @@
 import axios from "axios";
 import type { Note, NotePartial, Notes } from "../utils/types";
-import { ca } from "zod/v4/locales";
-import type { QueryFunctionContext } from "@tanstack/react-query";
 
 export const getQueryNotes = async ({
   pageParam,
@@ -13,6 +11,10 @@ export const getQueryNotes = async ({
       limit: 8,
       cursor: pageParam,
     },
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("bearer_token")}`,
+    },
+    withCredentials: true,
   });
 
   return res.data;
@@ -26,12 +28,23 @@ export const getQueryNoteById = async ({ queryKey }: QueryType) => {
   const [, id] = queryKey;
   const res = await axios.get<Note>(
     `http://localhost:3000/api/v1/all-notes/${id}`,
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("bearer_token")}`,
+      },
+      withCredentials: true,
+    },
   );
   return res.data;
 };
 
 export const addQueryNote = async (newNote: NotePartial) => {
-  await axios.post<Note>("http://localhost:3000/api/v1/note", newNote);
+  await axios.post<Note>("http://localhost:3000/api/v1/note", newNote, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("bearer_token")}`,
+    },
+    withCredentials: true,
+  });
 };
 
 type UpdateNoteType = {
@@ -40,19 +53,39 @@ type UpdateNoteType = {
 };
 
 export const updateQueryNote = async ({ id, note }: UpdateNoteType) => {
-  await axios.put<Note>(`http://localhost:3000/api/v1/note/${id}`, note);
+  await axios.put<Note>(`http://localhost:3000/api/v1/note/${id}`, note, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("bearer_token")}`,
+    },
+    withCredentials: true,
+  });
 };
 
 export const deleteQueryNote = async (id: string) => {
-  await axios.delete(`http://localhost:3000/api/v1/note/${id}`);
+  await axios.delete(`http://localhost:3000/api/v1/note/${id}`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("bearer_token")}`,
+    },
+    withCredentials: true,
+  });
 };
 
 export const deleteForeverQueryNote = async (id: string) => {
-  await axios.delete(`http://localhost:3000/api/v1/delete/${id}`);
+  await axios.delete(`http://localhost:3000/api/v1/delete/${id}`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("bearer_token")}`,
+    },
+    withCredentials: true,
+  });
 };
 
 export const archiveQueryNote = async (id: string) => {
-  await axios.put(`http://localhost:3000/api/v1/archives/${id}`);
+  await axios.put(`http://localhost:3000/api/v1/archives/${id}`,{}, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("bearer_token")}`,
+    },
+    withCredentials: true,
+  });
 };
 
 export const getArchiveNotes = async ({
@@ -62,13 +95,23 @@ export const getArchiveNotes = async ({
 }) => {
   const res = await axios.get<Notes>(`http://localhost:3000/api/v1/archives`, {
     params: { limit: 6, cursor: pageParam },
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("bearer_token")}`,
+    },
+    withCredentials: true,
   });
-  console.log("archives: ", res.data);
   return res.data;
 };
 
 export const unarchiveNote = async (id: string) => {
-  await axios.put(`http://localhost:3000/api/v1/unarchive/${id}`);
+  await axios.put(`http://localhost:3000/api/v1/unarchive/${id}`,{},
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("bearer_token")}`,
+      },
+      withCredentials: true,
+    }
+  );
 };
 
 export const searchNotes = async ({
@@ -81,6 +124,10 @@ export const searchNotes = async ({
   const [, search] = queryKey;
   const res = await axios.get<Notes>(`http://localhost:3000/api/v1/search`, {
     params: { search, cursor: pageParam, limit: 6 },
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("bearer_token")}`,
+    },
+    withCredentials: true,
   });
   return res.data;
 };
@@ -93,6 +140,10 @@ export const getAndSearchTags = async ({
   const [, search] = queryKey;
   const res = await axios.get<string[]>(`http://localhost:3000/api/v1/tags`, {
     params: { search },
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("bearer_token")}`,
+    },
+    withCredentials: true,
   });
   return res.data;
 };
@@ -107,12 +158,22 @@ export const getTrashNotes = async ({
   const [, search] = queryKey;
   const res = await axios.get<Notes>("http://localhost:3000/api/v1/trash", {
     params: { limit: 3, search, cursor: pageParam },
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("bearer_token")}`,
+    },
+    withCredentials: true,
   });
 
   return res.data;
 };
 
-
 export const restoreQueryNote = async ({ id, note }: UpdateNoteType) => {
-  await axios.put<Note>(`http://localhost:3000/api/v1/restore/${id}`, note);
+  await axios.put<Note>(`http://localhost:3000/api/v1/restore/${id}`, note,
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("bearer_token")}`,
+      },
+      withCredentials: true,
+    },
+  );
 };

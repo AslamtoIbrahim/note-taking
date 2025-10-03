@@ -9,10 +9,16 @@ export const getQueryNotes = async (
     const { limit, cursor } = req.query;
     const limitNumber = Number(limit) || 10;
 
-    let query: any = { deletedAt: null, archivedAt: null };
+    let query: any = {
+      userId: req.user?.id,
+      deletedAt: null,
+      archivedAt: null,
+    };
     if (cursor) {
       query._id = { $lt: cursor };
     }
+
+    // console.log("😎 query:", query);
 
     const notes = await NoteModel.find(query)
       .sort({ createdAt: -1 })
@@ -37,7 +43,7 @@ export const getNoteById = async (
     const { id } = req.params;
     if (!id) return res.status(400).json({ message: "id is required" });
 
-    const note = await NoteModel.findById(id);
+    const note = await NoteModel.findById({ _id: id, userId: req.user?.id });
     if (!note) {
       return res.status(404).json({ message: "note not found" });
     }
@@ -53,6 +59,7 @@ export const getArchivedNotes = async (
 ) => {
   try {
     const archivedNotes = await NoteModel.find({
+      userId: req.user?.id,
       archivedAt: { $ne: null },
       deletedAt: null,
     });
@@ -71,6 +78,7 @@ export const getDeletedNotes = async (
 ) => {
   try {
     const deletedNotes = await NoteModel.find({
+      userId: req.user?.id,
       deletedAt: { $ne: null },
     });
     if (!deletedNotes) {
@@ -85,19 +93,20 @@ export const getDeletedNotes = async (
 export const addNote = async (req: express.Request, res: express.Response) => {
   try {
     const { title, content, tags } = req.body;
-    console.log("🟡 title: ", title);
-    console.log("🟡 content: ", content);
 
     if (!title || !content) {
       return res.status(400).json({ message: "title or content required" });
     }
 
     const note = new NoteModel({
+      userId: req.user?.id,
       title,
       content,
       tags: tags || [],
       lastEdit: new Date(),
     });
+
+    console.log("😎 note:", note);
 
     await note.save();
     res.status(201).json(note);
@@ -118,12 +127,12 @@ export const updateNote = async (
       return res.status(400).json({ message: "id required to update" });
     }
 
-    // if (!title || !content) {
-    //   return res.status(400).json({ message: "Nothing to update" });
-    // }
+    if (!title || !content) {
+      return res.status(400).json({ message: "Nothing to update" });
+    }
 
     const updatedNote = await NoteModel.findByIdAndUpdate(
-      id,
+      { _id: id, userId: req.user?.id },
       {
         title,
         content,
@@ -153,7 +162,7 @@ export const deleteNote = async (
       return res.status(400).json({ message: "id required to update" });
     }
     const deletedNote = await NoteModel.findByIdAndUpdate(
-      id,
+      { _id: id, userId: req.user?.id },
       { deletedAt: new Date() },
       { new: true }
     );
@@ -172,13 +181,13 @@ export const archiveNote = async (
 ) => {
   try {
     const { id } = req.params;
-    console.log("📗 archive Note: ", id);
+    console.log("📗 userID: ", req.user?.id);
     if (!id) {
       res.status(400).json({ error: "id is not defined" });
     }
 
     const archivedNote = await NoteModel.findByIdAndUpdate(
-      id,
+      { _id: id, userId: req.user?.id },
       {
         archivedAt: new Date(),
       },
@@ -201,7 +210,11 @@ export const getArchives = async (
   try {
     const { cursor, limit } = req.query;
 
-    let query: any = { archivedAt: { $ne: null }, deletedAt: null };
+    let query: any = {
+      userId: req.user?.id,
+      archivedAt: { $ne: null },
+      deletedAt: null,
+    };
     if (cursor) {
       query._id = { $lt: cursor };
     }
@@ -232,9 +245,12 @@ export const unarchiveNote = async (
     if (!id) {
       return res.status(400).json({ error: "id is required" });
     }
-    const note = await NoteModel.findByIdAndUpdate(id, {
-      archivedAt: null,
-    });
+    const note = await NoteModel.findByIdAndUpdate(
+      { _id: id, userId: req.user?.id },
+      {
+        archivedAt: null,
+      }
+    );
     console.log("note: ", note);
     if (!note) {
       return res.status(404).json({ error: "unrachive not found" });
@@ -251,7 +267,11 @@ export const getSearchedNotes = async (
 ) => {
   try {
     const { search, cursor, limit } = req.query;
-    let query: any = { archivedAt: null, deletedAt: null };
+    let query: any = {
+      userId: req.user?.id,
+      archivedAt: null,
+      deletedAt: null,
+    };
 
     if (cursor) {
       query._id = { $lt: cursor };
@@ -289,15 +309,8 @@ export const getAndSearchTags = async (
   try {
     const { search } = req.query;
 
-    // let query: any = {
-    //   tags: { $regex: search, $options: "i" },
-    // };
-
-    // console.log("query", query);
-
-    // const notes = await NoteModel.find().select({ tags: 1, _id: 0 });
-    // const notes = await NoteModel.distinct("tags", query);
     const notes = await NoteModel.aggregate([
+      { $match: { userId: req.user?.id } }, // filter by userId
       { $unwind: "$tags" }, // flat map [[],[]]
       {
         $match: {
@@ -319,16 +332,6 @@ export const getAndSearchTags = async (
       return res.status(404).json({ error: "tags not found" });
     }
 
-    // const tags = [
-    //   ...new Set(notes.map((t) => t.tags.flatMap((t) => t)).flat()),
-    // ];
-
-    // const searchedTag = tags.filter((t) =>
-    //   t.toLocaleLowerCase().includes(search?.toString().toLocaleLowerCase() || "")
-    // );
-
-    // console.log('tags',notes[0]?.tags);
-
     res.json(notes[0]?.tags || []);
   } catch (error) {
     res.status(500).json({ message: "tags error server", error: error });
@@ -342,6 +345,7 @@ export const getTrashNotes = async (
   try {
     const { search, cursor, limit } = req.query;
     let query: any = {
+      userId: req.user?.id,
       deletedAt: { $ne: null },
     };
 
@@ -384,7 +388,7 @@ export const restoreNote = async (
       return res.status(400).json({ message: "id required to restore" });
     }
     const restoredNote = await NoteModel.findByIdAndUpdate(
-      id,
+      { _id: id, userId: req.user?.id },
       {
         deletedAt: null,
       },
@@ -409,10 +413,13 @@ export const deleteForeverNote = async (
     if (!id) {
       return res.status(400).json({ message: "id required to delete forever" });
     }
-    const deletedNote = await NoteModel.findByIdAndDelete(id);
+    const deletedNote = await NoteModel.findByIdAndDelete({
+      _id: id,
+      userId: req.user?.id,
+    });
     if (!deletedNote) {
       return res.status(404).json({ message: "restored Note  not found" });
-    }  
+    }
 
     res.status(201).json(deletedNote);
   } catch (error) {

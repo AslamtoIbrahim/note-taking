@@ -47,6 +47,7 @@ function App() {
         <Route path="editor" Component={NoteContentPage} />
         <Route path="editor/:id" Component={NoteContentPage} />
         <Route path="search" Component={SearchPage} />
+        <Route path="search/:tag" Component={SearchPage} />
         <Route path="archived" Component={ArchivedPage} />
         <Route path="tags" Component={TagsPage} />
         <Route path="settings" Component={SettingsPage} />

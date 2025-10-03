@@ -34,10 +34,18 @@ const LoginForm = () => {
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     setIsLoading(true);
-    const { error: responseError } = await authClient.signIn.email({
-      email: data.email,
-      password: data.password,
-    });
+    const { error: responseError } = await authClient.signIn.email(
+      {
+        email: data.email,
+        password: data.password,
+      },
+      {
+        onSuccess: (ctx) => {
+          const token = ctx.response.headers.get("set-auth-token");
+          if (token) localStorage.setItem("bearer_token", token);
+        },
+      },
+    );
 
     if (responseError) {
       setError(responseError.message || "something went wrong");

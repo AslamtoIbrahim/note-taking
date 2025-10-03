@@ -28,18 +28,18 @@ export type NoteState = {
 
 export const fullback: JSONContent = {
   type: "doc",
-  content: [
-    {
-      type: "paragraph",
-      attrs: {
-        textAlign: null,
-      },
-      content: [
-        {
-          type: "text",
-          text: "",
-        },
-      ],
-    },
-  ],
+  // content: [
+  //   {
+  //     type: "paragraph",
+  //     attrs: {
+  //       textAlign: null,
+  //     },
+  //     content: [
+  //       {
+  //         type: "text",
+  //         text: " ",
+  //       },
+  //     ],
+  //   },
+  // ],
 };
