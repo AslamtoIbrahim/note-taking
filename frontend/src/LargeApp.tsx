@@ -6,13 +6,13 @@ const LargeApp = () => {
   const session = useRequireAuth();
   if (!session) {
     return (
-      <div className="bg-primary/8 flex h-screen items-center justify-center lg:bg-white">
+      <div className="flex h-screen items-center justify-center ">
         <Loader className="border-l-primary/35 md:size-8 md:border-6" />
       </div>
     );
   }
   return (
-    <div className="bg-primary/8 relative h-screen lg:bg-white">
+    <div className="relative h-screen ">
       <DesktopPage />
     </div>
   );

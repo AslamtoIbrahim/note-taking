@@ -35,10 +35,10 @@ const TrashDialog = ({onClick}: TrashDialogProp) => {
   return (
     <div className="lg:h-full lg:w-full ">
       <div className="py-2 px-4 flex justify-end">
-        <CgClose className="border rounded-full text-secondary cursor-pointer" onClick={onClick}/>
+        <CgClose className="border rounded-full text-black cursor-pointer dark:text-white/65 hover:text-red-500 dark:hover:text-red-400" onClick={onClick}/>
       </div>
-      <div className="marx h-96 lg:h-full space-y-2 rounded-sm bg-white px-8 py-8 lg:pt-0">
-        <h2>Notes in Trash are deleted after 30 days</h2>
+      <div className="marx h-96 lg:h-full space-y-2 rounded-sm bg-white dark:bg-text-dark px-8 py-8 lg:pt-0">
+        <h2 className="dark:text-white/65">Notes in Trash are deleted after 30 days</h2>
         <SearchInput
           className="text-sm"
           search={search}

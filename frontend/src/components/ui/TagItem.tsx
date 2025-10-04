@@ -22,8 +22,8 @@ const TagItem = ({ tag }: TagItemProp) => {
         `${isActive ? "active" : "block w-full bg-transparent"} group hover:bg-primary/10 lg:my-1 `
       }
     >
-      <div className="w-full items-center justify-between lg:flex lg:pr-8">
-        <div className="flex w-full cursor-pointer items-center gap-x-4 rounded px-4 py-2 capitalize">
+      <div className="w-full items-center justify-between flex lg:pr-8">
+        <div className="flex w-full cursor-pointer items-center gap-x-4 rounded px-4 py-2 capitalize dark:text-secondary">
           <BsTag className="text-lg" />
           <p>{tag}</p>
         </div>

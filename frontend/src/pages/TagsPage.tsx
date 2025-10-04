@@ -27,14 +27,14 @@ const TagsPage = () => {
 
 
   return (
-    <div className="padx font-body h-full space-y-2 rounded-t-xl  bg-white py-4">
+    <div className="padx font-body h-full space-y-2 rounded-t-xl  py-4">
       <SearchInput
         search={search}
         onChangeSearch={onSearchHandler}
         placeholder="Enter tag name"
         className="text-sm xl:mx-4"
       />
-      <h1 className="text-secondary lg:px-2">Tags</h1>
+      <h1 className="text-secondary lg:px-2 dark:text-white/65">Tags</h1>
       {status === "pending" && (
         <div className="my-auto flex h-96 items-center justify-center">
           <Loader />

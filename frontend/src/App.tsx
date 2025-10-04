@@ -56,7 +56,7 @@ function App() {
       <Route path="/sign-up" Component={SignUpPage} />
       <Route path="/*" Component={NotFoundPage} />
     </Routes>
-  );
+  )
 }
 
 export default App;

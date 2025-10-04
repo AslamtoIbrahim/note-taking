@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Roboto:wght@400;500;700&display=swap");
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
   /* Fonts */
@@ -25,6 +26,11 @@
   --color-text-dark: hsl(221, 39%, 11%); /* Text Dark / Titles */
 }
 
+ 
+body {
+  @apply bg-primary/8 dark:bg-text-dark lg:bg-white;
+}
+
 .marx {
   @apply mx-4 md:mx-auto md:max-w-md;
 }
@@ -38,14 +44,14 @@
 }
 
 .form-input {
-  @apply w-full truncate outline-none;
+  @apply w-full truncate outline-none dark:bg-transparent dark:text-white/65;
 }
 .form-error {
   @apply text-sm text-red-500;
 }
 
 .nav-div {
-  @apply hover:text-text-dark flex w-fit scale-100 cursor-pointer flex-col items-center justify-center text-lg transition-transform duration-200 ease-in-out hover:scale-115;
+  @apply hover:text-text-dark flex w-fit scale-100 cursor-pointer flex-col items-center justify-center text-lg transition-transform duration-200 ease-in-out hover:scale-115 dark:hover:text-white/65;
 }
 
 .nav-p {
@@ -116,18 +122,21 @@ input[type="search"]::-webkit-search-cancel-button {
 }
 
 .active {
-  @apply bg-primary/10 block rounded w-full;
+  @apply bg-primary/10 block w-full rounded;
 }
 
-.color-sel{
-  @apply size-4 rounded-full cursor-pointer block
+.color-sel {
+  @apply block size-4 cursor-pointer rounded-full;
 }
 
-
-.icon-button{
-  @apply text-secondary hover:text-text-dark cursor-pointer
+.icon-button {
+  @apply text-secondary hover:text-text-dark cursor-pointer dark:hover:text-white/65;
 }
 
-.status{
-  @apply opacity-0 transition-opacity duration-300 ease-in-out peer-hover:visible peer-hover:opacity-100
+.status {
+  @apply opacity-0 transition-opacity duration-300 ease-in-out peer-hover:visible peer-hover:opacity-100;
+}
+
+.trash-icon {
+  @apply hover:text-black dark:hover:text-white/65;
 }

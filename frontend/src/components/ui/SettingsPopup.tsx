@@ -9,7 +9,7 @@ const SettingsPopup = ({ className }: SettingsPopup) => {
     <div
       className={twMerge(
         className,
-        "absolute right-0 z-100 w-96 rounded-md bg-white p-4 shadow-2xl transition-all duration-700 ease-in-out",
+        " w-96 rounded-md bg-white dark:bg-text-dark dark:shadow-none dark:border dark:border-secondary/50 p-4 shadow-2xl transition-all duration-700 ease-in-out",
       )}
     >
       <SettingsPage />

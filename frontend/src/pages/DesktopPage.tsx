@@ -24,7 +24,7 @@ const DesktopPage = () => {
       </section>
       <section className="divide-secondary/50 col-span-4 grid grid-rows-10 divide-y">
         <div className="row-span-1 flex items-center justify-between px-8">
-          <p className="text-2xl font-bold">All Notes</p>
+          <p className="text-2xl font-bold dark:text-white/85">All Notes</p>
           <div className="flex items-center gap-x-4 ">
             <SearchInput search={search} onChangeSearch={onChangeSearch} />
             <Settings />

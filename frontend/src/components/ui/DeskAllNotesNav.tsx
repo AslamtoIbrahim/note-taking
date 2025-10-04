@@ -19,7 +19,7 @@ const DeskAllNotesNav = () => {
     >
       <button
         onClick={onClickHandler}
-        className="hover:bg-primary/10 text-text-dark flex w-full cursor-pointer items-center justify-between px-4 py-2 hover:rounded"
+        className="hover:bg-primary/10 text-text-dark flex w-full cursor-pointer items-center justify-between px-4 py-2 hover:rounded dark:text-secondary"
       >
         <div className="flex items-center gap-x-2">
           <GoHome />

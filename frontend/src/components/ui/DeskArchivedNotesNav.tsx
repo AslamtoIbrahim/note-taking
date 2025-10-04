@@ -20,7 +20,7 @@ const DeskArchivedNotesNav = () => {
     >
       <button
         onClick={onClickHandler}
-        className="hover:bg-primary/10 text-text-dark mt-2 flex w-full cursor-pointer items-center justify-between px-4 py-2 hover:rounded"
+        className="hover:bg-primary/10 dark:text-secondary text-text-dark mt-2 flex w-full cursor-pointer items-center justify-between px-4 py-2 hover:rounded"
       >
         <div className="flex items-center gap-x-2">
           <GoArchive />

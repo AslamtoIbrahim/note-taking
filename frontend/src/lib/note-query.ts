@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { Note, NotePartial, Notes } from "../utils/types";
+import type { Note, NotePartial, Notes, UpdateNoteType } from "../utils/types";
 
 export const getQueryNotes = async ({
   pageParam,
@@ -47,10 +47,7 @@ export const addQueryNote = async (newNote: NotePartial) => {
   });
 };
 
-type UpdateNoteType = {
-  id: string;
-  note: NotePartial;
-};
+
 
 export const updateQueryNote = async ({ id, note }: UpdateNoteType) => {
   await axios.put<Note>(`http://localhost:3000/api/v1/note/${id}`, note, {

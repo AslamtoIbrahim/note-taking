@@ -54,7 +54,7 @@ const SignUpForm = () => {
     }
   };
   return (
-    <div className="bg-light marx mt-12 flex flex-col items-center gap-y-8 rounded px-6 py-8">
+    <div className="bg-light marx mt-12 flex flex-col items-center gap-y-8 rounded px-6 py-8 dark:bg-primary/5">
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <section>
           <div className="div-input">

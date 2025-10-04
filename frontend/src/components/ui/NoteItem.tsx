@@ -24,9 +24,9 @@ const NoteItem = ({ note, onclick }: NoteItemProp) => {
   }, [isDesktop]);
 
   const onUnrachiveNote = (e: React.MouseEvent<SVGElement>) => {
-    e.preventDefault()
-    e.stopPropagation()
-    console.log('button clicked');
+    e.preventDefault();
+    e.stopPropagation();
+    console.log("button clicked");
     if (note._id && note.archivedAt) {
       unarchiveNote.mutate(note._id);
     }
@@ -40,7 +40,7 @@ const NoteItem = ({ note, onclick }: NoteItemProp) => {
     <NavLink
       to={`${path}${note._id}`}
       className={({ isActive }) =>
-        `${isActive ? "active" : "bg-transparent"} h-fit block  h-fit block`
+        `${isActive ? "active" : "bg-transparent"} block h-fit`
       }
     >
       <div
@@ -52,12 +52,12 @@ const NoteItem = ({ note, onclick }: NoteItemProp) => {
           className="cursor-pointer space-y-3 p-4 hover:rounded lg:px-2"
         >
           <div className="flex justify-between">
-            <h1 className="text-lg font-black capitalize">{note.title}</h1>
+            <h1 className="text-lg font-black capitalize dark:text-white/75">{note.title}</h1>
           </div>
           <div className="flex flex-wrap items-center gap-2">
             {note.tags.map((t, i) => {
               return (
-                <p className="bg-secondary/20 rounded px-2 text-sm" key={i}>
+                <p className="bg-secondary/20 dark:bg-primary/30 dark:text-white/60 rounded px-2 text-sm" key={i}>
                   {t}
                 </p>
               );
@@ -76,7 +76,7 @@ const NoteItem = ({ note, onclick }: NoteItemProp) => {
         {note.archivedAt && (
           <BiArchiveOut
             onClick={onUnrachiveNote}
-            className="text-primary mt-3 size-6 cursor-pointer p-1 transition-transform duration-200 ease-in-out hover:scale-115 lg:mt-6 lg:mr-4 "
+            className="text-primary mt-3 size-6 cursor-pointer p-1 transition-transform duration-200 ease-in-out hover:scale-115 lg:mt-6 lg:mr-4"
           />
         )}
       </div>

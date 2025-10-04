@@ -79,7 +79,7 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="bg-light marx mt-12 flex flex-col items-center gap-y-8 rounded px-6 py-8">
+    <div className="bg-light dark:bg-primary/5 marx mt-12 flex flex-col items-center gap-y-8 rounded px-6 py-8">
       <GoogleSignIn onClick={onGoogleSignInHandler} loading={isGoogleLoading} />
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <section>
@@ -87,7 +87,7 @@ const LoginForm = () => {
             <FaEnvelope className="text-secondary" />
             <input
               {...register("email")}
-              className="form-input"
+              className="form-input "
               type="text"
               placeholder="email"
             />

@@ -71,7 +71,7 @@ const NoteText = ({ content, onUpdate }: NoteTextProp) => {
     <div>
       <NoteBar editor={editor} />
       <EditorContent
-        className="border-secondary tiptop py-2 outline-none"
+        className="border-secondary tiptop py-2 outline-none dark:text-white"
         editor={editor}
       />
     </div>

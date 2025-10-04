@@ -40,16 +40,16 @@ const SearchPage = () => {
   }
 
   return (
-    <div className="padx font-body h-full space-y-2 rounded-t-xl bg-white py-4">
+    <div className="padx font-body h-full space-y-2 rounded-t-xl py-4">
       <SearchInput
         search={noteContext.search}
         onChangeSearch={onChangeSearchHnadler}
         className="lg:hidden"
       />
       {noteContext.search && (
-        <p className="text-sm">
+        <p className="text-sm dark:text-secondary">
           All notes matching "
-          <span className="font-semibold">{noteContext.search}</span>" are
+          <span className="font-semibold dark:text-white/65">{noteContext.search}</span>" are
           displayed below
         </p>
       )}

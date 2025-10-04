@@ -13,7 +13,7 @@ const CreateNewNote = () => {
     <NavLink className={"block"} to={"editor/"}>
       <button
         onClick={onClickHandler}
-        className="bg-primary flex w-full cursor-pointer items-center justify-center gap-x-2 rounded py-2 text-white capitalize hover:bg-blue-600"
+        className="bg-primary flex w-full cursor-pointer items-center justify-center gap-x-2 rounded py-2 text-white capitalize hover:bg-blue-600 dark:bg-primary/75 dark:text-white/80"
       >
         <BiPlus />
         <p>create new note</p>

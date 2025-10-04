@@ -7,7 +7,7 @@ const ArchiveButton = ({ onclick }: ArchiveButtonProp) => {
   return (
     <button
       onClick={onclick}
-      className="text-secondary hover:text-text-dark desk-button cursor-pointer"
+      className="text-secondary icon-button hover:text-text-dark desk-button cursor-pointer"
     >
       <BiArchiveIn />
       <p className="hidden capitalize lg:block">archive note</p>

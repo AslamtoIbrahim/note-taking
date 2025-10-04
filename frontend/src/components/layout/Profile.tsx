@@ -32,15 +32,15 @@ const Profile = () => {
     <>
       {session && (
         <div className="text-text-dark/90 w-full space-y-6 p-4">
-          <div className="flex items-center gap-x-4">
+          <div className="flex items-center gap-x-4 dark:text-secondary">
             <BiUser className="text-xl" />
             <p className="text-lg font-bold capitalize">{session?.user.name}</p>
           </div>
-          <div className="flex items-center gap-x-4">
+          <div className="flex items-center gap-x-4 dark:text-secondary">
             <BiEnvelope className="text-xl" />
-            <div>
+            <div >
               <p className="capitalize">email</p>
-              <p className="text-secondary">{session?.user.email}</p>
+              <p >{session?.user.email}</p>
             </div>
           </div>
           <button

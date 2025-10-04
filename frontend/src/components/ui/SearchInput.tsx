@@ -22,7 +22,7 @@ const SearchInput = ({
     <div
       className={twMerge(
         className,
-        "bg-secondary/1 ring-secondary flex items-center rounded-md px-4 py-2 ring-1",
+        "bg-secondary/1 ring-secondary dark:placeholder:text-secondary flex items-center rounded-md px-4 py-2 ring-1 dark:text-white/65",
       )}
     >
       <FiSearch className="text-secondary" />

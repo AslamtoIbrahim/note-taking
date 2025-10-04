@@ -126,10 +126,10 @@ export const updateNote = async (
     if (!id) {
       return res.status(400).json({ message: "id required to update" });
     }
-
-    if (!title || !content) {
-      return res.status(400).json({ message: "Nothing to update" });
-    }
+    
+    // if (!title || !content) {
+    //   return res.status(400).json({ message: "Nothing to update" });
+    // }
 
     const updatedNote = await NoteModel.findByIdAndUpdate(
       { _id: id, userId: req.user?.id },

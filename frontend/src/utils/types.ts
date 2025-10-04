@@ -26,6 +26,12 @@ export type NoteState = {
 };
 
 
+export type UpdateNoteType = {
+  id: string;
+  note: NotePartial;
+};
+
+
 export const fullback: JSONContent = {
   type: "doc",
   // content: [

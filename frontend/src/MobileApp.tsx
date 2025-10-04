@@ -8,15 +8,15 @@ const MobileApp = () => {
   const session = useRequireAuth();
   if (!session) {
     return (
-      <div className="bg-primary/8 flex h-screen items-center justify-center lg:bg-white">
+      <div className="flex h-screen items-center justify-center">
         <Loader className="md:size-8 md:border-6" />
       </div>
     );
   }
   return (
-    <div className="bg-primary/8 relative flex flex-col h-screen lg:bg-white ">
+    <div className="relative flex h-screen flex-col  ">
       <Header />
-      <div className="flex-11/12 bg-white rounded-t-xl pt-4  lg:rounded-none">
+      <div className="flex-11/12 rounded-t-xl dark:border-t dark:border-secondary/50 pt-4 bg-white dark:bg-text-dark">
         <Outlet />
       </div>
       <BottomNav />

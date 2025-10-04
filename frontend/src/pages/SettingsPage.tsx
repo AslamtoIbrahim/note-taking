@@ -22,16 +22,16 @@ const SettingsPage = () => {
   };
 
   return (
-    <div className="padx font-body h-full space-y-2 rounded-t-xl bg-white py-4 ">
-      <h1 className="text-secondary text-lg">Settings</h1>
-      <section className="bg-secondary/5 divide-secondary/15 divide-y rounded">
+    <div className="padx font-body h-full space-y-2 rounded-t-xl py-4 ">
+      <h1 className="dark:text-white/65 text-lg">Settings</h1>
+      <section className="bg-secondary/5 divide-secondary/15 divide-y rounded ">
         <ArchivedNotesNavigate onClick={onArchivedNotesHandler} />
         <TrashNavigate onClick={onTrashHandler} />
       </section>
       <section className="bg-secondary/5 rounded">
         <ToggleTheme />
       </section>
-      <h1 className="text-secondary text-lg">Profile</h1>
+      <h1 className="dark:text-white/65 text-lg">Profile</h1>
       <section className="bg-secondary/5 rounded">
         <Profile />
       </section>
