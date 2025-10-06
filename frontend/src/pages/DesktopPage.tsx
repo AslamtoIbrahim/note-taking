@@ -45,29 +45,3 @@ const DesktopPage = () => {
 
 export default DesktopPage;
 
-
-
-// {/* <section className="col-span-3 grid grid-cols-3">
-//           {/* 🟢 Outlet Notes */}
-//             <div
-//               className={`col-span-2 grid grid-rows-9 ${isVisible ? "visible" : "visible"}`}
-//             >
-//               <div className="row-span-8 p-4">
-//                 {/* NoteContentPage code here */}
-//                 <NoteContentPage />
-//                 <hr className="text-secondary/50" />
-//               </div>
-//               <div className="row-span-1 p-2">
-//                 <div className="flex gap-x-4 px-4">
-//                   <SaveNoteButton onclick={onSaveNoteHandler} />
-//                   <CancelButton onclick={onCancelHandler} />
-//                 </div>
-//               </div>
-//             </div>
-//             <div
-//               className={`col-span-1 space-y-4  p-4 ${isVisible ? "visible" : "visible"} `}
-//             >
-//               <ArchiveButton onclick={onArchiveHandler} />
-//               <DeleteButton onclick={onDeleteHandler} />
-//             </div>
-//           </section> */}

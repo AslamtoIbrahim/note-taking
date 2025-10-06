@@ -51,7 +51,6 @@ const LoginForm = () => {
       setError(responseError.message || "something went wrong");
       toast.error("somthing went wrong");
       setIsLoading(false);
-      console.error("error", responseError.message);
     } else {
       refetch();
       toast.success("Welcome to Note taking");

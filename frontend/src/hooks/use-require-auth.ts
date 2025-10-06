@@ -3,13 +3,13 @@ import useSession from "../lib/auth-session";
 import { useEffect } from "react";
 
 export const useRequireAuth = (redirectTo = "/sign-in") => {
-  const { data: session, isPending, refetch } = useSession();
+  const { data: session, isPending } = useSession();
   const navigate = useNavigate();
   useEffect(() => {
     if (!isPending && !session) {
-      navigate(redirectTo)
+      navigate(redirectTo);
     }
   }, [session, isPending, navigate, redirectTo]);
 
-  return session
+  return session;
 };

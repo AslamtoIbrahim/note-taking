@@ -34,18 +34,4 @@ export type UpdateNoteType = {
 
 export const fullback: JSONContent = {
   type: "doc",
-  // content: [
-  //   {
-  //     type: "paragraph",
-  //     attrs: {
-  //       textAlign: null,
-  //     },
-  //     content: [
-  //       {
-  //         type: "text",
-  //         text: " ",
-  //       },
-  //     ],
-  //   },
-  // ],
 };
