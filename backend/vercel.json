@@ -11,5 +11,6 @@
             "src": "/(.*)",
             "dest": "/server.ts"
         }
-    ]
+    ],
+  "buildCommand": "npm install && npm run build"
 }
