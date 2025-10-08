@@ -3,14 +3,14 @@
     "buildCommand": "npm install && npm run build && ls -R dist",
     "builds": [
         {
-            "src": "dist/server.ts",
+            "src": "backend/server.ts",
             "use": "@vercel/node"
         }
     ],
     "routes": [
         {
             "src": "/(.*)",
-            "dest": "dist/server.ts"
+            "dest": "backend/server.ts"
         }
     ]
 }
