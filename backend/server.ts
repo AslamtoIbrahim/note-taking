@@ -29,6 +29,9 @@ app.use(express.json());
 
 app.use("/", noteRouter);
 
-app.listen(prot, () =>
-  console.log(`Server running on http://localhost:${prot}`)
-);
+// app.listen(prot, () =>
+//   console.log(`Server running on http://localhost:${prot}`)
+// );
+
+
+export default app;

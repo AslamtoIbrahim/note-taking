@@ -14,11 +14,9 @@ import {
   unarchiveNote,
   updateNote,
 } from "../controllers/note-controllers.ts";
-import { authenticateUser } from "../middlewares/authMiddlerware.ts";
 
 const noteRouter = express.Router();
 
-// noteRouter.get('/api/v1/all-notes', getNotes)
 
 noteRouter.get("/api/v1/notes", getQueryNotes);
 
