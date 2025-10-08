@@ -7,7 +7,7 @@ import { authenticateUser } from "./middlewares/authMiddlerware.js";
 
 const app = express();
 
-const prot = 3000;
+// const prot = 3000;
 
 connectNoteDB();
 
