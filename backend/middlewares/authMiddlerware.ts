@@ -1,4 +1,5 @@
 import express from "express";
+import "./types/express";
 import { auth } from "../lib/auth";
 import { fromNodeHeaders } from "better-auth/node";
 

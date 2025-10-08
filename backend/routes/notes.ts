@@ -1,4 +1,5 @@
 import express from "express";
+import "./types/express";
 import {
   addNote,
   archiveNote,
