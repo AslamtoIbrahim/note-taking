@@ -1,4 +1,5 @@
 import express from "express";
+import "./types/express";
 import cors from "cors";
 import authRouter from "./routes/auth";
 import noteRouter from "./routes/notes";
