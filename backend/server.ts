@@ -5,6 +5,7 @@ import authRouter from "./routes/auth";
 import noteRouter from "./routes/notes";
 import connectNoteDB from "./db/note-db";
 import { authenticateUser } from "./middlewares/authMiddlerware";
+import serverless from "serverless-http";
 
 const app = express();
 
@@ -40,4 +41,5 @@ app.listen(prot, () =>
 );
 
 
-export default app;
+
+export const handler = serverless(app);
