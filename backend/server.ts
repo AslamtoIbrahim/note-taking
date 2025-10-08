@@ -7,7 +7,11 @@ import { authenticateUser } from "./middlewares/authMiddlerware";
 
 const app = express();
 
-// const prot = 3000;
+const prot = 3000;
+
+app.get("/", (req, res) => {
+  res.send("API is running....");
+});
 
 connectNoteDB();
 
@@ -29,9 +33,9 @@ app.use(express.json());
 
 app.use("/", noteRouter);
 
-// app.listen(prot, () =>
-//   console.log(`Server running on http://localhost:${prot}`)
-// );
+app.listen(prot, () =>
+  console.log(`Server running on http://localhost:${prot}`)
+);
 
 
 export default app;
