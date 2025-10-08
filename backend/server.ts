@@ -1,9 +1,9 @@
 import express from "express";
 import cors from "cors";
-import authRouter from "./routes/auth.ts";
-import noteRouter from "./routes/notes.ts";
-import connectNoteDB from "./db/note-db.ts";
-import { authenticateUser } from "./middlewares/authMiddlerware.ts";
+import authRouter from "./routes/auth.js";
+import noteRouter from "./routes/notes.js";
+import connectNoteDB from "./db/note-db.js";
+import { authenticateUser } from "./middlewares/authMiddlerware.js";
 
 const app = express();
 
