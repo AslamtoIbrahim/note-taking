@@ -8,7 +8,8 @@ import { authenticateUser } from "./middlewares/authMiddlerware";
 
 const app = express();
 
-const prot = 3000;
+const prot = process.env.PORT || 3000;
+
 
 app.get("/", (req, res) => {
   res.send("API is running....");
