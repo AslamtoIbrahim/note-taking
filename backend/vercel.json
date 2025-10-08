@@ -1,16 +1,3 @@
 {
-    "version": 2,
-    "buildCommand": "npm install && npm run build && ls -R dist",
-    "builds": [
-        {
-            "src": "dist/server.ts",
-            "use": "@vercel/node"
-        }
-    ],
-    "routes": [
-        {
-            "src": "/(.*)",
-            "dest": "dist/server.ts"
-        }
-    ]
+  "rewrites": [{ "source": "/(.*)", "destination": "/api" }]
 }
