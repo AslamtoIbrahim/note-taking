@@ -18,7 +18,6 @@ import {
 
 const noteRouter = express.Router();
 
-
 noteRouter.get("/api/v1/notes", getQueryNotes);
 
 noteRouter.get("/api/v1/all-notes/:id", getNoteById);

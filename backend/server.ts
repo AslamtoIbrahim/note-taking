@@ -1,14 +1,13 @@
-import express from "express";
 import cors from "cors";
-import authRouter from "./routes/auth";
-import noteRouter from "./routes/notes";
+import express from "express";
 import connectNoteDB from "./db/note-db";
 import { authenticateUser } from "./middlewares/authMiddlerware";
-import serverless from "serverless-http";
+import authRouter from "./routes/auth";
+import noteRouter from "./routes/notes";
 
 const app = express();
 
-// const prot = process.env.PORT || 3000;
+const prot = process.env.PORT || 3000;
 
 
 app.get("/", (req, res) => {
@@ -35,10 +34,6 @@ app.use(express.json());
 
 app.use("/", noteRouter);
 
-// app.listen(prot, () =>
-//   console.log(`Server running on http://localhost:${prot}`)
-// );
-
-
-
-export const handler = serverless(app);
+app.listen(prot, () =>
+  console.log(`Server running on http://localhost:${prot}`)
+);

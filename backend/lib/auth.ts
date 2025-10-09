@@ -1,9 +1,7 @@
+import { betterAuth } from "better-auth/*";
 import Database from "better-sqlite3";
 import dotenv from "dotenv";
 dotenv.config();
-
-const { betterAuth } = await import("better-auth");
-
 
 export const auth = betterAuth({
   database: new Database("./notes.db"),
