@@ -1,12 +1,13 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
-    "module": "commonjs",
+    "target": "ES2020", // على الأقل ES2017، أنا خليت ES2020
+    "module": "ESNext", // باش Top-level await يخدم
+    "moduleResolution": "node",
     "outDir": "./dist",
     "esModuleInterop": true,
-    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
     "strict": true,
-    "typeRoots": ["./types", "./node_modules/@types"]
+    "skipLibCheck": true
   },
   "include": ["./**/*.ts", "./types"]
 }
