@@ -7,9 +7,8 @@
   "scripts": {
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js",
-    "mi": "nodemon server.ts",
-    "dev": "nodemon --exec ts-node --project tsconfig.json server.ts"
+    "start": "node dist/server.js",
+    "dev": "npx tsc && nodemon dist/server.js"
   },
   "devDependencies": {
     "@types/better-sqlite3": "^7.6.13",
