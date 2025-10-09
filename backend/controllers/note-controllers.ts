@@ -1,10 +1,10 @@
-import express from "express";
+import {Request, Response} from "express";
 import "./types/express";
 import NoteModel from "../models/note-model";
 
 export const getQueryNotes = async (
-  req: express.Request,
-  res: express.Response
+  req: Request,
+  res: Response
 ) => {
   try {
     const { limit, cursor } = req.query;
@@ -37,8 +37,8 @@ export const getQueryNotes = async (
 };
 
 export const getNoteById = async (
-  req: express.Request,
-  res: express.Response
+  req: Request,
+  res: Response
 ) => {
   try {
     const { id } = req.params;
@@ -55,8 +55,8 @@ export const getNoteById = async (
 };
 
 export const getArchivedNotes = async (
-  req: express.Request,
-  res: express.Response
+  req: Request,
+  res: Response
 ) => {
   try {
     const archivedNotes = await NoteModel.find({
@@ -74,8 +74,8 @@ export const getArchivedNotes = async (
 };
 
 export const getDeletedNotes = async (
-  req: express.Request,
-  res: express.Response
+  req: Request,
+  res: Response
 ) => {
   try {
     const deletedNotes = await NoteModel.find({
@@ -91,7 +91,7 @@ export const getDeletedNotes = async (
   }
 };
 
-export const addNote = async (req: express.Request, res: express.Response) => {
+export const addNote = async (req: Request, res: Response) => {
   try {
     const { title, content, tags } = req.body;
 
@@ -117,8 +117,8 @@ export const addNote = async (req: express.Request, res: express.Response) => {
 };
 
 export const updateNote = async (
-  req: express.Request,
-  res: express.Response
+  req: Request,
+  res: Response
 ) => {
   try {
     const { id } = req.params;
@@ -153,8 +153,8 @@ export const updateNote = async (
 
 // soft delete using update
 export const deleteNote = async (
-  req: express.Request,
-  res: express.Response
+  req: Request,
+  res: Response
 ) => {
   try {
     const { id } = req.params;
@@ -177,8 +177,8 @@ export const deleteNote = async (
 };
 
 export const archiveNote = async (
-  req: express.Request,
-  res: express.Response
+  req: Request,
+  res: Response
 ) => {
   try {
     const { id } = req.params;
@@ -205,8 +205,8 @@ export const archiveNote = async (
 };
 
 export const getArchives = async (
-  req: express.Request,
-  res: express.Response
+  req: Request,
+  res: Response
 ) => {
   try {
     const { cursor, limit } = req.query;
@@ -238,8 +238,8 @@ export const getArchives = async (
 };
 
 export const unarchiveNote = async (
-  req: express.Request,
-  res: express.Response
+  req: Request,
+  res: Response
 ) => {
   try {
     const { id } = req.params;
@@ -263,8 +263,8 @@ export const unarchiveNote = async (
 };
 
 export const getSearchedNotes = async (
-  req: express.Request,
-  res: express.Response
+  req: Request,
+  res: Response
 ) => {
   try {
     const { search, cursor, limit } = req.query;
@@ -304,8 +304,8 @@ export const getSearchedNotes = async (
 };
 
 export const getAndSearchTags = async (
-  req: express.Request,
-  res: express.Response
+  req: Request,
+  res: Response
 ) => {
   try {
     const { search } = req.query;
@@ -340,8 +340,8 @@ export const getAndSearchTags = async (
 };
 
 export const getTrashNotes = async (
-  req: express.Request,
-  res: express.Response
+  req: Request,
+  res: Response
 ) => {
   try {
     const { search, cursor, limit } = req.query;
@@ -379,8 +379,8 @@ export const getTrashNotes = async (
 };
 
 export const restoreNote = async (
-  req: express.Request,
-  res: express.Response
+  req: Request,
+  res: Response
 ) => {
   try {
     const { id } = req.params;
@@ -405,8 +405,8 @@ export const restoreNote = async (
 };
 
 export const deleteForeverNote = async (
-  req: express.Request,
-  res: express.Response
+  req: Request,
+  res: Response
 ) => {
   try {
     const { id } = req.params;

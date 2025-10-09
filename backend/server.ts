@@ -9,6 +9,7 @@ const app = express();
 
 const prot = process.env.PORT || 3000;
 
+// console.log('run ser 🧶💦');
 
 app.get("/", (req, res) => {
   res.send("API is running....");

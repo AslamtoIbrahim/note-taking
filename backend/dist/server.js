@@ -11,6 +11,7 @@ const auth_1 = __importDefault(require("./routes/auth"));
 const notes_1 = __importDefault(require("./routes/notes"));
 const app = (0, express_1.default)();
 const prot = process.env.PORT || 3000;
+// console.log('run ser 🧶💦');
 app.get("/", (req, res) => {
     res.send("API is running....");
 });
