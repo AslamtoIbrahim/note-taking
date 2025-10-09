@@ -9,7 +9,7 @@ import serverless from "serverless-http";
 
 const app = express();
 
-const prot = process.env.PORT || 3000;
+// const prot = process.env.PORT || 3000;
 
 
 app.get("/", (req, res) => {
@@ -36,9 +36,9 @@ app.use(express.json());
 
 app.use("/", noteRouter);
 
-app.listen(prot, () =>
-  console.log(`Server running on http://localhost:${prot}`)
-);
+// app.listen(prot, () =>
+//   console.log(`Server running on http://localhost:${prot}`)
+// );
 
 
 
