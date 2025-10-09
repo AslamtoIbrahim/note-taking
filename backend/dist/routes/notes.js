@@ -1,0 +1,23 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
+require("./types/express");
+const note_controllers_1 = require("../controllers/note-controllers");
+const noteRouter = express_1.default.Router();
+noteRouter.get("/api/v1/notes", note_controllers_1.getQueryNotes);
+noteRouter.get("/api/v1/all-notes/:id", note_controllers_1.getNoteById);
+noteRouter.post("/api/v1/note", note_controllers_1.addNote);
+noteRouter.put("/api/v1/note/:id", note_controllers_1.updateNote);
+noteRouter.delete("/api/v1/note/:id", note_controllers_1.deleteNote);
+noteRouter.get("/api/v1/archives", note_controllers_1.getArchives);
+noteRouter.put("/api/v1/archives/:id", note_controllers_1.archiveNote);
+noteRouter.put("/api/v1/unarchive/:id", note_controllers_1.unarchiveNote);
+noteRouter.get("/api/v1/search", note_controllers_1.getSearchedNotes);
+noteRouter.get("/api/v1/tags", note_controllers_1.getAndSearchTags);
+noteRouter.get("/api/v1/trash", note_controllers_1.getTrashNotes);
+noteRouter.put("/api/v1/restore/:id", note_controllers_1.restoreNote);
+noteRouter.delete("/api/v1/delete/:id", note_controllers_1.deleteForeverNote);
+exports.default = noteRouter;
