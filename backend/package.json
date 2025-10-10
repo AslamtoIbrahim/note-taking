@@ -6,8 +6,9 @@
   "main": "server.ts",
   "type": "module",
   "scripts": {
-    "start": "node server.ts",
-    "dev": "nodemon server.ts"
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "dev": "nodemon --watch backend --exec ts-node backend/server.ts"
   },
   "devDependencies": {
     "@types/better-sqlite3": "^7.6.13",

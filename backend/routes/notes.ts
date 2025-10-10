@@ -13,7 +13,7 @@ import {
   restoreNote,
   unarchiveNote,
   updateNote,
-} from "../controllers/note-controllers";
+} from "../controllers/note-controllers.ts";
 
 const noteRouter = express.Router();
 
