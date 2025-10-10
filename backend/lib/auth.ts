@@ -1,4 +1,4 @@
-import { betterAuth } from "better-auth/*";
+import { betterAuth } from "better-auth";
 import Database from "better-sqlite3";
 import dotenv from "dotenv";
 dotenv.config();

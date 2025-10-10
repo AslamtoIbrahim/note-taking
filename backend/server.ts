@@ -1,9 +1,9 @@
 import cors from "cors";
 import express from "express";
-import connectNoteDB from "./db/note-db";
-import { authenticateUser } from "./middlewares/authMiddlerware";
-import authRouter from "./routes/auth";
-import noteRouter from "./routes/notes";
+import connectNoteDB from "./db/note-db.ts";
+import { authenticateUser } from "./middlewares/authMiddlerware.ts";
+import authRouter from "./routes/auth.ts";
+import noteRouter from "./routes/notes.ts";
 import dotenv from "dotenv";
 dotenv.config();
 

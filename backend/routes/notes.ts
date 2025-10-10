@@ -1,5 +1,4 @@
 import express from "express";
-import "./types/express";
 import {
   addNote,
   archiveNote,
@@ -14,7 +13,7 @@ import {
   restoreNote,
   unarchiveNote,
   updateNote,
-} from "../controllers/note-controllers";
+} from "../controllers/note-controllers.ts";
 
 const noteRouter = express.Router();
 
