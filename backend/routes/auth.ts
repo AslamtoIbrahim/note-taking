@@ -1,5 +1,5 @@
 import express from "express";
-import { auth } from "../lib/auth.ts";
+import { auth } from "../lib/auth";
 import { fromNodeHeaders, toNodeHandler } from "better-auth/node";
 
 const authRouter = express.Router();
