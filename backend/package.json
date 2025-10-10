@@ -4,6 +4,7 @@
   "description": "",
   "license": "ISC",
   "main": "server.ts",
+  "type": "module",
   "scripts": {
     "start": "node server.ts",
     "dev": "nodemon server.ts"

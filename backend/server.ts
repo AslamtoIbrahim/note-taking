@@ -1,4 +1,5 @@
-import cors from "cors";
+// import cors from "cors";
+const cors = require("cors");
 import express from "express";
 import connectNoteDB from "./db/note-db.ts";
 import { authenticateUser } from "./middlewares/authMiddlerware.ts";
