@@ -4,6 +4,8 @@ import connectNoteDB from "./db/note-db";
 import { authenticateUser } from "./middlewares/authMiddlerware";
 import authRouter from "./routes/auth";
 import noteRouter from "./routes/notes";
+import dotenv from "dotenv";
+dotenv.config();
 
 const app = express();
 
