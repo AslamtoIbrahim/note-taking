@@ -43,8 +43,13 @@ const LoginForm = () => {
         onSuccess: (ctx) => {
           const token = ctx.response.headers.get("set-auth-token");
           if (token) localStorage.setItem("bearer_token", token);
+          console.log(ctx.response);
         },
-      },
+        fetchOptions: {
+          credentials: "include",
+          callbackURL: "https://beautiful-cassata-eb7dbf.netlify.app",
+        },
+      }
     );
 
     if (responseError) {
