@@ -4,11 +4,10 @@
   "description": "",
   "license": "ISC",
   "main": "server.ts",
-  "type": "module",
   "scripts": {
     "build": "tsc",
     "start": "node dist/server.js",
-    "dev": "nodemon server.ts"
+    "dev": "nodemon dist/server.js"
   },
   "devDependencies": {
     "@types/better-sqlite3": "^7.6.13",
