@@ -24,6 +24,7 @@ app.use(
       "http://localhost:5173",
       "http://127.0.0.1:5173",
       "https://beautiful-cassata-eb7dbf.netlify.app",
+      "https://note-taking-woad.vercel.app",
     ],
     credentials: true,
   })
