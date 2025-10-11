@@ -113,7 +113,7 @@ const LoginForm = () => {
           Don't you have an account?{" "}
           <Link
             to={"/sign-up"}
-            className="hover:text-text-dark cursor-pointer underline"
+            className="hover:text-text-dark dark:hover:text-light/65 cursor-pointer underline"
           >
             sign up
           </Link>
