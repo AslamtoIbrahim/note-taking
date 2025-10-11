@@ -4,6 +4,7 @@
   "description": "",
   "license": "ISC",
   "main": "server.ts",
+  "type": "module",
   "scripts": {
     "build": "tsc",
     "start": "node dist/server.js",
