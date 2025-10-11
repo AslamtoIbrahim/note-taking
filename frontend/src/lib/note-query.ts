@@ -1,12 +1,15 @@
 import axios from "axios";
 import type { Note, NotePartial, Notes, UpdateNoteType } from "../utils/types";
 
+
+const API_URL = "https://note-taking-woad.vercel.app"
+
 export const getQueryNotes = async ({
   pageParam,
 }: {
   pageParam: string | null;
 }) => {
-  const res = await axios.get<Notes>("http://localhost:3000/api/v1/notes", {
+  const res = await axios.get<Notes>(`${API_URL}/api/v1/notes`, {
     params: {
       limit: 8,
       cursor: pageParam,
@@ -27,7 +30,7 @@ type QueryType = {
 export const getQueryNoteById = async ({ queryKey }: QueryType) => {
   const [, id] = queryKey;
   const res = await axios.get<Note>(
-    `http://localhost:3000/api/v1/all-notes/${id}`,
+    `${API_URL}/api/v1/all-notes/${id}`,
     {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("bearer_token")}`,
@@ -39,7 +42,7 @@ export const getQueryNoteById = async ({ queryKey }: QueryType) => {
 };
 
 export const addQueryNote = async (newNote: NotePartial) => {
-  await axios.post<Note>("http://localhost:3000/api/v1/note", newNote, {
+  await axios.post<Note>(`${API_URL}/api/v1/note`, newNote, {
     headers: {
       Authorization: `Bearer ${localStorage.getItem("bearer_token")}`,
     },
@@ -50,7 +53,7 @@ export const addQueryNote = async (newNote: NotePartial) => {
 
 
 export const updateQueryNote = async ({ id, note }: UpdateNoteType) => {
-  await axios.put<Note>(`http://localhost:3000/api/v1/note/${id}`, note, {
+  await axios.put<Note>(`${API_URL}/api/v1/note/${id}`, note, {
     headers: {
       Authorization: `Bearer ${localStorage.getItem("bearer_token")}`,
     },
@@ -59,7 +62,7 @@ export const updateQueryNote = async ({ id, note }: UpdateNoteType) => {
 };
 
 export const deleteQueryNote = async (id: string) => {
-  await axios.delete(`http://localhost:3000/api/v1/note/${id}`, {
+  await axios.delete(`${API_URL}/api/v1/note/${id}`, {
     headers: {
       Authorization: `Bearer ${localStorage.getItem("bearer_token")}`,
     },
@@ -68,7 +71,7 @@ export const deleteQueryNote = async (id: string) => {
 };
 
 export const deleteForeverQueryNote = async (id: string) => {
-  await axios.delete(`http://localhost:3000/api/v1/delete/${id}`, {
+  await axios.delete(`${API_URL}/api/v1/delete/${id}`, {
     headers: {
       Authorization: `Bearer ${localStorage.getItem("bearer_token")}`,
     },
@@ -77,7 +80,7 @@ export const deleteForeverQueryNote = async (id: string) => {
 };
 
 export const archiveQueryNote = async (id: string) => {
-  await axios.put(`http://localhost:3000/api/v1/archives/${id}`,{}, {
+  await axios.put(`${API_URL}/api/v1/archives/${id}`, {}, {
     headers: {
       Authorization: `Bearer ${localStorage.getItem("bearer_token")}`,
     },
@@ -90,7 +93,7 @@ export const getArchiveNotes = async ({
 }: {
   pageParam: string | null;
 }) => {
-  const res = await axios.get<Notes>(`http://localhost:3000/api/v1/archives`, {
+  const res = await axios.get<Notes>(`${API_URL}/api/v1/archives`, {
     params: { limit: 6, cursor: pageParam },
     headers: {
       Authorization: `Bearer ${localStorage.getItem("bearer_token")}`,
@@ -101,7 +104,7 @@ export const getArchiveNotes = async ({
 };
 
 export const unarchiveNote = async (id: string) => {
-  await axios.put(`http://localhost:3000/api/v1/unarchive/${id}`,{},
+  await axios.put(`${API_URL}/api/v1/unarchive/${id}`,{},
     {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("bearer_token")}`,
@@ -119,7 +122,7 @@ export const searchNotes = async ({
   queryKey: [string, string];
 }) => {
   const [, search] = queryKey;
-  const res = await axios.get<Notes>(`http://localhost:3000/api/v1/search`, {
+  const res = await axios.get<Notes>(`${API_URL}/api/v1/search`, {
     params: { search, cursor: pageParam, limit: 6 },
     headers: {
       Authorization: `Bearer ${localStorage.getItem("bearer_token")}`,
@@ -135,7 +138,7 @@ export const getAndSearchTags = async ({
   queryKey: [string, string];
 }) => {
   const [, search] = queryKey;
-  const res = await axios.get<string[]>(`http://localhost:3000/api/v1/tags`, {
+  const res = await axios.get<string[]>(`${API_URL}/api/v1/tags`, {
     params: { search },
     headers: {
       Authorization: `Bearer ${localStorage.getItem("bearer_token")}`,
@@ -153,7 +156,7 @@ export const getTrashNotes = async ({
   queryKey: [string, string];
 }) => {
   const [, search] = queryKey;
-  const res = await axios.get<Notes>("http://localhost:3000/api/v1/trash", {
+  const res = await axios.get<Notes>(`${API_URL}/api/v1/trash`, {
     params: { limit: 3, search, cursor: pageParam },
     headers: {
       Authorization: `Bearer ${localStorage.getItem("bearer_token")}`,
@@ -165,7 +168,7 @@ export const getTrashNotes = async ({
 };
 
 export const restoreQueryNote = async ({ id, note }: UpdateNoteType) => {
-  await axios.put<Note>(`http://localhost:3000/api/v1/restore/${id}`, note,
+  await axios.put<Note>(`${API_URL}/api/v1/restore/${id}`, note,
     {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("bearer_token")}`,

@@ -12,27 +12,27 @@ const app = express();
 
 const prot = process.env.PORT || 3000;
 
-// console.log('run ser 🧶💦');
-
 app.get("/", (req, res) => {
   res.send("API is running....");
 });
 
 connectNoteDB();
 
-
 app.use(
   cors({
-    origin: ["http://localhost:5173", "http://127.0.0.1:5173"],
+    origin: [
+      "http://localhost:5173",
+      "http://127.0.0.1:5173",
+      "https://beautiful-cassata-eb7dbf.netlify.app",
+    ],
     credentials: true,
   })
 );
 
-
 app.use("/", authRouter);
 
 // protect all routes after this middleware
-app.use(authenticateUser)
+app.use(authenticateUser);
 
 app.use(express.json());
 
