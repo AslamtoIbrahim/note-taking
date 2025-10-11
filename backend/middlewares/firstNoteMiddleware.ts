@@ -1,6 +1,6 @@
 import type { NextFunction, Request, Response } from "express";
 import mongoose from "mongoose";
-import NoteModel from "../models/note-model";
+import NoteModel from "../models/note-model.js";
 
 
 export const createFirstNote = async (req: Request, res: Response, next: NextFunction) => {

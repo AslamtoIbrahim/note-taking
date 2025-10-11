@@ -13,8 +13,8 @@ import {
   restoreNote,
   unarchiveNote,
   updateNote,
-} from "../controllers/note-controllers";
-import { createFirstNote } from "../middlewares/firstNoteMiddleware";
+} from "../controllers/note-controllers.js";
+import { createFirstNote } from "../middlewares/firstNoteMiddleware.js";
 
 const noteRouter = express.Router();
 
