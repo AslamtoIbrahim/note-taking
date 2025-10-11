@@ -1,7 +1,7 @@
 import { betterAuth } from "better-auth";
 import { mongodbAdapter } from "better-auth/adapters/mongodb";
 import dotenv from "dotenv";
-import { client } from "../db/note-db";
+import { client } from "../db/note-db.js";
 dotenv.config();
 
 export const auth = betterAuth({
