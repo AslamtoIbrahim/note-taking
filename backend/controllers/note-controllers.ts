@@ -1,10 +1,10 @@
-import type {Request, Response} from "express";
+import type { Request, Response } from "express";
 import NoteModel from "../models/note-model.ts";
+import { client } from "../db/note-db.ts";
 
-export const getQueryNotes = async (
-  req: Request,
-  res: Response
-) => {
+
+
+export const getQueryNotes = async (req: Request, res: Response) => {
   try {
     const { limit, cursor } = req.query;
     const limitNumber = Number(limit) || 10;
@@ -18,11 +18,10 @@ export const getQueryNotes = async (
       query._id = { $lt: cursor };
     }
 
-    // console.log("😎 query:", query);
-
     const notes = await NoteModel.find(query)
       .sort({ createdAt: -1 })
       .limit(limitNumber);
+
 
     if (!notes) {
       res.status(404).json({ message: "Notes not found" });
@@ -35,10 +34,7 @@ export const getQueryNotes = async (
   }
 };
 
-export const getNoteById = async (
-  req: Request,
-  res: Response
-) => {
+export const getNoteById = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     if (!id) return res.status(400).json({ message: "id is required" });
@@ -53,10 +49,7 @@ export const getNoteById = async (
   }
 };
 
-export const getArchivedNotes = async (
-  req: Request,
-  res: Response
-) => {
+export const getArchivedNotes = async (req: Request, res: Response) => {
   try {
     const archivedNotes = await NoteModel.find({
       userId: req.user?.id,
@@ -72,10 +65,7 @@ export const getArchivedNotes = async (
   }
 };
 
-export const getDeletedNotes = async (
-  req: Request,
-  res: Response
-) => {
+export const getDeletedNotes = async (req: Request, res: Response) => {
   try {
     const deletedNotes = await NoteModel.find({
       userId: req.user?.id,
@@ -106,8 +96,6 @@ export const addNote = async (req: Request, res: Response) => {
       lastEdit: new Date(),
     });
 
-    console.log("😎 note:", note);
-
     await note.save();
     res.status(201).json(note);
   } catch (error) {
@@ -115,10 +103,7 @@ export const addNote = async (req: Request, res: Response) => {
   }
 };
 
-export const updateNote = async (
-  req: Request,
-  res: Response
-) => {
+export const updateNote = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const { title, content, tags } = req.body;
@@ -126,7 +111,7 @@ export const updateNote = async (
     if (!id) {
       return res.status(400).json({ message: "id required to update" });
     }
-    
+
     // if (!title || !content) {
     //   return res.status(400).json({ message: "Nothing to update" });
     // }
@@ -151,10 +136,7 @@ export const updateNote = async (
 };
 
 // soft delete using update
-export const deleteNote = async (
-  req: Request,
-  res: Response
-) => {
+export const deleteNote = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
 
@@ -175,10 +157,7 @@ export const deleteNote = async (
   }
 };
 
-export const archiveNote = async (
-  req: Request,
-  res: Response
-) => {
+export const archiveNote = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     console.log("📗 userID: ", req.user?.id);
@@ -203,10 +182,7 @@ export const archiveNote = async (
   }
 };
 
-export const getArchives = async (
-  req: Request,
-  res: Response
-) => {
+export const getArchives = async (req: Request, res: Response) => {
   try {
     const { cursor, limit } = req.query;
 
@@ -236,10 +212,7 @@ export const getArchives = async (
   }
 };
 
-export const unarchiveNote = async (
-  req: Request,
-  res: Response
-) => {
+export const unarchiveNote = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     if (!id) {
@@ -261,10 +234,7 @@ export const unarchiveNote = async (
   }
 };
 
-export const getSearchedNotes = async (
-  req: Request,
-  res: Response
-) => {
+export const getSearchedNotes = async (req: Request, res: Response) => {
   try {
     const { search, cursor, limit } = req.query;
     let query: any = {
@@ -302,10 +272,7 @@ export const getSearchedNotes = async (
   }
 };
 
-export const getAndSearchTags = async (
-  req: Request,
-  res: Response
-) => {
+export const getAndSearchTags = async (req: Request, res: Response) => {
   try {
     const { search } = req.query;
 
@@ -338,10 +305,7 @@ export const getAndSearchTags = async (
   }
 };
 
-export const getTrashNotes = async (
-  req: Request,
-  res: Response
-) => {
+export const getTrashNotes = async (req: Request, res: Response) => {
   try {
     const { search, cursor, limit } = req.query;
     let query: any = {
@@ -377,10 +341,7 @@ export const getTrashNotes = async (
   }
 };
 
-export const restoreNote = async (
-  req: Request,
-  res: Response
-) => {
+export const restoreNote = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
 
@@ -403,10 +364,7 @@ export const restoreNote = async (
   }
 };
 
-export const deleteForeverNote = async (
-  req: Request,
-  res: Response
-) => {
+export const deleteForeverNote = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
 

@@ -1,10 +1,11 @@
 import { betterAuth } from "better-auth";
-import Database from "better-sqlite3";
 import dotenv from "dotenv";
+import { mongodbAdapter } from "better-auth/adapters/mongodb";
+import { client } from "../db/note-db.ts";
 dotenv.config();
 
 export const auth = betterAuth({
-  database: new Database("./notes.db"),
+  database: mongodbAdapter(client.db("notes_taking")),
   secret: process.env.BETTER_AUTH_SECRET,
   emailAndPassword: {
     enabled: true,
