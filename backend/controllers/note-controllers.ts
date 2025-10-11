@@ -1,8 +1,5 @@
 import type { Request, Response } from "express";
 import NoteModel from "../models/note-model.ts";
-import { client } from "../db/note-db.ts";
-
-
 
 export const getQueryNotes = async (req: Request, res: Response) => {
   try {
@@ -21,7 +18,6 @@ export const getQueryNotes = async (req: Request, res: Response) => {
     const notes = await NoteModel.find(query)
       .sort({ createdAt: -1 })
       .limit(limitNumber);
-
 
     if (!notes) {
       res.status(404).json({ message: "Notes not found" });

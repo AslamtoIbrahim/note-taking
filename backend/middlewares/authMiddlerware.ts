@@ -1,8 +1,6 @@
 import { fromNodeHeaders } from "better-auth/node";
 import type { NextFunction, Request, Response } from "express";
 import { auth } from "../lib/auth.ts";
-import NoteModel from "../models/note-model.ts";
-import mongoose from "mongoose";
 
 
 export const authenticateUser = async (
