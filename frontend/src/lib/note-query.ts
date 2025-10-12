@@ -17,9 +17,9 @@ export const getQueryNotes = async ({
       limit: 8,
       cursor: pageParam,
     },
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("bearer_token")}`,
-    },
+    // headers: {
+    //   Authorization: `Bearer ${localStorage.getItem("bearer_token")}`,
+    // },
     withCredentials: true,
   });
 

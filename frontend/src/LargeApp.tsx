@@ -1,6 +1,5 @@
 import { Navigate } from "react-router-dom";
 import Loader from "./components/ui/Loader";
-import { useRequireAuth } from "./hooks/use-require-auth";
 import useSession from "./lib/auth-session";
 import DesktopPage from "./pages/DesktopPage";
 

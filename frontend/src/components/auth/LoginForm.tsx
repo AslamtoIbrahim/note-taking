@@ -40,29 +40,27 @@ const LoginForm = () => {
         password: data.password,
       },
       {
-        onSuccess: (ctx) => {
-          const token = ctx.response.headers.get("set-auth-token");
-          console.log('token: ',token);
-          if (token) localStorage.setItem("bearer_token", token);
-          console.log(ctx.response);
-        },
         fetchOptions: {
           credentials: "include",
-          callbackURL: "https://beautiful-cassata-eb7dbf.netlify.app",
         },
-      }
+        onSuccess: () => {
+          // const token = ctx.response.headers.get("set-auth-token");
+          // console.log('token: ',token);
+          // if (token) localStorage.setItem("bearer_token", token);
+          // console.log(ctx.response);
+          refetch();
+          toast.success("Welcome to Note taking");
+          setIsLoading(false);
+          setError("");
+          navigate("/");
+        },
+      },
     );
 
     if (responseError) {
       setError(responseError.message || "something went wrong");
       toast.error("somthing went wrong");
       setIsLoading(false);
-    } else {
-      refetch();
-      toast.success("Welcome to Note taking");
-      setIsLoading(false);
-      setError("");
-      navigate("/");
     }
   };
 
@@ -93,7 +91,7 @@ const LoginForm = () => {
             <FaEnvelope className="text-secondary" />
             <input
               {...register("email")}
-              className="form-input "
+              className="form-input"
               type="text"
               placeholder="email"
             />
