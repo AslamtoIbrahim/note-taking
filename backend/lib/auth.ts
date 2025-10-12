@@ -10,7 +10,7 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
   },
-  trustedOrigins: ["http://localhost:5173", "http://127.0.0.1:5173"],
+  trustedOrigins: ["https://beautiful-cassata-eb7dbf.netlify.app","http://localhost:5173", "http://127.0.0.1:5173"],
   socialProviders: {
     google: {
       clientId: process.env.GOOGLE_CLIENT_ID as string,

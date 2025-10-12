@@ -4,6 +4,7 @@ import DesktopPage from "./pages/DesktopPage";
 
 const LargeApp = () => {
   const session = useRequireAuth();
+  console.log('session LargeApp: ',session);
   if (!session) {
     return (
       <div className="flex h-screen items-center justify-center ">
