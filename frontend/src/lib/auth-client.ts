@@ -6,4 +6,5 @@ export const baseURL = window.location.hostname === "localhost"
 
 export const authClient = createAuthClient({
   baseURL,
+  credentials: "include",
 });

@@ -4,6 +4,7 @@ import { baseURL } from "./auth-client";
 
 const {useSession} = createAuthClient({
     baseURL,
+    credentials: "include",
 })
 
 export default useSession
