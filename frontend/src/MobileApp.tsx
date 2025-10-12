@@ -1,18 +1,27 @@
-import { Outlet } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import Header from "./components/layout/Header";
 import { useRequireAuth } from "./hooks/use-require-auth";
 import BottomNav from "./navigation/BottomNav";
 import Loader from "./components/ui/Loader";
+import useSession from "./lib/auth-session";
 
 const MobileApp = () => {
-  const session = useRequireAuth();
-  if (!session) {
+  // const session = useRequireAuth();
+  const { data: session, isPending } = useSession();
+
+  if (isPending) {
     return (
       <div className="flex h-screen items-center justify-center">
         <Loader className="md:size-8 md:border-6" />
       </div>
     );
   }
+
+
+  if (!session) {
+    return <Navigate to="/sign-in" replace />;
+  }
+
   return (
     <div className="relative flex h-screen flex-col  ">
       <Header />
