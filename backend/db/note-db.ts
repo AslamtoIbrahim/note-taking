@@ -4,18 +4,35 @@ import mongoose from "mongoose";
 dotenv.config();
 
 const uri = process.env.MONGO_URI as string;
-export const client = new MongoClient(uri);
 
-const connectNoteDB = async () => {
-  try {
-    await client.connect();
+if (!uri) {
+  throw new Error("MONGO_URI is not defined in .env file");
+}
+
+let clientPromise: Promise<MongoClient>;
+
+if (!(global as any)._mongoClientPromise) {
+  const client = new MongoClient(uri);
+  (global as any)._mongoClientPromise = client.connect().then(() => {
     console.log("✅ mongoDB Atlas is connected successfully for better_auth");
+    return client;
+  }).catch((err) => { 
+    console.log("❌ error: ", err);
+  });
+}
 
-    await mongoose.connect(uri);
+clientPromise = (global as any)._mongoClientPromise;
+
+
+// mongoose connection
+if (mongoose.connection.readyState === 0) {
+  mongoose.connect(uri).then(() => {
     console.log("✅ mongoDB Atlas is connected successfully for mongoose");
-  } catch (error) {
-    console.log("❌ error: ", error);
-  }
-};
+  }).catch((err) => {
+    console.log("❌ error: ", err);
+  });
+}
 
-export default connectNoteDB;
+ 
+
+export default clientPromise;

@@ -1,11 +1,10 @@
 // import cors from "cors";
 import cors from "cors";
+import dotenv from "dotenv";
 import express from "express";
-import connectNoteDB from "./db/note-db.js";
 import { authenticateUser } from "./middlewares/authMiddlerware.js";
 import authRouter from "./routes/auth.js";
 import noteRouter from "./routes/notes.js";
-import dotenv from "dotenv";
 dotenv.config();
 
 const app = express();
@@ -16,7 +15,6 @@ app.get("/", (req, res) => {
   res.send("API is running....");
 });
 
-connectNoteDB();
 
 app.use(
   cors({

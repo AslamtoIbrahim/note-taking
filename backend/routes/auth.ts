@@ -7,9 +7,6 @@ const authRouter = express.Router();
 
 authRouter.get('/api/me', async (req, res) =>{
     try {
-        console.log('header: ',req.headers);
-        console.log('fromNodeHeaders: ', fromNodeHeaders(req.headers));
-
         const session = await auth.api.getSession({
             headers: fromNodeHeaders(req.headers)
         })
