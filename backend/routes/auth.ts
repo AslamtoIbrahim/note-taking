@@ -10,7 +10,6 @@ authRouter.get('/api/me', async (req, res) =>{
         const session = await auth.api.getSession({
             headers: fromNodeHeaders(req.headers)
         })
-        console.log('session: ',session)
         if(!session) return res.status(401).json({error: "😥 you are not signed in"})
     
         res.json(session)

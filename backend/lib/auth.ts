@@ -4,17 +4,10 @@ import dotenv from "dotenv";
 import clientPromise from "../db/note-db.js";
 dotenv.config();
 
-let db: any
-
-clientPromise.then((client) => {
-  db = client.db(); // use the default database specified in the connection string
-  console.log("✅ MongoDB db object ready")
-}).catch((err) => {
-  console.error("Failed to connect to database", err);
-});
+const client = await clientPromise;
 
 export const auth = betterAuth({
-  database: mongodbAdapter(db),
+  database: mongodbAdapter(client.db("notes_taking")),
   secret: process.env.BETTER_AUTH_SECRET,
   emailAndPassword: {
     enabled: true,
