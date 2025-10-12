@@ -42,6 +42,7 @@ const LoginForm = () => {
       {
         onSuccess: (ctx) => {
           const token = ctx.response.headers.get("set-auth-token");
+          console.log('token: ',token);
           if (token) localStorage.setItem("bearer_token", token);
           console.log(ctx.response);
         },

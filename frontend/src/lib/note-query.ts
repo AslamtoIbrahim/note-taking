@@ -2,7 +2,10 @@ import axios from "axios";
 import type { Note, NotePartial, Notes, UpdateNoteType } from "../utils/types";
 
 
-const API_URL = "https://note-taking-woad.vercel.app"
+// const API_URL = "https://note-taking-woad.vercel.app"
+const API_URL = window.location.hostname === "localhost"
+  ? "http://localhost:3000"
+  : "https://note-taking-woad.vercel.app";
 
 export const getQueryNotes = async ({
   pageParam,
