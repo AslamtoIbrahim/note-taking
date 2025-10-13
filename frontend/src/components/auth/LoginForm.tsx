@@ -2,11 +2,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { FaEnvelope, FaLock } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { toast } from "sonner";
 import z from "zod";
 import { authClient } from "../../lib/auth-client";
-import useSession from "../../lib/auth-session";
 import GoogleSignIn from "../ui/GoogleSignIn";
 import SubmitButton from "../ui/SubmitButton";
 
@@ -18,11 +17,9 @@ const schema = z.object({
 type Inputs = z.infer<typeof schema>;
 
 const LoginForm = () => {
-  const { refetch } = useSession();
   const [isLoading, setIsLoading] = useState(false);
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
   const [error, setError] = useState("");
-  const navigate = useNavigate();
 
   const {
     register,
@@ -41,20 +38,10 @@ const LoginForm = () => {
         callbackURL: "/home",
       },
       {
-        // fetchOptions: {
-        //   credentials: "include",
-        // },
-
         onSuccess: () => {
-          // const token = ctx.response.headers.get("set-auth-token");
-          // console.log('token: ',token);
-          // if (token) localStorage.setItem("bearer_token", token);
-          // console.log(ctx.response);
-          refetch();
           toast.success("Welcome to Note taking");
           setIsLoading(false);
           setError("");
-          // navigate("/");
         },
       },
     );
@@ -72,7 +59,8 @@ const LoginForm = () => {
       const data = await authClient.signIn.social({
         provider: "google",
         // callbackURL: "http://localhost:5173",
-        callbackURL: "https://beautiful-cassata-eb7dbf.netlify.app",
+        // callbackURL: "https://beautiful-cassata-eb7dbf.netlify.app",
+        callbackURL: "/home",
       });
       if (data) {
         setIsGoogleLoading(false);
