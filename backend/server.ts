@@ -30,7 +30,7 @@ app.use(
 
 app.use("/", authRouter);
 
-// protect all routes after this middleware
+// protect all routes after this middleware : provides user id req object
 app.use(authenticateUser);
 
 app.use(express.json());

@@ -13,9 +13,10 @@ export const authenticateUser = async (
   });
 
   if (!session?.user) {
-    return res.status(401).json({ error: "You are not signed in" });
+    return res.status(401).json({ error: "🎃 user not found" });
   }
 
+  // 💎 Attach user to request for CRUD notes
   req.user = session.user;
   next();
 };
