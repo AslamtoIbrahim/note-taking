@@ -58,7 +58,7 @@ const LoginForm = () => {
       setIsGoogleLoading(true);
       const data = await authClient.signIn.social({
         provider: "google",
-        callbackURL: "/home",
+        callbackURL: "https://beautiful-cassata-eb7dbf.netlify.app/home",
         errorCallbackURL: "/sign-in"
       });
       if (data) {
