@@ -17,6 +17,7 @@ export const auth = betterAuth({
     "https://note-taking-woad.vercel.app",
     "http://localhost:5173",
   ],
+  credentials: true,
   socialProviders: {
     google: {
       clientId: process.env.GOOGLE_CLIENT_ID as string,
