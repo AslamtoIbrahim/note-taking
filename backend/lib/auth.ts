@@ -15,6 +15,7 @@ export const auth = betterAuth({
   trustedOrigins: [
     "https://beautiful-cassata-eb7dbf.netlify.app",
     "https://note-taking-woad.vercel.app",
+    "http://localhost:5173",
   ],
   socialProviders: {
     google: {

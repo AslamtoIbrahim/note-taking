@@ -15,15 +15,16 @@ const MobileApp = () => {
     );
   }
 
+  console.log("mobile session: ", session);
 
   if (!session) {
     return <Navigate to="/sign-in" replace />;
   }
 
   return (
-    <div className="relative flex h-screen flex-col  ">
+    <div className="relative flex h-screen flex-col">
       <Header />
-      <div className="flex-11/12 rounded-t-xl dark:border-t dark:border-secondary/50 pt-4 bg-white dark:bg-text-dark">
+      <div className="dark:border-secondary/50 dark:bg-text-dark flex-11/12 rounded-t-xl bg-white pt-4 dark:border-t">
         <Outlet />
       </div>
       <BottomNav />

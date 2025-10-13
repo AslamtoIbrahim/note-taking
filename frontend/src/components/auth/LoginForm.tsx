@@ -38,11 +38,13 @@ const LoginForm = () => {
       {
         email: data.email,
         password: data.password,
+        callbackURL: "/home",
       },
       {
-        fetchOptions: {
-          credentials: "include",
-        },
+        // fetchOptions: {
+        //   credentials: "include",
+        // },
+
         onSuccess: () => {
           // const token = ctx.response.headers.get("set-auth-token");
           // console.log('token: ',token);
@@ -52,7 +54,7 @@ const LoginForm = () => {
           toast.success("Welcome to Note taking");
           setIsLoading(false);
           setError("");
-          navigate("/");
+          // navigate("/");
         },
       },
     );
