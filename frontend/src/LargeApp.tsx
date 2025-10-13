@@ -4,7 +4,6 @@ import useSession from "./lib/auth-session";
 import DesktopPage from "./pages/DesktopPage";
 
 const LargeApp = () => {
-  // const session = useRequireAuth();
   const { data: session, isPending } = useSession();
 
 
@@ -15,8 +14,6 @@ const LargeApp = () => {
       </div>
     );
   }
-
-  console.log('large session: ',session);
 
   if (!session) {
     return <Navigate to="/sign-in" replace />;

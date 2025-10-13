@@ -4,7 +4,6 @@ import Loader from "./components/ui/Loader";
 import useSession from "./lib/auth-session";
 import BottomNav from "./navigation/BottomNav";
 const MobileApp = () => {
-  // const session = useRequireAuth();
   const { data: session, isPending } = useSession();
 
   if (isPending) {
@@ -14,8 +13,6 @@ const MobileApp = () => {
       </div>
     );
   }
-
-  console.log("mobile session: ", session);
 
   if (!session) {
     return <Navigate to="/sign-in" replace />;
