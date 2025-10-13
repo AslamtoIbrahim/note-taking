@@ -9,6 +9,13 @@ const client = await clientPromise;
 export const auth = betterAuth({
   database: mongodbAdapter(client.db("notes_taking")),
   secret: process.env.BETTER_AUTH_SECRET,
+  advanced: {
+    defaultCookieAttributes: {
+      sameSite: "none",
+      secure: true,
+      httpOnly: true,
+    },
+  },
   emailAndPassword: {
     enabled: true,
   },
@@ -17,7 +24,6 @@ export const auth = betterAuth({
     "https://note-taking-woad.vercel.app",
     "http://localhost:5173",
   ],
-  credentials: true,
   socialProviders: {
     google: {
       clientId: process.env.GOOGLE_CLIENT_ID as string,
