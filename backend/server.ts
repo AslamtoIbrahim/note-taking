@@ -1,10 +1,11 @@
-// import cors from "cors";
 import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
 import { authenticateUser } from "./middlewares/authMiddlerware.js";
 import authRouter from "./routes/auth.js";
 import noteRouter from "./routes/notes.js";
+import tagsRouter from "./routes/tags.js";
+import linksRouter from "./routes/links.js";
 dotenv.config();
 
 const app = express();
@@ -36,6 +37,10 @@ app.use(authenticateUser);
 app.use(express.json());
 
 app.use("/", noteRouter);
+
+app.use("/", tagsRouter);
+
+app.use("/", linksRouter);
 
 app.listen(prot, () =>
   console.log(`Server running on http://localhost:${prot}`)
