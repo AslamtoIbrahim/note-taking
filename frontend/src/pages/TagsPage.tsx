@@ -7,9 +7,9 @@ import useSearchDebounce from "../hooks/use-debouce-search";
 
 const TagsPage = () => {
   const [search, setSearch] = useState("");
-  const searchDebounce = useSearchDebounce(search)
+  const searchDebounce = useSearchDebounce(search);
   const { data, error, status } = useQueryTags(searchDebounce);
-  
+
   const onSearchHandler = (value: string) => {
     setSearch(value);
   };
@@ -37,10 +37,14 @@ const TagsPage = () => {
         </div>
       )}
       <section className="space-y-2 lg:px-3">
-        {data && (
+        {Array.isArray(data?.pages) && (
           <div className="">
-            {data.pages.map((p) =>
-              p.tags.map((t) => <TagItem key={t._id} tagId={t._id} tag={t.title} />),
+            {data.pages.map(
+              (p) =>
+                Array.isArray(p.tags) &&
+                p.tags.map((t) => (
+                  <TagItem key={t._id} tagId={t._id} tag={t.title} />
+                )),
             )}
           </div>
         )}
