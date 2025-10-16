@@ -26,19 +26,13 @@ const TrashItem = ({ note, searchForCaching }: TrashItemProp) => {
     }
   };
   return (
-    <div className="border-secondary/50 hover:bg-primary/15 group flex cursor-pointer items-center justify-between rounded border p-2">
+    <div className="border-secondary/50 hover:bg-primary/15 group flex cursor-pointer items-center justify-between rounded border px-3 py-2">
       <section className="space-y-1">
         <p className="text-sm text-gray-700 capitalize dark:text-white/65">
           {note.title}
         </p>
-        <div className="space-x-2">
-          {note.tags.map((t) => (
-            <span key={t} className="bg-secondary/20 rounded p-0.5 text-xs/1">
-              {t}
-            </span>
-          ))}
-        </div>
-        <p className="ml-2 font-mono text-xs tracking-tighter text-gray-500">
+       
+        <p className="ml-0.5 font-mono text-xs tracking-tighter text-gray-500">
           {note.deletedAt &&
             new Date(note.deletedAt).toLocaleDateString("en-UK", {
               day: "2-digit",
