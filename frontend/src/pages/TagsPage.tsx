@@ -1,18 +1,13 @@
 import { useState } from "react";
-import TagItem from "../components/ui/TagItem";
-import SearchInput from "../components/ui/SearchInput";
-import { useQuery } from "@tanstack/react-query";
-import { getAndSearchTags } from "../lib/note-query";
 import Loader from "../components/ui/Loader";
+import SearchInput from "../components/ui/SearchInput";
+import TagItem from "../components/ui/TagItem";
+import { useQueryTags } from "../hooks/use-query-tag";
 
 const TagsPage = () => {
   const [search, setSearch] = useState("");
-
-  const { data, error, status } = useQuery({
-    queryKey: ["tags", search],
-    queryFn: getAndSearchTags,
-  });
-
+  const { data, error, status } = useQueryTags(search);
+  
   const onSearchHandler = (value: string) => {
     setSearch(value);
   };
@@ -25,9 +20,8 @@ const TagsPage = () => {
     );
   }
 
-
   return (
-    <div className="padx font-body h-full space-y-2 rounded-t-xl  py-4">
+    <div className="padx font-body h-full space-y-2 rounded-t-xl py-4">
       <SearchInput
         search={search}
         onChangeSearch={onSearchHandler}
@@ -43,9 +37,9 @@ const TagsPage = () => {
       <section className="space-y-2 lg:px-3">
         {data && (
           <div className="">
-            {data.map((t) => (
-              <TagItem key={t} tag={t} />
-            ))}
+            {data.pages.map((p) =>
+              p.tags.map((t) => <TagItem key={t._id} tagId={t._id} tag={t.title} />),
+            )}
           </div>
         )}
       </section>

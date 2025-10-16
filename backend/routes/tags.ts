@@ -1,12 +1,12 @@
-import express from "express"
-import { addTag, deleteTag, getTags } from "../controllers/tag-controllers"
+import express from "express";
+import { addTag, deleteTag, getTags } from "../controllers/tag-controllers.js";
 
-const tagsRouter = express.Router()
+const tagsRouter = express.Router();
 
-tagsRouter.get('/api/v1/tags', getTags)
+tagsRouter.get("/api/v1/tags", getTags);
 
-tagsRouter.put('/api/v1/tag', addTag)
+tagsRouter.put("/api/v1/tag", addTag);
 
-tagsRouter.delete('/api/v1/tags/:id', deleteTag)
+tagsRouter.delete("/api/v1/tags/:id", deleteTag);
 
-export default tagsRouter
+export default tagsRouter;

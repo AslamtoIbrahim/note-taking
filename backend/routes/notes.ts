@@ -4,7 +4,6 @@ import {
   archiveNote,
   deleteForeverNote,
   deleteNote,
-  getAndSearchTags,
   getArchives,
   getNoteById,
   getQueryNotes,
@@ -12,7 +11,7 @@ import {
   getTrashNotes,
   restoreNote,
   unarchiveNote,
-  updateNote,
+  updateNote
 } from "../controllers/note-controllers.js";
 import { createFirstNote } from "../middlewares/firstNoteMiddleware.js";
 
@@ -35,8 +34,6 @@ noteRouter.put("/api/v1/archives/:id", archiveNote);
 noteRouter.put("/api/v1/unarchive/:id", unarchiveNote);
 
 noteRouter.get("/api/v1/search", getSearchedNotes);
-
-noteRouter.get("/api/v1/tags", getAndSearchTags);
 
 noteRouter.get("/api/v1/trash", getTrashNotes);
 

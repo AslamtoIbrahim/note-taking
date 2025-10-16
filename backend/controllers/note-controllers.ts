@@ -268,38 +268,38 @@ export const getSearchedNotes = async (req: Request, res: Response) => {
   }
 };
 
-export const getAndSearchTags = async (req: Request, res: Response) => {
-  try {
-    const { search } = req.query;
+// export const getAndSearchTags = async (req: Request, res: Response) => {
+//   try {
+//     const { search } = req.query;
 
-    const notes = await NoteModel.aggregate([
-      { $match: { userId: req.user?.id } }, // filter by userId
-      { $unwind: "$tags" }, // flat map [[],[]]
-      {
-        $match: {
-          tags: { $regex: search, $options: "i" }, // search includes
-        },
-      },
-      {
-        $group: {
-          _id: null,
-          tags: { $addToSet: "$tags" }, // unique value like [...new Set()]
-        },
-      },
-      {
-        $project: { _id: 0, tags: 1 }, // remove id
-      },
-    ]);
+//     const notes = await NoteModel.aggregate([
+//       { $match: { userId: req.user?.id } }, // filter by userId
+//       { $unwind: "$tags" }, // flat map [[],[]]
+//       {
+//         $match: {
+//           tags: { $regex: search, $options: "i" }, // search includes
+//         },
+//       },
+//       {
+//         $group: {
+//           _id: null,
+//           tags: { $addToSet: "$tags" }, // unique value like [...new Set()]
+//         },
+//       },
+//       {
+//         $project: { _id: 0, tags: 1 }, // remove id
+//       },
+//     ]);
 
-    if (!notes) {
-      return res.status(404).json({ error: "tags not found" });
-    }
+//     if (!notes) {
+//       return res.status(404).json({ error: "tags not found" });
+//     }
 
-    res.json(notes[0]?.tags || []);
-  } catch (error) {
-    res.status(500).json({ message: "tags error server", error: error });
-  }
-};
+//     res.json(notes[0]?.tags || []);
+//   } catch (error) {
+//     res.status(500).json({ message: "tags error server", error: error });
+//   }
+// };
 
 export const getTrashNotes = async (req: Request, res: Response) => {
   try {

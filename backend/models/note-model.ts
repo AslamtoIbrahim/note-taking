@@ -6,7 +6,6 @@ const NoteSchema = new mongoose.Schema(
   {
     userId: { type: String, required: true },
     title: { type: String, default: "" },
-    tags: [String],
     content: { type: mongoose.Schema.Types.Mixed, required: true },
     lastEdit: { type: Date, default: null },
     archivedAt: { type: Date, default: null },

@@ -1,11 +1,12 @@
 import { useState } from "react";
 
 type TagCheckItemProp = {
+  tagId: string;
   check: boolean;
   name: string;
-  onCheckTag: (checked: boolean, name: string) => void;
+  onCheckTag: (tagId: string, checked: boolean) => void;
 };
-const TagCheckItem = ({ check, name, onCheckTag }: TagCheckItemProp) => {
+const TagCheckItem = ({ tagId, check, name, onCheckTag }: TagCheckItemProp) => {
   const [checked, setChecked] = useState(check);
   return (
     <div className="flex items-center gap-x-2">
@@ -16,7 +17,7 @@ const TagCheckItem = ({ check, name, onCheckTag }: TagCheckItemProp) => {
         id={name}
         onChange={(e) => {
           setChecked(e.currentTarget.checked);
-          onCheckTag(e.currentTarget.checked, name)
+          onCheckTag(tagId, e.currentTarget.checked);
         }}
       />
       <label htmlFor={name}>

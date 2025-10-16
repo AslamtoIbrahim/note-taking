@@ -1,10 +1,11 @@
-import { BiArchiveOut } from "react-icons/bi";
-import { NavLink } from "react-router-dom";
-import type { Note } from "../../utils/types";
-import { useUnarchiveNote } from "../../hooks/use-query-note";
 import { use, useEffect, useState } from "react";
+import { BiArchiveOut } from "react-icons/bi";
 import { useMediaQuery } from "react-responsive";
+import { NavLink } from "react-router-dom";
+import { useUnarchiveNote } from "../../hooks/use-query-note";
 import LayoutContext from "../../store/layout-context";
+import type { Note } from "../../utils/types";
+import { useTagsLinkToNote } from "../../hooks/use-query-tags";
 
 type NoteItemProp = {
   note: Note;
@@ -16,6 +17,7 @@ const NoteItem = ({ note, onclick }: NoteItemProp) => {
   const isDesktop = useMediaQuery({ minWidth: 1024 });
   const [path, setPath] = useState(`/editor/`);
   const { setIsVisible } = use(LayoutContext);
+  const { data: tags } = useTagsLinkToNote(note._id);
 
   useEffect(() => {
     if (isDesktop) {
@@ -52,16 +54,22 @@ const NoteItem = ({ note, onclick }: NoteItemProp) => {
           className="cursor-pointer space-y-3 p-4 hover:rounded lg:px-2"
         >
           <div className="flex justify-between">
-            <h1 className="text-lg font-black capitalize dark:text-white/75">{note.title}</h1>
+            <h1 className="text-lg font-black capitalize dark:text-white/75">
+              {note.title}
+            </h1>
           </div>
           <div className="flex flex-wrap items-center gap-2">
-            {note.tags.map((t, i) => {
-              return (
-                <p className="bg-secondary/20 dark:bg-primary/30 dark:text-white/60 rounded px-2 text-sm" key={i}>
-                  {t}
-                </p>
-              );
-            })}
+            {tags &&
+              tags.map((t, i) => {
+                return (
+                  <p
+                    className="bg-secondary/20 dark:bg-primary/30 rounded px-2 text-sm dark:text-white/60"
+                    key={i}
+                  >
+                    {t.tagId.title}
+                  </p>
+                );
+              })}
           </div>
           <p className="text-secondary">
             {note.lastEdit &&

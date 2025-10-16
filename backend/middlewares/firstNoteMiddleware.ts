@@ -1,13 +1,17 @@
 import type { NextFunction, Request, Response } from "express";
 import mongoose from "mongoose";
 import NoteModel from "../models/note-model.js";
+import Tag from "../models/tag-model.js";
 
-
-export const createFirstNote = async (req: Request, res: Response, next: NextFunction) => {
+export const createFirstNote = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const db = mongoose.connection.db;
-    if(!db){
-      throw new Error("Mongodb is not connected yet"); 
+    if (!db) {
+      throw new Error("Mongodb is not connected yet");
     }
 
     const collection = await db.listCollections({ name: "notes" }).toArray();
@@ -30,5 +34,30 @@ export const createFirstNote = async (req: Request, res: Response, next: NextFun
     console.error("Error creating collection:", error);
     next(error);
   }
-
 };
+
+// export const createFirstTag = async (
+//   req: Request,
+//   res: Response,
+//   next: NextFunction
+// ) => {
+//   try {
+//     const db = mongoose.connection.db;
+//     if (!db) {
+//       throw new Error("Mongodb is not connected yet");
+//     }
+//     const collection = await db.listCollections({ name: "tags" }).toArray();
+//     if (collection.length === 0) {
+//       const tag = new Tag({
+//         userId: req.user?.id,
+//         title: "First Tag",
+//       });
+//       await tag.save();
+//       console.log("✅ Collection created!");
+//     }
+//     next();
+//   } catch (error) {
+//     console.error("Error creating collection:", error);
+//     next(error);
+//   }
+// };

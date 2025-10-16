@@ -1,8 +1,9 @@
 import { GoClock, GoTag } from "react-icons/go";
+import type { TagLink } from "../../utils/types";
 
 type MetadataProp = {
-  tags: string[] | undefined;
-  lastEdit: Date |null | undefined;
+  tags: TagLink[] | undefined;
+  lastEdit: Date | null | undefined;
 };
 const Metadata = ({ tags, lastEdit }: MetadataProp) => {
   return (
@@ -12,7 +13,7 @@ const Metadata = ({ tags, lastEdit }: MetadataProp) => {
           <GoTag />
           <p>Tags</p>
         </div>
-        <p>{tags?.join(", ")}</p>
+        <p>{tags?.map((t) => t.tagId.title).join(", ")}</p>
       </section>
       <section className="flex items-center gap-x-8">
         <div className="flex items-center gap-x-2">
@@ -20,11 +21,12 @@ const Metadata = ({ tags, lastEdit }: MetadataProp) => {
           <p>Last edited</p>
         </div>
         <p>
-          {lastEdit && new Date(lastEdit).toLocaleDateString("en-UK", {
-            day: "2-digit",
-            month: "short",
-            year: "numeric",
-          })}
+          {lastEdit &&
+            new Date(lastEdit).toLocaleDateString("en-UK", {
+              day: "2-digit",
+              month: "short",
+              year: "numeric",
+            })}
         </p>
       </section>
     </div>

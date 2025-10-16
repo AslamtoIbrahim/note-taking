@@ -1,54 +1,58 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { getAndSearchTags } from "../../lib/note-query";
+import { useAddQueryTag, useQueryTags } from "../../hooks/use-query-tag";
+import { useAddLink, useDeleteLink } from "../../hooks/use-query-tags";
+import type { TagLink } from "../../utils/types";
 import CreateNewTage from "./CreateNewTage";
 import Loader from "./Loader";
 import SearchInput from "./SearchInput";
 import TagCheckItem from "./TagCheckItem";
-import { useUpdateNote } from "../../hooks/use-query-note";
+import { toast } from "sonner";
 
 type TagsDialog = {
-  id: string | undefined;
-  tags: string[] | undefined;
+  id: string;
+  tags: TagLink[];
 };
 
 const TagsDialog = ({ id, tags }: TagsDialog) => {
   const [search, setSearch] = useState("");
-  const [newTags, setNewTags] = useState(tags);
-  const queryClient = useQueryClient();
+  const [tagTitles, setTagTitles] = useState(() =>
+    tags?.map((t) => t.tagId.title),
+  );
+  const { data: allTags, error, status } = useQueryTags(search);
 
-  const { data, error, status } = useQuery({
-    queryKey: ["tags", search],
-    queryFn: getAndSearchTags,
-  });
+  const addTagMutation = useAddQueryTag(id);
 
-  const updateNoteMutation = useUpdateNote(id);
+  const addTagLinkNote = useAddLink();
+  const deleteTagLinkNote = useDeleteLink();
 
   const onSearchHandler = (value: string) => {
     setSearch(value);
   };
 
-  const onCreateNewTag = () => {
-    if (id && newTags) {
-      const tags = [search, ...newTags];
-      setNewTags(tags);
-      updateNoteMutation.mutate({ id, note: { tags } });
-      queryClient.invalidateQueries({ queryKey: ["tags"] });
+  const onCreateNewTag = async () => {
+    if (id) {
+      const tag = await addTagMutation.mutateAsync(search);
+      setTagTitles([tag.title, ...tagTitles])
+      addTagLinkNote.mutate({ noteId: id, tagId: tag._id });
       setSearch("");
+    } else {
+      toast.warning(
+        "you should first add a note then you can come back and add tags",
+      );
     }
   };
 
-  const onCheckTagHandler = (checked: boolean, name: string) => {
-    if (id && newTags) {
-      let tags;
+  const onCheckTagHandler = (tagId: string, checked: boolean) => {
+    if (id) {
       if (checked) {
-        tags = [name, ...newTags];
+        addTagLinkNote.mutate({ noteId: id, tagId });
       } else {
-        tags = newTags.filter((t) => t !== name);
+        deleteTagLinkNote.mutate({ noteId: id, tagId });
       }
-      setNewTags(tags);
-      updateNoteMutation.mutate({ id, note: { tags: tags } });
-      queryClient.invalidateQueries({ queryKey: ["tags"] });
+    } else {
+      toast.warning(
+        "you should first add a note then you can come back and add tags",
+      );
     }
   };
 
@@ -60,8 +64,8 @@ const TagsDialog = ({ id, tags }: TagsDialog) => {
     );
   }
   return (
-    <div className="flex h-80 flex-col marx justify-between rounded bg-white dark:bg-text-dark">
-      <div className="z-10 w-fit space-y-4 px-12 pt-8">
+    <div className="marx dark:bg-text-dark flex h-80 flex-col justify-between rounded bg-white">
+      <div className="w-fit space-y-4 px-12 pt-8">
         <h2 className="dark:text-white/65">Add tags note</h2>
         <SearchInput
           search={search}
@@ -74,21 +78,27 @@ const TagsDialog = ({ id, tags }: TagsDialog) => {
             <Loader />
           </div>
         )}
-        {data &&
-          <div className="space-y-6 h-30 overflow-y-auto">
-           { data.map((t) => (
-              <TagCheckItem
-                key={t}
-                name={t}
-                check={tags?.includes(t) || false}
-                onCheckTag={onCheckTagHandler}
-              />
-            ))}
-          </div>}
+        {allTags && (
+          <div className="h-34 space-y-4 overflow-y-scroll px-4">
+            {allTags.pages.map((p) =>
+              p.tags.map((alt) => (
+                <TagCheckItem
+                  tagId={alt._id}
+                  key={alt._id}
+                  name={alt.title}
+                  check={
+                    // tags?.map((t) => t.tagId.title).includes(alt.title) || false
+                    tagTitles?.includes(alt.title) || false
+                  }
+                  onCheckTag={onCheckTagHandler}
+                />
+              )),
+            )}
+          </div>
+        )}
       </div>
-      {data?.length === 0 && (
-        <CreateNewTage newTage={search} onClick={onCreateNewTag} />
-      )}
+      {allTags?.pages.map((p) => p.tags.map((t) => t)).flat().length === 0 &&
+        search && <CreateNewTage newTage={search} onClick={onCreateNewTag} />}
     </div>
   );
 };

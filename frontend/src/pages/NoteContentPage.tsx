@@ -20,6 +20,7 @@ import {
   useUnarchiveNote,
   useUpdateNote,
 } from "../hooks/use-query-note";
+import { useTagsLinkToNote } from "../hooks/use-query-tags";
 import ActionBar from "../navigation/ActionBar";
 import LayoutContext from "../store/layout-context";
 import { fullback } from "../utils/types";
@@ -43,6 +44,8 @@ const NoteContentPage = () => {
   const archiveNoteMutation = useArchiveNote();
 
   const unarchiveNoteMutation = useUnarchiveNote();
+
+  const { data: tags } = useTagsLinkToNote(id || "");
 
   useEffect(() => {
     if (noteDetails) {
@@ -106,7 +109,6 @@ const NoteContentPage = () => {
 
     setIsVisible(false);
     navigate(-1);
-   
   };
 
   const onUnarchiveNoteHandler = () => {
@@ -162,10 +164,7 @@ const NoteContentPage = () => {
             />
             <hr className="text-secondary/50 lg:hidden" />
             <TitleInput title={title} onChange={onTitleChangeHandler} />
-            <Metadata
-              tags={noteDetails?.tags}
-              lastEdit={noteDetails?.lastEdit}
-            />
+            {<Metadata tags={tags} lastEdit={noteDetails?.lastEdit} />}
             <hr className="text-secondary/50" />
             {/* Add a WYSIWYG editor with text formatting for the notes */}
             <NoteText content={content} onUpdate={onUpdateNoteText} />
@@ -178,7 +177,7 @@ const NoteContentPage = () => {
                 }}
                 className="absolute top-0 left-0 z-10 flex h-screen w-full items-center justify-center bg-black/50"
               >
-                {<TagsDialog tags={noteDetails?.tags} id={id} />}
+                {tags && id && <TagsDialog tags={tags} id={id} />}
               </div>
             )}
           </div>
@@ -207,7 +206,6 @@ const NoteContentPage = () => {
       </div>
     </section>
   );
-
 };
 
 export default NoteContentPage;

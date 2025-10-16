@@ -1,18 +1,16 @@
 import axios from "axios";
-import type { Note, NotePartial, Notes, UpdateNoteType } from "../utils/types";
+import type { Note, NotePartial, AxiosNotes, UpdateNoteType } from "../utils/types";
+import { API_URL } from "./urls";
 
 // const API_URL = "https://note-taking-woad.vercel.app"
-const API_URL =
-  window.location.hostname === "localhost"
-    ? "http://localhost:3000"
-    : "https://note-taking-woad.vercel.app";
+
 
 export const getQueryNotes = async ({
   pageParam,
 }: {
   pageParam: string | null;
 }) => {
-  const res = await axios.get<Notes>(`${API_URL}/api/v1/notes`, {
+  const res = await axios.get<AxiosNotes>(`${API_URL}/api/v1/notes`, {
     params: {
       limit: 8,
       cursor: pageParam,
@@ -74,7 +72,7 @@ export const getArchiveNotes = async ({
 }: {
   pageParam: string | null;
 }) => {
-  const res = await axios.get<Notes>(`${API_URL}/api/v1/archives`, {
+  const res = await axios.get<AxiosNotes>(`${API_URL}/api/v1/archives`, {
     params: { limit: 6, cursor: pageParam },
     withCredentials: true,
   });
@@ -99,7 +97,7 @@ export const searchNotes = async ({
   queryKey: [string, string];
 }) => {
   const [, search] = queryKey;
-  const res = await axios.get<Notes>(`${API_URL}/api/v1/search`, {
+  const res = await axios.get<AxiosNotes>(`${API_URL}/api/v1/search`, {
     params: { search, cursor: pageParam, limit: 6 },
     withCredentials: true,
   });
@@ -127,7 +125,7 @@ export const getTrashNotes = async ({
   queryKey: [string, string];
 }) => {
   const [, search] = queryKey;
-  const res = await axios.get<Notes>(`${API_URL}/api/v1/trash`, {
+  const res = await axios.get<AxiosNotes>(`${API_URL}/api/v1/trash`, {
     params: { limit: 3, search, cursor: pageParam },
     withCredentials: true,
   });
