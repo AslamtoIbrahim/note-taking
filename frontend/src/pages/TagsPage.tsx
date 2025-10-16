@@ -3,10 +3,12 @@ import Loader from "../components/ui/Loader";
 import SearchInput from "../components/ui/SearchInput";
 import TagItem from "../components/ui/TagItem";
 import { useQueryTags } from "../hooks/use-query-tag";
+import useSearchDebounce from "../hooks/use-debouce-search";
 
 const TagsPage = () => {
   const [search, setSearch] = useState("");
-  const { data, error, status } = useQueryTags(search);
+  const searchDebounce = useSearchDebounce(search)
+  const { data, error, status } = useQueryTags(searchDebounce);
   
   const onSearchHandler = (value: string) => {
     setSearch(value);

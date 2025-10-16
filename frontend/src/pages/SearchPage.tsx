@@ -7,14 +7,17 @@ import NoteItem from "../components/ui/NoteItem";
 import SearchInput from "../components/ui/SearchInput";
 import { useSearchNote } from "../hooks/use-query-note";
 import LayoutContext from "../store/layout-context";
+import useSearchDebounce from "../hooks/use-debouce-search";
 
 const SearchPage = () => {
   const navigate = useNavigate();
 
   const noteContext = use(LayoutContext);
 
+  const searchDebounce = useSearchDebounce(noteContext.search);
+
   const { data, status, error, hasNextPage, fetchNextPage } = useSearchNote(
-    noteContext.search,
+    searchDebounce,
   );
 
   const onClickAddNoteHandler = () => {
@@ -46,12 +49,14 @@ const SearchPage = () => {
         onChangeSearch={onChangeSearchHnadler}
         className="lg:hidden"
       />
-      {noteContext.search && (
-        <p className="text-sm dark:text-secondary">
-          All notes matching "
-          <span className="font-semibold dark:text-white/65">{noteContext.search}</span>" are
-          displayed below
-        </p>
+      { (
+        <div className={`invisible ${searchDebounce && 'visible'}`}>
+          <p className="text-sm dark:text-secondary">
+            All notes matching "
+            <span className="font-semibold dark:text-white/65">{searchDebounce}</span>" are
+            displayed below
+          </p>
+        </div>
       )}
       <section className="divide-secondary/50 divide-y lg:flex lg:max-h-[38.5rem] lg:flex-col lg:gap-y-4 lg:overflow-auto lg:scroll-smooth">
         {status === "pending" && (
