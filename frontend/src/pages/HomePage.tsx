@@ -7,7 +7,8 @@ import { useInfiniteQueryNotes } from "../hooks/use-query-note";
 
 const HomePage = () => {
   const navigate = useNavigate();
-  const { data, status, error, fetchNextPage, hasNextPage } = useInfiniteQueryNotes()
+  const { data, status, error, fetchNextPage, hasNextPage } =
+    useInfiniteQueryNotes();
 
   const onClickAddNoteHandler = () => {
     navigate("/editor/");
@@ -37,9 +38,12 @@ const HomePage = () => {
   return (
     <div className="padx font-body relative pt-4 pb-14 lg:py-0">
       <section className="divide-secondary/50 divide-y lg:flex lg:max-h-[37.5rem] lg:flex-col lg:gap-y-4 lg:overflow-auto lg:scroll-smooth">
-        {data && data.pages.map((p) =>
-          p.notes.map((note, i) => <NoteItem key={i} note={note} />),
-        )}
+        {Array.isArray(data?.pages) &&
+          data.pages.map(
+            (p) =>
+              Array.isArray(p?.notes) &&
+              p.notes.map((note) => <NoteItem key={note._id} note={note} />),
+          )}
         {hasNextPage && (
           <InView className="py-4" onChange={onFetchNoteHandler}>
             <Loader className="mx-auto" />
