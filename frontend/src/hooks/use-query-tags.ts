@@ -44,7 +44,7 @@ export const useTagsLinkToNote = (noteId: string) => {
   });
 };
 
-export const useNotsLinkToTag = (tagId: string) => {
+export const useNotesLinkToTag = (tagId: string) => {
   return useInfiniteQuery({
     queryKey: ["links", tagId] as string[],
     queryFn: populateNotes,

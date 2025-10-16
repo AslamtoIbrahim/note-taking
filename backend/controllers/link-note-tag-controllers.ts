@@ -80,7 +80,7 @@ export const populateNotes = async (req: Request, res: Response) => {
       query._id = { $lt: cursor };
     }
     if (!tagId) {
-      return res.status(404).json({ message: "tagId not found" });
+      return res.json({ notes: [], nextCursor: null });
     }
 
     const notes = await Link.find(query)
@@ -88,7 +88,7 @@ export const populateNotes = async (req: Request, res: Response) => {
       .limit(Number(limit) || 3)
       .populate("noteId");
     if (!notes) {
-      return res.json([]);
+      return res.json({ notes: [], nextCursor: null });
     }
     const nextCursor = notes.length > 0 ? notes[notes.length - 1]._id : null;
     res.json({ notes, nextCursor });

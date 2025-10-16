@@ -53,7 +53,7 @@ const SearchPage = () => {
           displayed below
         </p>
       )}
-      <section className="divide-secondary/50 divide-y lg:flex lg:h-[37rem] lg:flex-col lg:gap-y-4 lg:overflow-auto lg:scroll-smooth">
+      <section className="divide-secondary/50 divide-y lg:flex lg:max-h-[38.5rem] lg:flex-col lg:gap-y-4 lg:overflow-auto lg:scroll-smooth">
         {status === "pending" && (
           <div className="my-auto flex h-[30rem] items-center justify-center md:h-[35rem]">
             <Loader />

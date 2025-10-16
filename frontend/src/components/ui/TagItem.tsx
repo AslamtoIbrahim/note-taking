@@ -3,7 +3,7 @@ import { BsTag } from "react-icons/bs";
 import { CgChevronRight } from "react-icons/cg";
 import { NavLink } from "react-router-dom";
 import { toast } from "sonner";
-import { useNotsLinkToTag } from "../../hooks/use-query-tags";
+import { useNotesLinkToTag } from "../../hooks/use-query-tags";
 import LayoutContext from "../../store/layout-context";
 
 type TagItemProp = {
@@ -12,10 +12,10 @@ type TagItemProp = {
 };
 const TagItem = ({ tag, tagId }: TagItemProp) => {
   const { setIsVisible } = use(LayoutContext);
-  const { data } = useNotsLinkToTag(tagId);
+  const { data } = useNotesLinkToTag(tagId);
 
   const onClickHandler = () => {
-     if (data?.pages.map((p) => p.notes).flat(Infinity).length === 0) {
+    if (data?.pages.map((p) => p.notes).flat(Infinity).length === 0) {
       toast.warning("no items in this tag 😁");
       return;
     }
@@ -35,7 +35,7 @@ const TagItem = ({ tag, tagId }: TagItemProp) => {
           <BsTag className="text-lg" />
           <p>{tag}</p>
         </div>
-        <CgChevronRight className="invisible size-5 group-[.active]:visible mr-4 dark:text-secondary" />
+        <CgChevronRight className="dark:text-secondary invisible mr-4 lg:mr-0 size-5 group-[.active]:visible" />
       </div>
     </NavLink>
   );

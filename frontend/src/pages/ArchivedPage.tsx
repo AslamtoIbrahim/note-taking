@@ -33,7 +33,7 @@ const ArchivedPage = () => {
         <h1>You can unarchive notes click on</h1>
         <BiArchiveOut />
       </section>
-      <section className="divide-secondary/50 divide-y pb-14 lg:flex lg:h-[39.1rem] lg:flex-col lg:gap-y-4 lg:overflow-auto lg:scroll-smooth">
+      <section className="divide-secondary/50 divide-y pb-14 lg:flex lg:max-h-[38.5rem] lg:flex-col lg:gap-y-4 lg:overflow-auto lg:scroll-smooth">
         {data.pages.map((p) =>
           p.notes.map((n) => <NoteItem key={n._id} note={n} />),
         )}

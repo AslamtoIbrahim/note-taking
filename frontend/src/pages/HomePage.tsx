@@ -38,7 +38,7 @@ const HomePage = () => {
 
   return (
     <div className="padx font-body relative pt-4 pb-14 lg:py-0">
-      <section className="divide-secondary/50 divide-y lg:flex lg:h-[37rem] lg:flex-col lg:gap-y-4 lg:overflow-auto lg:scroll-smooth">
+      <section className="divide-secondary/50 divide-y lg:flex lg:max-h-[37.5rem] lg:flex-col lg:gap-y-4 lg:overflow-auto lg:scroll-smooth">
         {data.pages.map((p) =>
           p.notes.map((note, i) => <NoteItem key={i} note={note} />),
         )}
