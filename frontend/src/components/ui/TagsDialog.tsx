@@ -7,6 +7,7 @@ import Loader from "./Loader";
 import SearchInput from "./SearchInput";
 import TagCheckItem from "./TagCheckItem";
 import { toast } from "sonner";
+import useSearchDebounce from "../../hooks/use-debouce-search";
 
 type TagsDialog = {
   id: string;
@@ -18,7 +19,8 @@ const TagsDialog = ({ id, tags }: TagsDialog) => {
   const [tagTitles, setTagTitles] = useState(() =>
     tags?.map((t) => t.tagId.title),
   );
-  const { data: allTags, error, status } = useQueryTags(search);
+  const searchDebounce = useSearchDebounce(search);
+  const { data: allTags, error, status } = useQueryTags(searchDebounce);
 
   const addTagMutation = useAddQueryTag(id);
 
@@ -29,10 +31,15 @@ const TagsDialog = ({ id, tags }: TagsDialog) => {
     setSearch(value);
   };
 
+  const onClickHandler = (e: React.MouseEvent<HTMLDialogElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
   const onCreateNewTag = async () => {
     if (id) {
       const tag = await addTagMutation.mutateAsync(search);
-      setTagTitles([tag.title, ...tagTitles])
+      setTagTitles([tag.title, ...tagTitles]);
       addTagLinkNote.mutate({ noteId: id, tagId: tag._id });
       setSearch("");
     } else {
@@ -64,8 +71,11 @@ const TagsDialog = ({ id, tags }: TagsDialog) => {
     );
   }
   return (
-    <div className="marx dark:bg-text-dark flex h-80 flex-col justify-between rounded bg-white">
-      <div className="w-fit space-y-4 px-12 pt-8">
+    <dialog
+      onClick={onClickHandler}
+      className="marx dark:border-secondary dark:bg-text-dark flex h-80 flex-col justify-between rounded bg-white dark:border"
+    >
+      <div className="w-fit space-y-4 px-6 pt-8 md:px-12">
         <h2 className="dark:text-white/65">Add tags note</h2>
         <SearchInput
           search={search}
@@ -79,7 +89,7 @@ const TagsDialog = ({ id, tags }: TagsDialog) => {
           </div>
         )}
         {allTags && (
-          <div className="h-34 space-y-4 overflow-y-scroll px-4">
+          <div className="h-full max-h-38 space-y-4 overflow-y-scroll px-4">
             {allTags.pages.map((p) =>
               p.tags.map((alt) => (
                 <TagCheckItem
@@ -87,7 +97,6 @@ const TagsDialog = ({ id, tags }: TagsDialog) => {
                   key={alt._id}
                   name={alt.title}
                   check={
-                    // tags?.map((t) => t.tagId.title).includes(alt.title) || false
                     tagTitles?.includes(alt.title) || false
                   }
                   onCheckTag={onCheckTagHandler}
@@ -99,7 +108,7 @@ const TagsDialog = ({ id, tags }: TagsDialog) => {
       </div>
       {allTags?.pages.map((p) => p.tags.map((t) => t)).flat().length === 0 &&
         search && <CreateNewTage newTage={search} onClick={onCreateNewTag} />}
-    </div>
+    </dialog>
   );
 };
 

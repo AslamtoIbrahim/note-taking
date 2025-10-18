@@ -8,7 +8,7 @@ const Settings = () => {
     setIsActive((prv) => !prv);
   };
   return (
-    <div className="lrelative">
+    <div>
       <DeskSettingsButton onClick={onClickHandler} />
       <div onClick={(e)=>{
         if (e.target===e.currentTarget) {

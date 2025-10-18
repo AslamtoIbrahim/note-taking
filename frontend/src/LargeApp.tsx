@@ -9,7 +9,7 @@ const LargeApp = () => {
 
   if (isPending) {
     return (
-      <div className="flex h-screen items-center justify-center">
+      <div className="flex h-screen items-center justify-center bg-white dark:bg-text-dark">
         <Loader className="md:size-8 md:border-6" />
       </div>
     );

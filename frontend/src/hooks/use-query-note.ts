@@ -68,7 +68,7 @@ export const useUpdateNote = (id: string | undefined) => {
   });
 };
 
-export const useDelteNote = (id: string | undefined) => {
+export const useDeleteNote = (id: string | undefined) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: deleteQueryNote,

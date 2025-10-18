@@ -9,7 +9,7 @@ const SaveNoteButton = ({
   return (
     <button
       onClick={onclick}
-      className="text-primary lg:bg-primary cursor-pointer capitalize md:dark:bg-primary/75 dark:text-white/80  md:rounded md:px-4 md:py-1 lg:py-2 lg:text-white md:hover:bg-blue-600 lg:hover:text-white"
+      className="text-primary lg:bg-primary cursor-pointer capitalize md:dark:bg-primary/75 dark:text-white/80  md:rounded md:px-4 md:py-1 lg:py-2 lg:text-white md:hover:bg-blue-600 md:hover:text-white"
     >
       {text}
     </button>

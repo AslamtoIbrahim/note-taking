@@ -1,11 +1,11 @@
 import { use, useEffect, useState } from "react";
-import { BiArchiveOut } from "react-icons/bi";
+import { FiMoreHorizontal } from "react-icons/fi";
 import { useMediaQuery } from "react-responsive";
 import { NavLink } from "react-router-dom";
-import { useUnarchiveNote } from "../../hooks/use-query-note";
+import { useTagsLinkToNote } from "../../hooks/use-query-tags";
 import LayoutContext from "../../store/layout-context";
 import type { Note } from "../../utils/types";
-import { useTagsLinkToNote } from "../../hooks/use-query-tags";
+import PopupControler from "./PopupControler";
 
 type NoteItemProp = {
   note: Note;
@@ -13,11 +13,12 @@ type NoteItemProp = {
 };
 
 const NoteItem = ({ note, onclick }: NoteItemProp) => {
-  const unarchiveNote = useUnarchiveNote();
   const isDesktop = useMediaQuery({ minWidth: 1024 });
   const [path, setPath] = useState(`/editor/`);
   const { setIsVisible } = use(LayoutContext);
   const { data: tags } = useTagsLinkToNote(note._id);
+
+  const [popupActive, setPopupActive] = useState(false);
 
   useEffect(() => {
     if (isDesktop) {
@@ -25,17 +26,18 @@ const NoteItem = ({ note, onclick }: NoteItemProp) => {
     }
   }, [isDesktop]);
 
-  const onUnrachiveNote = (e: React.MouseEvent<SVGElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
-    console.log("button clicked");
-    if (note._id && note.archivedAt) {
-      unarchiveNote.mutate(note._id);
-    }
-  };
-
   const onClickHandler = () => {
     setIsVisible(true);
+  };
+
+  const onMoreMenuClick = (e: React.MouseEvent<SVGElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setPopupActive((prv) => !prv);
+  };
+
+  const onPopupClickHandler = () => {
+    setPopupActive(false);
   };
 
   return (
@@ -81,12 +83,15 @@ const NoteItem = ({ note, onclick }: NoteItemProp) => {
           </p>
         </div>
 
-        {note.archivedAt && (
-          <BiArchiveOut
-            onClick={onUnrachiveNote}
-            className="text-primary mt-3 size-6 cursor-pointer p-1 transition-transform duration-200 ease-in-out hover:scale-115 lg:mt-6 lg:mr-4"
+        <div className="pr-4">
+          <FiMoreHorizontal
+            className="editor-icons text-text-dark dark:text-secondary mt-4 size-4 cursor-pointer"
+            onClick={onMoreMenuClick}
           />
-        )}
+          {popupActive && (
+            <PopupControler onPopupClick={onPopupClickHandler} note={note} />
+          )}
+        </div>
       </div>
     </NavLink>
   );

@@ -39,13 +39,11 @@ export const deleteLink = async (req: Request, res: Response) => {
     if (!noteId || !tagId) {
       return res.status(400).json({ message: "noteId, tagId are required" });
     }
-    console.log("ids: ", noteId, tagId);
     const link = await Link.findOneAndDelete({
       userId: req.user?.id,
       noteId,
       tagId,
     });
-    console.log("link: ", link);
 
     res.status(200).json({ message: "a link deleted successfully", link });
   } catch (error) {

@@ -15,7 +15,7 @@ import UnarchiveButton from "../components/ui/UnarchiveButton";
 import {
   useAddNote,
   useArchiveNote,
-  useDelteNote,
+  useDeleteNote,
   useQueryNote,
   useUnarchiveNote,
   useUpdateNote,
@@ -39,7 +39,7 @@ const NoteContentPage = () => {
 
   const updateNoteMutation = useUpdateNote(id);
 
-  const deleteNoteMutation = useDelteNote(id);
+  const deleteNoteMutation = useDeleteNote(id);
 
   const archiveNoteMutation = useArchiveNote();
 

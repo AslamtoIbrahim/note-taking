@@ -156,7 +156,6 @@ export const deleteNote = async (req: Request, res: Response) => {
 export const archiveNote = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    console.log("📗 userID: ", req.user?.id);
     if (!id) {
       res.status(400).json({ error: "id is not defined" });
     }
@@ -220,7 +219,6 @@ export const unarchiveNote = async (req: Request, res: Response) => {
         archivedAt: null,
       }
     );
-    console.log("note: ", note);
     if (!note) {
       return res.status(404).json({ error: "unrachive not found" });
     }
@@ -251,7 +249,6 @@ export const getSearchedNotes = async (req: Request, res: Response) => {
       ];
     }
 
-    // console.log("query: ", query);
 
     const notes = await NoteModel.find(query)
       .sort({ createdAt: -1 })
