@@ -153,3 +153,7 @@ input[type="search"]::-webkit-search-cancel-button {
 .bc-dg {
   @apply fixed top-0 right-0  h-full flex w-full items-start cursor-default justify-end p-12 
 }
+
+.prop-active {
+  @apply text-black dark:text-white/85
+}
